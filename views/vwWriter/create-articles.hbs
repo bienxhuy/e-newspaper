@@ -19,7 +19,7 @@
         color: red;
         text-decoration: none;
     }
-    
+
     .article-title {
         color: black;
         font-size: large;
@@ -65,9 +65,17 @@
             <a href="" class="category-link mr-2">{{name}}</a>
             {{/each}}
 
-            {{#unless is_published}}
-            <span class="badge badge-warning ml-auto">Nháp</span>
-            {{/unless}}
+            <span class="ml-auto">
+                {{#if is_premium}}
+                <span class="badge badge-warning mr-1">
+                    Premium
+                    <i class="bi bi-star-fill"></i>
+                </span>
+                {{/if}}
+                {{#unless is_published}}
+                <span class="badge badge-warning">Nháp</span>
+                {{/unless}}
+            </span>
         </p>
         {{!-- Thêm link vào bài viết sau nhe --}}
         <a class="font-weight-bold article-title" href="/writer/edit-article?id={{this.id}}">{{title}}</a>

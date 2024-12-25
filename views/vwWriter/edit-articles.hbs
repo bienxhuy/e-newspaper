@@ -226,7 +226,19 @@
                 {{/if}}
 
                 <div class="form-group">
-                    <label class="ml-2" for="txtTitle"><b class="text-danger">Tiêu đề</b></label>
+                    <div class="d-flex justify-content-between">
+                        <label class="ml-2" for="txtTitle"><b class="text-danger">Tiêu đề</b></label>
+                        <span class="form-group custom-control custom-checkbox">
+                            <input type="checkbox" name="isPremium" class="custom-control-input ml-5 text-right"
+                                id="customCheck1" {{#if this.draft.is_premium}}checked{{/if}}>
+                            <label class="custom-control-label" for="customCheck1">
+                                <span class="badge badge-warning">
+                                    <b class="">Bài viết Premium</b>
+                                    <i class="bi bi-star-fill"></i>
+                                </span>
+                            </label>
+                        </span>
+                    </div>
                     <input type="text" name="title" id="txtTitle" class="form-control" placeholder="Nhập tiêu đề ở đây"
                         aria-describedby="helpId" value="{{this.draft.title}}" required>
                 </div>

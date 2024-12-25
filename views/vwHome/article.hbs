@@ -69,6 +69,13 @@
                     <h3 class="card-title" style="font-weight: bolder; margin: 0; margin-top: 15px;">
                         {{this.article.title}}
                     </h3>
+
+                    <!-- Nút tải bài báo -->
+                    <a href="/download-pdf?id={{this.article.id}}" class="btn btn-danger mt-3"
+                        style="float: right; border-radius: 5px; background: #ffc107; border: none;">
+                        <i class="fas fa-download fa-sm fa-fw" style="margin-right: 5px"></i>
+                        Tải bài báo
+                    </a>
                 </div>
 
                 <div class="list-group-item d-flex align-items-center justify-content-between">
