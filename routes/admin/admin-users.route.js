@@ -104,14 +104,14 @@ router.post('/delete', async (req, res) => {
     try {
         const userId = req.body.id;
 
-        if (user.role === 'writer') {
-            const writerExist = await writerService.getWriterByUserId();
+        if (userId.role === 'writer') {
+            const writerExist = await writerService.getWriterByUserId(userId);
             if (writerExist) {
-                await writerService.removeWriter();
+                await writerService.removeWriter(userId);
             }
         }
 
-        await userService.removeUser();
+        await userService.removeUser(userId);
 
         res.redirect('/admin/users');
     } catch (err) {
