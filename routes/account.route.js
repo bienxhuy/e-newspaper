@@ -56,7 +56,7 @@ router.post('/premium', async function (req, res) {
 
     const subscribers = {
         user_id: user.id,
-        vipStatus: 'waiting',
+        status: 'waiting',
     }
 
     let ret = await subscriberService.addSubscriber(subscribers);
@@ -205,7 +205,7 @@ router.post('/role-register', async function (req, res) {
 //     res.redirect('/');
 // });
 
-router.post('/logout', isAuth, function (req, res) {
+router.get('/logout', isAuth, function (req, res) {
   req.session.auth = false;
   req.session.user = undefined;
   req.session.editor = undefined;
