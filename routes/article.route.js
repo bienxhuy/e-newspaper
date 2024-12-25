@@ -253,8 +253,16 @@ router.get("/download-pdf", async (req, res) => {
       `);
     }
 
-    // Lấy thông tin bài viết từ database 
+    // Lấy thông tin bài viết từ database
     const article = await articleService.getFullArticleInfoById(articleId);
+    if (!article.is_premium) {
+      return res.send(`
+          <script>
+            alert('Chỉ có thể tải được bài viết premium.');
+            window.location.href = '/article?id=${articleId}';
+          </script>
+        `);
+    }
 
     // Tạo đường dẫn đến file HTML (layout để render PDF)
     const htmlTemplatePath = path.join(
@@ -263,13 +271,16 @@ router.get("/download-pdf", async (req, res) => {
     );
 
     // Tạo đường dẫn đến ảnh thumbnail
-    const fullImagePath = `file://${path.join(process.cwd(), article.main_thumb)}`;
+    const fullImagePath = `file://${path.join(
+      process.cwd(),
+      article.main_thumb
+    )}`;
     article.fullImagePath = fullImagePath;
 
     // Khởi chạy Puppeteer
     const browser = await puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
 
@@ -297,16 +308,28 @@ router.get("/download-pdf", async (req, res) => {
         tagContainer.appendChild(span);
       });
 
-      document.querySelector("#article-author").innerText = `Tác giả: ${data.writer_pseudonym}`;
+      document.querySelector(
+        "#article-author"
+      ).innerText = `Tác giả: ${data.writer_pseudonym}`;
 
-      const options = { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit", year: "numeric", hour12: false };
-      const publishDate = new Date(data.publish_date).toLocaleString("vi-VN", options);
+      const options = {
+        hour: "2-digit",
+        minute: "2-digit",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour12: false,
+      };
+      const publishDate = new Date(data.publish_date).toLocaleString(
+        "vi-VN",
+        options
+      );
       document.querySelector("#article-publish-date").innerText = publishDate;
 
       document.querySelector("#article-summary").innerText = data.abstract;
 
       document.querySelector("#article-thumbnail").src = data.fullImagePath;
-      
+
       document.querySelector("#article-content").innerHTML = data.content;
     }, article);
 
@@ -322,7 +345,10 @@ router.get("/download-pdf", async (req, res) => {
     let outputPath = path.join(downloadsPath, `article_${articleId}.pdf`);
     let fileIndex = 1;
     while (fs.existsSync(outputPath)) {
-      outputPath = path.join(downloadsPath, `article_${articleId}(${fileIndex}).pdf`);
+      outputPath = path.join(
+        downloadsPath,
+        `article_${articleId}(${fileIndex}).pdf`
+      );
       fileIndex++;
     }
 
