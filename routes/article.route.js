@@ -71,6 +71,16 @@ router.get('/article', async function (req, res) {
         return res.send(script);
     }
     if (fullInfoArticle.is_premium) {
+        if (req.session.user === null || req.session.user === undefined) {
+            const script = `
+        <script>
+            alert('Bạn chưa đăng nhập, tài khoản đăng nhập bạn phải là premium để đọc bài này');
+            window.location.href = '/';
+        </script>
+    `;
+            return res.send(script);
+        }
+
         let user = await subscriberService.getVipStatus(req.session.user.id);
         if (user.vipStatus !== 'active') {
             const script = `
