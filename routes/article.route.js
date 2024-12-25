@@ -262,6 +262,10 @@ router.get("/download-pdf", async (req, res) => {
       "static/template/pdfTemplate.html"
     );
 
+    // Tạo đường dẫn đến ảnh thumbnail
+    const fullImagePath = `file://${path.join(process.cwd(), article.main_thumb)}`;
+    article.fullImagePath = fullImagePath;
+
     // Khởi chạy Puppeteer
     const browser = await puppeteer.launch({
       headless: true,
@@ -301,7 +305,7 @@ router.get("/download-pdf", async (req, res) => {
 
       document.querySelector("#article-summary").innerText = data.abstract;
 
-      document.querySelector("#article-thumbnail").src = data.main_thumb;
+      document.querySelector("#article-thumbnail").src = data.fullImagePath;
       
       document.querySelector("#article-content").innerHTML = data.content;
     }, article);
