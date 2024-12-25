@@ -233,6 +233,26 @@ router.get("/download-pdf", async (req, res) => {
       return res.status(400).send("Thiếu id bài báo.");
     }
 
+    const user = req.session.user;
+    if (!user) {
+      return res.send(`
+        <script>
+          alert('Bạn cần đăng nhập để tải file PDF.');
+          window.location.href = window.location.href = '/article?id=${articleId}';
+        </script>
+      `);
+    }
+
+    const vipStatus = await subscriberService.getVipStatus(user.id);
+    if (vipStatus.vipStatus !== "active") {
+      return res.send(`
+        <script>
+          alert('Bạn cần là thành viên premium để tải file PDF.');
+          window.location.href = window.location.href = '/article?id=${articleId}';
+        </script>
+      `);
+    }
+
     // Lấy thông tin bài viết từ database 
     const article = await articleService.getFullArticleInfoById(articleId);
 
