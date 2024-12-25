@@ -10,6 +10,7 @@ import fs from "fs";
 import path from "path";
 import puppeteer from "puppeteer";
 import subscriberService from "../services/subscriberService.js";
+import viewService from "../services/viewService.js";
 
 const router = express.Router();
 // Limit for each page
@@ -124,6 +125,10 @@ router.get("/article", async function (req, res) {
     5
   );
   const noRelevantArticles = relevantArticles.length === 0;
+
+  // Increview
+  await viewService.addViewPermanent(articleId);
+  await viewService.addViewWeek(articleId);
 
   res.render("vwHome/article", {
     layout: "home",
