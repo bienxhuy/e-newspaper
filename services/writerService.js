@@ -43,5 +43,9 @@ export default {
         } else {
             return db('writers').insert({ user_id: userId, pseudonym });
         }
+    },
+
+    checkExistId(user_id) {
+        return db('writers').where('user_id', '=', user_id).first();
     }
 }

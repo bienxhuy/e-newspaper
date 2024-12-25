@@ -606,6 +606,9 @@ export default {
             );
 
             // Update article
+            if (entity.publish_date && entity.publish_date === 'need update') {
+                entity.publish_date = db.raw('CURRENT_TIMESTAMP');
+            }
             const updateArticle = db('articles').where('id', id).update(entity);
 
             // Wait all to complete

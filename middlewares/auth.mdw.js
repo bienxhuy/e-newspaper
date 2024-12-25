@@ -12,6 +12,10 @@ export function isAuth(req, res, next) {
 }
 
 export function isWriter(req, res, next) {
+    if (req.session.user.role === 'admin') {
+        return next();
+    }
+
     if (req.session.user.role !== 'writer') {
         const script = `
         <script>
@@ -42,6 +46,10 @@ export function isEditor(req, res, next) {
 // When writer do an action in writer route, check if this writer has auth to do that action
 // It's like modifying another writer's article
 export async function isValidWriter(req, res, next) {
+    if (req.session.user.role === 'admin') {
+        return next();
+    }
+
     const article_id = +req.query.id || 0;
     if (article_id === 0) {
         return;

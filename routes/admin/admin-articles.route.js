@@ -8,9 +8,9 @@ const router = express.Router();
 
 router.get('/', async function (req, res) {
     let articlesList = await articleService.getArticlesList();
-    articlesList =await articleService.getCatsAndTagsForAnArticleNoModificationDateTime(articlesList);
+    articlesList = await articleService.getCatsAndTagsForAnArticleNoModificationDateTime(articlesList);
     console.log(articlesList);
-    articlesList=articlesList.map((article)=>{
+    articlesList = articlesList.map((article) => {
         article.publish_date = moment(article.publish_date).format('DD/MM/YYYY HH:mm');
         return article;
     })
@@ -83,9 +83,20 @@ router.get('/delete', async function (req, res) {
     const ret = await articleService.deleteArticle(articleId);
 
     res.redirect('/admin/articles');
-
-
-
-
 });
+
+// ../publish-right-now?id=
+router.get('/publish-right-now', async function (req, res) {
+    const article_id = +req.query.id || 0;
+    const articleChanges = {
+        is_available: 1,
+        publish_date: 'need update',
+    };
+
+    await articleService.patchArticle(article_id, articleChanges, [], []);
+    await articleService.delDraft(article_id);
+
+
+    res.redirect('/admin/articles');
+})
 export default router;
