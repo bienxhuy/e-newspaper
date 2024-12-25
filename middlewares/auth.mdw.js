@@ -123,3 +123,16 @@ export async function isEditorHasPermissionOnArticle(req, res, next) {
     `;
     return res.send(script);
 }
+
+export function isAdmin(req, res, next) {
+    if (req.session.user.role !== 'admin') {
+        const script = `
+        <script>
+            alert('Bạn không có quyền truy cập vào trang web này.');
+            window.location.href = '/';
+        </script>
+        `;
+        return res.status(403).send(script);
+    }
+    next();
+}
