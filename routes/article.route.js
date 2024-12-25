@@ -233,6 +233,26 @@ router.get("/download-pdf", async (req, res) => {
       return res.status(400).send("Thiếu id bài báo.");
     }
 
+    const user = req.session.user;
+    if (!user) {
+      return res.send(`
+        <script>
+          alert('Bạn cần đăng nhập để tải file PDF.');
+          window.location.href = window.location.href = '/article?id=${articleId}';
+        </script>
+      `);
+    }
+
+    const vipStatus = await subscriberService.getVipStatus(user.id);
+    if (vipStatus.vipStatus !== "active") {
+      return res.send(`
+        <script>
+          alert('Bạn cần là thành viên premium để tải file PDF.');
+          window.location.href = window.location.href = '/article?id=${articleId}';
+        </script>
+      `);
+    }
+
     // Lấy thông tin bài viết từ database 
     const article = await articleService.getFullArticleInfoById(articleId);
 
@@ -241,6 +261,10 @@ router.get("/download-pdf", async (req, res) => {
       process.cwd(),
       "static/template/pdfTemplate.html"
     );
+
+    // Tạo đường dẫn đến ảnh thumbnail
+    const fullImagePath = `file://${path.join(process.cwd(), article.main_thumb)}`;
+    article.fullImagePath = fullImagePath;
 
     // Khởi chạy Puppeteer
     const browser = await puppeteer.launch({
@@ -281,7 +305,7 @@ router.get("/download-pdf", async (req, res) => {
 
       document.querySelector("#article-summary").innerText = data.abstract;
 
-      document.querySelector("#article-thumbnail").src = data.main_thumb;
+      document.querySelector("#article-thumbnail").src = data.fullImagePath;
       
       document.querySelector("#article-content").innerHTML = data.content;
     }, article);
