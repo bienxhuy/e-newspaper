@@ -69,7 +69,8 @@
                             {{/if}}
 
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/account/logout">
+                            <a class="dropdown-item" href="#"
+                                onclick="document.getElementById('logout-form').submit();">
                                 <i class="bi bi-reply-fill mr-1"></i>
                                 Đăng xuất
                             </a>
@@ -114,7 +115,7 @@
                     </div>
                 </li>
                 {{/each}}
-                
+
             </ul>
         </div>
     </nav>
@@ -188,6 +189,9 @@
         })
     </script>
     {{{_sections.js}}}
+    <form id="logout-form" action="/account/logout" method="POST" style="display: none;">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </form>
 </body>
 
 </html>

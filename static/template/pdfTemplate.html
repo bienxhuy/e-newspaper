@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài viết PDF</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .breadcrumb-item + .breadcrumb-item::before {
+        content: "|";
+      }
+
+      .category-link {
+        text-decoration: none;
+        color: #6c757d;
+      }
+
+      .category-link:hover {
+        color: red;
+      }
+
+      .tag-link:hover {
+        cursor: pointer;
+      }
+
+      .thumbnail img {
+        border-radius: 10px;
+      }
+
+      .author {
+        font-weight: bold;
+        font-size: 16px;
+        color: #555;
+      }
+
+      .publish-date {
+        font-size: 14px;
+        text-align: right;
+        font-style: italic;
+        color: #777;
+        margin-top: 10px;
+      }
+
+      .abstract {
+        font-weight: bold;
+        background-color: #fff9c4;
+        border-radius: 5px;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid mt-4 mb-5" style="width: 730px">
+      <div class="card" style="border-radius: 10px; border: none">
+        <div class="card-body">
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb" id="article-categories">
+                <li class="breadcrumb-item active">
+                  <a href="/cat?catId={{this.id}}" class="category-link"></a>
+                </li>
+            </ol>
+          </nav>
+
+          <!-- Tags -->
+          <ul class="list-inline" id="article-tags">
+              <li class="badge badge-pill badge-light tag-link"></li>
+          </ul>
+
+          <!-- Title -->
+          <h3
+            class="card-title font-weight-bolder text-primary text-dark"
+            id="article-title"
+          >
+            {{title}}
+          </h3>
+        </div>
+
+        <!-- Author and Publish Date -->
+        <div
+          class="list-group-item d-flex align-items-center justify-content-between"
+        >
+          <p class="author" id="article-author">Tác giả: {{writer_pseudonym}}</p>
+          <small id="article-publish-date">{{publish_date}}</small>
+        </div>
+
+        <!-- Abstract -->
+        <div class="list-group-item" id="article-summary">
+          {{abstract}}
+        </div>
+
+        <!-- Thumbnail -->
+        <div class="list-group-item">
+          <div class="d-flex justify-content-center thumbnail">
+            <img
+              id="article-thumbnail"
+              class="d-block w-100"
+              src="{{main_thumb}}"
+              alt="Ảnh minh họa"
+            />
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="list-group-item" id="article-content">
+          {{{content}}}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

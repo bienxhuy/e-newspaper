@@ -37,6 +37,7 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "pdfkit": "^0.15.2",
+    "puppeteer": "^23.11.1",
     "sequelize": "^6.37.5",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.6.13",
