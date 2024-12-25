@@ -101,6 +101,9 @@ router.get("/article", async function (req, res) {
       return res.send(script);
     }
   }
+  
+  // Nav data
+  const categoryTree = await categoryService.getCategoryTree();
 
   // Get comments of article
   const articleComments =
@@ -129,6 +132,7 @@ router.get("/article", async function (req, res) {
     commentCount: articleComments.length,
     relevantArticles: relevantArticles,
     noRelevantArticles: noRelevantArticles,
+    categoryTree: categoryTree
   });
 });
 
@@ -141,6 +145,8 @@ router.get("/cat", async function (req, res) {
   const childCats = await categoryService.getChildCategories(catId);
 
   const category = await categoryService.getCategory(catId);
+  const categoryTree = await categoryService.getCategoryTree();
+
 
   const paginationVars = await helper.paginationVars(
     catId,
@@ -159,6 +165,7 @@ router.get("/cat", async function (req, res) {
     empty: paginationVars.articles.length === 0,
     page_items: paginationVars.page_items,
     catId: catId,
+    categoryTree: categoryTree,
     prevPage: paginationVars.prevPage,
     nextPage: paginationVars.nextPage,
   });
@@ -168,6 +175,7 @@ router.get("/search", async function (req, res) {
   const page = +req.query.page || 1;
   const offset = (page - 1) * limit;
   const keywords = req.query.keywords.trimEnd();
+  const categoryTree = await categoryService.getCategoryTree();
   const paginationVars = await helper.paginationVars(
     keywords,
     limit,
@@ -184,6 +192,7 @@ router.get("/search", async function (req, res) {
     nextPage: paginationVars.nextPage,
     keywords: keywords,
     articles: paginationVars.articles,
+    categoryTree: categoryTree,
   });
 });
 
@@ -191,6 +200,7 @@ router.get("/tag", async function (req, res) {
   const tagId = +req.query.tagId || 1;
   const page = +req.query.page || 1;
   const offset = (page - 1) * limit;
+  const categoryTree = await categoryService.getCategoryTree();
   const tag = await tagService.getTagNameById(tagId);
   const paginationVars = await helper.paginationVars(
     tagId,
@@ -210,12 +220,15 @@ router.get("/tag", async function (req, res) {
     tagId: tagId,
     prevPage: paginationVars.prevPage,
     nextPage: paginationVars.nextPage,
+    categoryTree: categoryTree,
   });
 });
 
 router.get("/newest", async function (req, res) {
   const page = +req.query.page || 1;
   const offset = (page - 1) * limit;
+  
+  const categoryTree = await categoryService.getCategoryTree();
 
   const paginationVars = await helper.paginationVars(
     null,
@@ -229,6 +242,7 @@ router.get("/newest", async function (req, res) {
   res.render("vwHome/articleNewest", {
     layout: "home",
     articles: paginationVars.articles,
+    categoryTree: categoryTree,
     empty: paginationVars.articles.length === 0,
     page_items: paginationVars.page_items,
     prevPage: paginationVars.prevPage,
