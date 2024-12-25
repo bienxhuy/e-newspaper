@@ -5,6 +5,7 @@ import adminTagsRoute from "./admin-tags.route.js";
 import adminUsersRoute from "./admin-users.route.js";
 import adminRoleRegistersRoute from "./admin-role-register.route.js";
 import adminVipUsersRoute from "./admin-vip-users.route.js";
+import adminEditorCategoryRoute from "./admin-editor-category.route.js";
 
 const router = express.Router();
 
@@ -20,6 +21,9 @@ router.use('/vip-users', adminVipUsersRoute);
 
 router.use('/users', adminUsersRoute);
 
+router.use('/editor-category', adminEditorCategoryRoute);
+
+
 
 router.get('/', function (req, res) {
     res.render('vwAdmin/dashboard', {
@@ -28,10 +32,6 @@ router.get('/', function (req, res) {
 
     });
 });
-
-
-
-
 
 
 router.get('/articles', function (req, res) {
