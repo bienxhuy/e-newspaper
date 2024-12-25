@@ -655,6 +655,7 @@ export default {
                 'articles.title as title',
                 'articles.abstract as abstract',
                 'articles.main_thumb as main_thumb',
+                'articles.is_premium as is_premium',
                 'drafts.date as submit_time',
             );
     }
