@@ -13,7 +13,7 @@ import {dirname} from "path";
 import {fileURLToPath} from "url";
 
 import helper from './utils/helper.js';
-import { isAuth, isEditor, isWriter } from './middlewares/auth.mdw.js';
+import { isAdmin, isAuth, isEditor, isWriter } from './middlewares/auth.mdw.js';
 
 import accountRoute from "./routes/account.route.js";
 import authRouter from './routes/auth.route.js';
@@ -68,6 +68,12 @@ app.engine('hbs', engine({
         formatSimpleDatetime: helper.formatSimpleDatetime,
         toUpperCase: helper.toUpperCase,
         section: hbs_section(),
+        eq: helper.eq,
+        greater: helper.greater,
+        less: helper.less,
+        range: helper.range,
+        add: helper.add,
+        subtract: helper.subtract,  
     },
 }));
 
@@ -86,7 +92,7 @@ app.use('/account', isAuth, getVipUser, accountRoute);
 app.use('/category', categoryRoute);
 app.use('/writer', isAuth, isWriter, writerRouter);
 app.use('/editor', isAuth, isEditor, editorRouter);
-app.use('/admin', adminRoute);
+app.use('/admin', isAuth, isAdmin, adminRoute);
 
 
 app.listen(3000, function () {

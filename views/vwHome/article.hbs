@@ -69,6 +69,13 @@
                     <h3 class="card-title" style="font-weight: bolder; margin: 0; margin-top: 15px;">
                         {{this.article.title}}
                     </h3>
+
+                    <!-- Nút tải bài báo -->
+                    <a href="/download-pdf?id={{this.article.id}}" class="btn btn-danger mt-3"
+                        style="float: right; border-radius: 5px; background: #ffc107; border: none;">
+                        <i class="fas fa-download fa-sm fa-fw" style="margin-right: 5px"></i>
+                        Tải bài báo
+                    </a>
                 </div>
 
                 <div class="list-group-item d-flex align-items-center justify-content-between">
@@ -124,7 +131,8 @@
                         {{#each this.comments}}
                         <li class="pt-2 pb-4 px-4"
                             style="background-color: #F0F0F0; border-radius:10px;  margin-bottom: 15px;">
-                            <div class="d-flex align-items-center justify-content-between mb-2" style="border-bottom: 1px solid lightgray">
+                            <div class="d-flex align-items-center justify-content-between mb-2"
+                                style="border-bottom: 1px solid lightgray">
                                 <p style="margin: 0; font-weight: bolder;">{{user}}</p>
 
                                 <small style="font-weight: lighter">{{formatSimpleDatetime date}}</small>
@@ -158,13 +166,14 @@
                 </div>
                 {{else}}
 
-                {{#each this.relevantArticles}}
+
                 <div id="carouselIdsamecate" class="carousel slide" data-ride="carousel" data-interval="3000">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
+                        {{#each this.relevantArticles}}
+                        <div class="carousel-item {{#if @first}}active{{/if}}">
                             <div href="#" class="list-group-item list-group-item-action d-flex"
                                 style="background-color: transparent; text-decoration: none; border: none; width: 560px; padding-right:0px">
-                                <a href="/article?id={{id}}">
+                                <a href="">
                                     <img src="{{main_thumb}}" alt="Photo"
                                         style="object-fit: cover; width: 250px; height: 170px; border-radius: 10px">
                                 </a>
@@ -179,14 +188,13 @@
                                 </div>
                             </div>
                         </div>
-
+                        {{/each}}
                         <button class="carousel-control-next" type="button" data-target="#carouselIdsamecate"
                             data-slide="next">
                             <i class="bi bi-arrow-right-square-fill text-danger" style="font-size: 30px;"></i>
                         </button>
                     </div>
                 </div>
-                {{/each}}
 
                 {{/if}}
 

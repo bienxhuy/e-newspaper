@@ -6,7 +6,8 @@ import fsExtra from 'fs-extra';
 import articleService from '../services/articleService.js';
 import categoryService from '../services/categoryService.js';
 import tagService from '../services/tagService.js';
-import { isValidWriter} from '../middlewares/auth.mdw.js';
+import writerService from '../services/writerService.js';
+import { isValidWriter } from '../middlewares/auth.mdw.js';
 
 const router = express.Router();
 
@@ -44,10 +45,18 @@ router.get('/edit-article', isValidWriter, async function (req, res) {
 
     // If published
     if (fullDraftInfo.is_available) {
+        let retAdd = '';
+        if (req.session.user.role === 'admin') {
+            retAdd = '/admin/articles';
+        }
+        else {
+            retAdd = '/writer/manage-articles';
+        }
+
         const script = `
         <script>
             alert('Bài viết đã được xuất bản!');
-            window.location.href = '/writer/manage-articles';
+            window.location.href = '${retAdd}';
         </script>
         `;
         res.send(script);
@@ -89,6 +98,7 @@ router.get('/edit-article', isValidWriter, async function (req, res) {
         isRejected: isRejected,
         isPending: isPending,
         isCreating: isCreating,
+        isAdmin: req.session.user.role === 'admin',
     });
 });
 
@@ -137,13 +147,14 @@ router.post('/save-draft', isValidWriter, async function (req, res) {
         }
 
         // Draft information
-        let { title, abstract, categories, tags, content } = req.body;
+        let { title, abstract, isPremium, categories, tags, content } = req.body;
         if (!categories) { categories = []; }
         if (!tags) { tags = []; }
         const draft = {
             id: draftId,
             title,
             abstract,
+            is_premium: isPremium === 'on',
             main_thumb: thumbnailUrl,
             content,
         };
@@ -178,6 +189,10 @@ router.get('/del-draft', isValidWriter, async function (req, res) {
     }
     // Delete in database
     await articleService.delArticle(draftId);
+
+    if (req.session.user.role === 'admin') {
+        return res.redirect('/admin/articles');
+    }
     res.redirect('manage-articles');
 })
 
@@ -185,6 +200,9 @@ router.get('/del-draft', isValidWriter, async function (req, res) {
 router.get('/submit-draft', isValidWriter, async function (req, res) {
     const draftId = +req.query.id || 0;
     await articleService.submitDraft(draftId);
+    if (req.session.user.role === 'admin') {
+        return res.redirect('/admin/articles');
+    }
     res.redirect(`edit-article?id=${draftId}`)
 })
 
@@ -249,6 +267,15 @@ router.get('/create-articles', async function (req, res) {
 });
 
 router.get('/create-new', async function (req, res) {
+    let existWriter = await writerService.checkExistId(req.session.user.id);
+    if (!existWriter) {
+        let entity = { pseudonym: 'Ẩn danh' };
+        if (req.session.user.role === 'admin') {
+            entity.pseudonym = 'Admin';
+        }
+        await writerService.addWriter(req.session.user.id, entity);
+    }
+
     const writer_id = req.session.user.id;
     const newDraftId = await articleService.createNewDraft(writer_id);
     res.redirect(`edit-article?id=${newDraftId}`);

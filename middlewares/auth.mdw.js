@@ -12,6 +12,10 @@ export function isAuth(req, res, next) {
 }
 
 export function isWriter(req, res, next) {
+    if (req.session.user.role === 'admin') {
+        return next();
+    }
+
     if (req.session.user.role !== 'writer') {
         const script = `
         <script>
@@ -42,6 +46,10 @@ export function isEditor(req, res, next) {
 // When writer do an action in writer route, check if this writer has auth to do that action
 // It's like modifying another writer's article
 export async function isValidWriter(req, res, next) {
+    if (req.session.user.role === 'admin') {
+        return next();
+    }
+
     const article_id = +req.query.id || 0;
     if (article_id === 0) {
         return;
@@ -122,4 +130,17 @@ export async function isEditorHasPermissionOnArticle(req, res, next) {
         </script>
     `;
     return res.send(script);
+}
+
+export function isAdmin(req, res, next) {
+    if (req.session.user.role !== 'admin') {
+        const script = `
+        <script>
+            alert('Bạn không có quyền truy cập vào trang web này.');
+            window.location.href = '/';
+        </script>
+        `;
+        return res.status(403).send(script);
+    }
+    next();
 }

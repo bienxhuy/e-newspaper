@@ -1,0 +1,77 @@
+<div class="wrapper">
+    {{#if this.isHistoryEmpty}}
+    <div class="d-flex" style="min-height: 300px;">
+        <span class="m-auto">
+            Hiện bạn chưa có bài viết nào đã phê duyệt hay từ chối.
+        </span>
+    </div>
+    {{else}}
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="row px-4 py-3 font-weight-bold text-danger bg-light">
+                <div class="col-6">
+                    Tiêu đề bài viết
+                </div>
+                <div class="col-2">
+                    Ngày
+                </div>
+                <div class="col-2 text-center">
+                    Trạng thái
+                </div>
+                <div class="col-2">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+
+        {{#each this.history}}
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <div class="row">
+                    <div class="col-6">
+                        {{article_title}}
+                    </div>
+                    <div class="col-2">
+                        <i>
+                            {{formatSimpleDatetime date}}
+                        </i>
+                    </div>
+                    <div class="col-2 text-center">
+                        {{#if isRejected}}
+                        <span class="badge badge-danger">Từ chối</span>
+                        {{/if}}
+                        {{#if isApproved}}
+                        <span class="badge badge-success">Duyệt</span>
+                        {{/if}}
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                            data-target="#coll{{id}}" aria-expanded="true" aria-controls="coll{{id}}">
+                            Xem thêm
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="coll{{id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body pl-5">
+                    {{#if isRejected}}
+                    <b>
+                        Lí do không duyệt:
+                    </b>
+                    {{extra}}
+                    {{/if}}
+                    {{#if isApproved}}
+                    <a href="/article?id={{extra}}">
+                        Xem bài viết
+                    </a>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+    {{/if}}
+</div>

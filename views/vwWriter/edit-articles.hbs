@@ -174,9 +174,16 @@
         <div class="wrapper d-flex mx-auto">
             {{!-- Thanh điều khiển quay lại lưu xóa --}}
             <div class="sticky-control bg-light p-2 mr-3 rounded">
+                {{#if isAdmin}}
+                <a href="/admin/articles" type="button" class="btn btn-secondary mb-2">
+                    <i class="bi bi-reply"></i>
+                </a> <br>
+                {{else}}
                 <a href="/writer/manage-articles" type="button" class="btn btn-secondary mb-2">
                     <i class="bi bi-reply"></i>
                 </a> <br>
+                {{/if}}
+
                 <a href="/writer/del-draft?id={{this.draft.id}}" type="button" id="delButton"
                     class="btn btn-danger mb-2">
                     <i class="bi bi-trash3"></i>
@@ -184,10 +191,17 @@
                 <button type="submit" class="btn btn-primary mb-2">
                     <i class="bi bi-floppy-fill"></i>
                 </button> <br>
+
+                {{#if isAdmin}}
+                <a href="/admin/articles/publish-right-now?id={{this.draft.id}}" type="button" class="btn btn-secondary mb-2">
+                    <i class="bi bi-file-earmark-arrow-up-fill"></i>
+                </a> <br>
+                {{else}}
                 <a href="/writer/submit-draft?id={{this.draft.id}}" type="button" id="subButton"
                     class="btn btn-success {{#if this.isPending}}disabled{{/if}}">
                     <i class="bi bi-file-earmark-arrow-up-fill"></i>
                 </a>
+                {{/if}}
             </div>
 
             {{!-- Nội dung chính --}}
@@ -226,7 +240,19 @@
                 {{/if}}
 
                 <div class="form-group">
-                    <label class="ml-2" for="txtTitle"><b class="text-danger">Tiêu đề</b></label>
+                    <div class="d-flex justify-content-between">
+                        <label class="ml-2" for="txtTitle"><b class="text-danger">Tiêu đề</b></label>
+                        <span class="form-group custom-control custom-checkbox">
+                            <input type="checkbox" name="isPremium" class="custom-control-input ml-5 text-right"
+                                id="customCheck1" {{#if this.draft.is_premium}}checked{{/if}}>
+                            <label class="custom-control-label" for="customCheck1">
+                                <span class="badge badge-warning">
+                                    <b class="">Bài viết Premium</b>
+                                    <i class="bi bi-star-fill"></i>
+                                </span>
+                            </label>
+                        </span>
+                    </div>
                     <input type="text" name="title" id="txtTitle" class="form-control" placeholder="Nhập tiêu đề ở đây"
                         aria-describedby="helpId" value="{{this.draft.title}}" required>
                 </div>

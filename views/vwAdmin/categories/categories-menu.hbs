@@ -18,7 +18,7 @@
 <div class="bg-white shadow px-4 pt-3 pb-5 position-relative" style="border-radius: 10px;min-height: 797px ">
     <div class="d-flex justify-content-between">
         <h3>Danh sách chuyên mục </h3>
-        <a class="btn btn-outline-success font-weight-bold d-flex align-items-center" href="/admin/categories/add">
+        <a class="btn btn-outline-danger font-weight-bold d-flex align-items-center" href="/admin/categories/add">
             <i class="bi bi-plus-square-fill mr-1"></i>
             <span>
             Thêm chuyên mục
@@ -48,7 +48,7 @@
                             <a href="/admin/categories/edit?catId={{id}}" class="m-1">{{name}}</a>
                         {{/each}}
                     {{else}}
-                        Không có gì hết :3.
+                        Không có danh mục con
                     {{/if}}
                 </div>
                 <div class="col-3 category-section__btn-edit d-flex justify-content-center">

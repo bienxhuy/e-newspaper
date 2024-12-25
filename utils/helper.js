@@ -61,6 +61,18 @@ export default {
         }
     },
 
+    splitDateAndTimeOutdatedTimeVipUsers(vipUser) {
+        const outdatedTime = vipUser.outdate_time
+        const momentTime = moment(outdatedTime, moment.ISO_8601);
+        const time = momentTime.format('h:mm');
+        const date = momentTime.format('YYYY-MM-DD');
+        vipUser.time = time;
+        vipUser.date = date;
+        vipUser.subscribe_time = moment(vipUser.subscribe_time).format('DD-MM-YYYY, h:mm: A');
+        return vipUser;
+
+    },
+
     // Delete redundant images in article folder
     deleteUnrelatedImages(directory, imagesToKeep) {
         fs.readdir(directory, (err, files) => {
@@ -128,5 +140,34 @@ export default {
     },
     toUpperCase(str) {
         return str.toUpperCase();
+    },
+
+    // Dùng để so sánh 2 giá trị
+    eq(value1, value2) {
+        return value1 === value2;
+    },
+
+    greater(value1, value2) {
+        return value1 > value2;
+    },
+
+    less(value1, value2) {
+        return value1 < value2;
+    },
+
+    range(start, end) {
+        const rangeArray = [];
+        for (let i = start; i <= end; i++) {
+            rangeArray.push(i);
+        }
+        return rangeArray;
+    },
+
+    add(value1, value2) {
+        return value1 + value2;
+    },
+    
+    subtract(value1, value2) {
+        return value1 - value2;
     },
 }

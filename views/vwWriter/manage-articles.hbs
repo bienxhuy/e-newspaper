@@ -53,26 +53,34 @@
         {{#each this.availableArticles}}
         <div class="row mb-3" style="border-radius: 10px; ">
             <div class="col-3">
-                <a href="">
+                <a href="/article?id={{id}}">
                     <img src="{{main_thumb}}" class="rounded" style="object-fit:cover; width: 200px; height: 170px;" />
                 </a>
             </div>
             <div class="col-9 pl-0 d-flex flex-column">
                 <p class="mb-0 article-text d-flex">
                     {{#each categories}}
-                    <a href="" class="category-link mr-2">{{name}}</a>
+                    <a href="/cat?catId={{id}}" class="category-link mr-2">{{name}}</a>
                     {{/each}}
 
-                    {{#unless is_published}}
-                    <span class="badge badge-info ml-auto">Chờ xuất bản</span>
-                    {{/unless}}
+                    <span class="ml-auto">
+                        {{#if is_premium}}
+                        <span class="badge badge-warning mr-1">
+                            Premium
+                            <i class="bi bi-star-fill"></i>
+                        </span>
+                        {{/if}}
+                        {{#unless is_published}}
+                        <span class="badge badge-info">Chờ xuất bản</span>
+                        {{/unless}}
+                    </span>
                 </p>
                 {{!-- Thêm link vào bài viết sau nhe --}}
-                <a class="font-weight-bold article-title" href="#">{{title}}</a>
+                <a class="font-weight-bold article-title" href="/article?id={{id}}">{{title}}</a>
                 <div class="article-text mt-1">{{abstract}}</div>
                 <p class="mb-0 article-text mt-auto d-flex">
                     {{#each tags}}
-                    <a href="" class="badge badge-pill badge-light mr-2 mt-auto">{{name}}</a>
+                    <a href="/tag?tagId={{id}}" class="badge badge-pill badge-light mr-2 mt-auto">{{name}}</a>
                     {{/each}}
                     <span class="ml-auto">{{formatSimpleDatetime this.publish_date}}</span>
                 </p>
@@ -96,20 +104,28 @@
             <div class="col-9 pl-0 d-flex flex-column">
                 <p style="color: #7E8299" class="mb-0 article-text d-flex">
                     {{#each categories}}
-                    <a href="" class="category-link mr-2">{{name}}</a>
+                    <a href="/cat?catId={{id}}" class="category-link mr-2">{{name}}</a>
                     {{/each}}
 
-                    {{#if is_rejected}}
-                    <span class="badge badge-danger ml-auto">Bị từ chối</span>
-                    {{else}}
-                    <span class="badge badge-warning ml-auto">Đang chờ duyệt</span>
-                    {{/if}}
+                    <span class="ml-auto">
+                        {{#if is_premium}}
+                        <span class="badge badge-warning mr-1">
+                            Premium
+                            <i class="bi bi-star-fill"></i>
+                        </span>
+                        {{/if}}
+                        {{#if is_rejected}}
+                        <span class="badge badge-danger">Bị từ chối</span>
+                        {{else}}
+                        <span class="badge badge-warning">Đang chờ duyệt</span>
+                        {{/if}}
+                    </span>
                 </p>
                 <a class="font-weight-bold article-title" href="/writer/edit-article?id={{id}}">{{title}}</a>
                 <div class="article-text mt-1">{{abstract}}</div>
                 <p class="mb-0 article-text mt-auto">
                     {{#each tags}}
-                    <a href="" class="badge badge-pill badge-light mr-2 mt-auto">{{name}}</a>
+                    <a href="/tag?tagId={{id}}" class="badge badge-pill badge-light mr-2 mt-auto">{{name}}</a>
                     {{/each}}
                 </p>
             </div>

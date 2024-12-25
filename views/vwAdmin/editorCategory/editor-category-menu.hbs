@@ -1,0 +1,53 @@
+{{#section 'css'}}
+    <link rel="stylesheet"
+          href="/static/css/admin/admin-vip-users.css">
+    <link rel="stylesheet"
+          href="/static/css/admin/admin-categories.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+{{/section}}
+
+
+
+<div class="bg-white p-4 shadow position-relative" style="border-radius: 10px; min-height: 797px">
+    <div class="d-flex justify-content-between">
+        <h3>Danh sách các editor</h3>
+
+    </div>
+    <div class="border-bottom mt-3 ">
+        <div class="row text-white rounded d-flex py-2 align-items-center"
+             style="padding: 0.5rem;background-color: #EF314C">
+            <h4 class="col-3  d-flex mb-0 justify-content-center ">
+                <span class="ml-2">Editor's Email</span>
+            </h4>
+            <h4 class="col-7 d-flex mb-0 justify-content-center ">
+                <span class="ml-4">Chuyên mục quản lý</span>
+            </h4>
+            <div class="col-2 ">
+            </div>
+        </div>
+    </div>
+    <div class="scrollable-content ">
+        {{#each this.editors}}
+            <div class="row  border  category-section">
+                <div class="col-3  category-section__category-name"><span
+                        style="font-size: 15px; text-overflow: ellipsis;overflow: hidden">{{email}}</span>
+                </div>
+                <div class="col-7 overflow-x-hidden category-section__child-category">
+                    {{#if categories}}
+                        {{#each categories}}
+                            <a href="/admin/categories/edit?catId={{id}}" class="m-1">{{name}}</a>
+                        {{/each}}
+                    {{else}}
+                        Không có danh mục quản lý
+                    {{/if}}
+                </div>
+                <div class="col-2 category-section__btn-edit d-flex justify-content-center">
+                    <a href="/admin/editor-category/edit?editorId={{id}}" class="btn btn-outline-success mr-3">
+                    <i class="bi bi-pencil-square mr-1"></i>Sửa
+                    </a>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+
+</div>
