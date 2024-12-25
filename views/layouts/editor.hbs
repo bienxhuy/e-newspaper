@@ -14,7 +14,9 @@
 
 <body style="background-color: #E6E9F1">
     <div class="bg-danger d-flex justify-content-center align-items-center " style="height: 50px">
-        <h3 class="font-weight-bold text-white ">WebSite Name</h3>
+        <a href="/">
+            <img src="/static/images/others/logo.png" alt="" style="width: 95px">
+        </a>
     </div>
     <div class="account-container__content justify-content-between mt-5 mb-5 d-flex">
         <div class="account-container__content__sidebar  pb-3" style="background-color: transparent;">
@@ -26,7 +28,8 @@
                 <ul class="list-group list-group-flush" style="border-radius: 10px;">
                     {{#each children}}
                     <li class="list-group-item pl-5" {{#if isActive}}style="color: red;" {{/if}}>
-                        <a href="/editor/drafts?catId={{id}}" class="text-decoration-none" style="color:{{#if isActive}}#FF474C;{{else}}dimgray;{{/if}}">
+                        <a href="/editor/drafts?catId={{id}}" class="text-decoration-none"
+                            style="color:{{#if isActive}}#FF474C;{{else}}dimgray;{{/if}}">
                             {{name}}
                         </a>
                     </li>
@@ -34,6 +37,16 @@
                 </ul>
             </div>
             {{/each}}
+
+            <a href="/editor/history" class="text-decoration-none">
+                <div class="text-center py-2"
+                    style="width: 18rem; border-radius: 10px; background-color: #FF474C; color: white;">
+                    <b>
+                    Lịch sử
+                    </b>
+                </div>
+            </a>
+
         </div>
 
 

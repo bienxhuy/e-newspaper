@@ -149,13 +149,21 @@ export default {
         return randomArticles;
     },
     async getTopViewArticlesWithCat(amount) {
-        const topViewsArticlesRawData = await db('articles')
+        const topViewsArticlesId = await db('articles')
             .where('is_available', '=', '1')
             .where('publish_date', '<', db.raw('CURRENT_TIMESTAMP'))
-            .orderBy('articles.view_count', 'desc')
+            .orderBy('view_count', 'desc')
             .limit(amount)
-            .leftJoin('articles_categories', 'articles.id', 'articles_categories.article_id')
-            .leftJoin('categories', 'articles_categories.category_id', 'categories.id')
+            .pluck('id');
+
+        if (topViewsArticlesId.length === 0) {
+            return [];
+        }
+
+        const topViewsArticlesRawData = await db('articles')
+            .whereIn('articles.id', topViewsArticlesId)
+            .leftJoin('articles_categories', 'articles.id', '=', 'articles_categories.article_id')
+            .leftJoin('categories', 'articles_categories.category_id', '=', 'categories.id')
             .select(
                 'articles.id',
                 'articles.title',
@@ -166,10 +174,6 @@ export default {
                 'categories.id as category_id',
                 'categories.name as category_name',
             );
-
-        if (topViewsArticlesRawData.length === 0) {
-            return [];
-        }
 
         let topViewsArticlesMap = {};
         topViewsArticlesRawData.forEach(row => {
@@ -348,7 +352,7 @@ export default {
     async getAvailableOfWriterByWriterId(id) {
         // Available list along with category list of each article (each article can have many categories)
         const articlesWithCategories = await db('articles')
-            .where({writer_id: id, is_available: 1})
+            .where({ writer_id: id, is_available: 1 })
             .leftJoin('articles_categories', 'articles.id', 'articles_categories.article_id')
             .leftJoin('categories', 'articles_categories.category_id', 'categories.id')
             .leftJoin('articles_tags', 'articles.id', 'articles_tags.article_id')
@@ -406,7 +410,7 @@ export default {
     async getDraftOfWriterByWriterId(id) {
         // Draft list along with category list of each article (each article can have many categories)
         const draftsWithCategories = await db('articles')
-            .where({writer_id: id, is_available: 0})
+            .where({ writer_id: id, is_available: 0 })
             .join('drafts', 'articles.id', 'drafts.article_id')
             .leftJoin('articles_categories', 'articles.id', 'articles_categories.article_id')
             .leftJoin('categories', 'articles_categories.category_id', 'categories.id')
@@ -562,11 +566,11 @@ export default {
 
         fullInfoArticle.forEach(row => {
             if (row.cat_id && !categorySet.has(row.cat_id)) {
-                article.categories.push({id: row.cat_id, name: row.cat_name});
+                article.categories.push({ id: row.cat_id, name: row.cat_name });
                 categorySet.add(row.cat_id);
             }
             if (row.tag_id && !tagSet.has(row.tag_id)) {
-                article.tags.push({id: row.tag_id, name: row.tag_name});
+                article.tags.push({ id: row.tag_id, name: row.tag_name });
                 tagSet.add(row.tag_id);
             }
         });
@@ -587,10 +591,10 @@ export default {
 
             // Add new article_tag and article_category 
             const addTags = tags.map(tag =>
-                db('articles_tags').insert({article_id: id, tag_id: tag})
+                db('articles_tags').insert({ article_id: id, tag_id: tag })
             );
             const addCategories = categories.map(cat =>
-                db('articles_categories').insert({article_id: id, category_id: cat})
+                db('articles_categories').insert({ article_id: id, category_id: cat })
             );
 
             // Update article
@@ -624,7 +628,7 @@ export default {
         let datetime = new Date();
         const formattedLocalTime = helper.formatFullDateTime(datetime);
 
-        const entity = {status: 'pending', date: formattedLocalTime};
+        const entity = { status: 'pending', date: formattedLocalTime };
         return db('drafts').where('article_id', id).update(entity);
     },
     async createNewDraft(writerId) {
@@ -655,7 +659,11 @@ export default {
                 'articles.title as title',
                 'articles.abstract as abstract',
                 'articles.main_thumb as main_thumb',
+                'articles.is_premium as is_premium',
                 'drafts.date as submit_time',
             );
+    },
+    getArticleTitleById(id) {
+        return db('articles').where('id', '=', id).select('title').first();
     }
 };

@@ -3,6 +3,7 @@ import editorCategoriesService from "../services/editorCategoriesService.js";
 import articleService from "../services/articleService.js";
 import categoryService from "../services/categoryService.js";
 import tagService from "../services/tagService.js";
+import editorHistory from "../services/editorHistory.js";
 
 import { isEditorWorkAvailable, isEditorHasPermissonOnCategory, isEditorHasPermissionOnArticle } from "../middlewares/auth.mdw.js";
 
@@ -103,11 +104,19 @@ router.post('/approve', isEditorWorkAvailable, isEditorHasPermissionOnArticle, a
     const articleChanges = {
         is_available: 1,
         publish_date: req.body.publish_time,
-        is_premium: req.body.isPremium === 'on' ? 1 : 0,
     };
 
     await articleService.patchArticle(article_id, articleChanges, newCategories, newTags);
     await articleService.delDraft(article_id);
+
+    // Add edit history
+    const editHistory = {
+        article_title : (await articleService.getArticleTitleById(article_id)).title,
+        editor_id: req.session.user.id,
+        action: 'approved',
+        extra: `${article_id}`,
+    }
+    await editorHistory.add(editHistory);
 
     res.redirect('/editor');
 });
@@ -120,8 +129,40 @@ router.post('/reject', isEditorWorkAvailable, isEditorHasPermissionOnArticle, as
         reject_reason: req.body.reject_reason,
     }
     await articleService.patchDraft(article_id, draftChanges);
+    
+    // Add edit history
+    const editHistory = {
+        article_title : (await articleService.getArticleTitleById(article_id)).title,
+        editor_id: req.session.user.id,
+        action: 'rejected',
+        extra: req.body.reject_reason,
+    }
+    await editorHistory.add(editHistory);
 
     res.redirect('/editor');
+});
+
+router.get('/history', isEditorWorkAvailable, async function (req, res) {
+    const editorId = req.session.user.id;
+    const categoryListOfEditor = await editorCategoriesService.getEditorCategoriesFullDetail(editorId);
+
+    const history = await editorHistory.fetchHistoryOfEditorByEditorId(editorId);
+    history.forEach(element => {
+        if (element.action === 'rejected') {
+            element.isRejected = true;
+        }
+        else {
+            element.isApproved = true;
+        }
+    });
+
+    res.render('vwEditor/history', {
+        layout: 'editor',
+        title: 'Lịch sử duyệt bài',
+        catList: categoryListOfEditor,
+        history: history,
+        isHistoryEmpty: history.length === 0
+    });
 });
 
 export default router;

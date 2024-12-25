@@ -68,19 +68,28 @@
 
                         </ol>
                     </nav>
-                    <ul
-                        style="list-style: none; display: flex; align-items: center; padding: 0; margin: 0; margin-top: 5px;">
-                        <i class="fas fa-tags fa-sm fa-fw" style="margin-right: 5px; margin-top: 5px;"></i>
-                        {{#each this.tData}}
-                        {{#if selected}}
-                        <li>
-                            <span class="badge badge-pill badge-light" style="font-weight: 400;">
-                                {{name}}
-                            </span>
-                        </li>
-                        {{/if}}
-                        {{/each}}
-                    </ul>
+
+                    <div class="d-flex">
+                        <span>
+                            <ul
+                                style="list-style: none; display: flex; align-items: center; padding: 0; margin: 0;">
+                                <i class="fas fa-tags fa-sm fa-fw" style="margin-right: 5px; margin-top: 5px;"></i>
+                                {{#each this.tData}}
+                                {{#if selected}}
+                                <li>
+                                    <span class="badge badge-pill badge-light" style="font-weight: 400;">
+                                        {{name}}
+                                    </span>
+                                </li>
+                                {{/if}}
+                                {{/each}}
+                            </ul>
+                        </span>
+                        <span class="badge badge-warning ml-auto mr-1" style="height: 20px;">
+                            Premium
+                            <i class="bi bi-star-fill"></i>
+                        </span>
+                    </div>
 
                     <h3 class="card-title" style="font-weight: bolder; margin: 0; margin-top: 15px;">
                         {{this.draft.title}}
@@ -178,13 +187,6 @@
                             <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
                             {{/each}}
                         </select>
-                    </div>
-                    <div class="form-group custom-control custom-checkbox ml-2">
-                        <input type="checkbox" name="isPremium" class="custom-control-input ml-5 text-right" id="customCheck1">
-                        <label class="custom-control-label" for="customCheck1">
-                            <b class="text-warning">Bài viết Premium</b>
-                            <i class="bi bi-star-fill text-warning"></i>
-                        </label>
                     </div>
                     <div class="form-group">
                         <label class="ml-2" for="pubdate"><b class="text-danger">Thời gian xuất bản</b></label>
