@@ -44,6 +44,14 @@ export default {
 
         return articlesList;
     },
+    async getCatsAndTagsForAnArticleNoModificationDateTime(articlesList) {
+        articlesList = await Promise.all(articlesList.map(async (article) => {
+            article.categoryList = (await categoryService.getCategoryListFromAnArticle(article.id));
+            article.tagList = (await tagService.getTagListFromAnArticle(article.id));
+            return article;
+        }));
+        return articlesList;
+    },
     async countByCatId(catId) {
         let childCats = await categoryService.getChildCategories(catId);
         if (childCats.length !== 0) {
@@ -657,5 +665,12 @@ export default {
                 'articles.main_thumb as main_thumb',
                 'drafts.date as submit_time',
             );
-    }
+    },
+    getArticlesList() {
+        return db('articles').select('id', 'title', 'is_available', 'publish_date', 'is_premium');
+    },
+
+    deleteArticle(articleId) {
+        return db('articles').where('id', articleId).delete();
+    },
 };

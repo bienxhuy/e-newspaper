@@ -2,13 +2,22 @@ import express from 'express';
 import articleService from '../../services/articleService.js';
 import categoryService from '../../services/categoryService.js';
 import tagService from '../../services/tagService.js';
+import moment from "moment";
 
 const router = express.Router();
 
 router.get('/', async function (req, res) {
+    let articlesList = await articleService.getArticlesList();
+    articlesList =await articleService.getCatsAndTagsForAnArticleNoModificationDateTime(articlesList);
+    console.log(articlesList);
+    articlesList=articlesList.map((article)=>{
+        article.publish_date = moment(article.publish_date).format('DD/MM/YYYY HH:mm');
+        return article;
+    })
     res.render('vwAdmin/articles/articles-menu', {
         layout: 'admin',
         articles: true,
+        articlesList: articlesList,
     });
 });
 
@@ -68,4 +77,15 @@ router.post('/add', async function (req, res) {
     }
 });
 
+router.get('/delete', async function (req, res) {
+    const articleId = +req.query.articleId;
+
+    const ret = await articleService.deleteArticle(articleId);
+
+    res.redirect('/admin/articles');
+
+
+
+
+});
 export default router;
