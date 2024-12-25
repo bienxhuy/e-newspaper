@@ -70,16 +70,18 @@ export default {
     async updateCategoriesForEditor(editorId, newCategories) {
         const trx = await db.transaction();
         try {
-            const deleteOldCategory =await db('editors_categories').where('editor_id', editorId).transacting(trx).delete();
-            if (!deleteOldCategory) {
-                throw Error("Error in delete old categories");
+            const ret = await db('editors_categories').where('editor_id', editorId);
+            if (ret) {
+                const deleteOldCategory = await db('editors_categories').where('editor_id', editorId).transacting(trx).delete();
+                if (!deleteOldCategory) {
+                    throw Error("Error in delete old categories");
+                }
             }
-
             const addPromise =
                 newCategories.map(async (newCat) => await this.addEditorCategory({
                         editor_id: editorId,
                         category_id: newCat,
-                    },trx)
+                    }, trx)
                 )
 
             const addNewCat = await Promise.all(addPromise);
