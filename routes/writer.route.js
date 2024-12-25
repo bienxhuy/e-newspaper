@@ -137,13 +137,14 @@ router.post('/save-draft', isValidWriter, async function (req, res) {
         }
 
         // Draft information
-        let { title, abstract, categories, tags, content } = req.body;
+        let { title, abstract, isPremium, categories, tags, content } = req.body;
         if (!categories) { categories = []; }
         if (!tags) { tags = []; }
         const draft = {
             id: draftId,
             title,
             abstract,
+            is_premium: isPremium === 'on',
             main_thumb: thumbnailUrl,
             content,
         };
