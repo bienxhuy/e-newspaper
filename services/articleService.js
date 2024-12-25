@@ -658,5 +658,8 @@ export default {
                 'articles.is_premium as is_premium',
                 'drafts.date as submit_time',
             );
+    },
+    getArticleTitleById(id) {
+        return db('articles').where('id', '=', id).select('title').first();
     }
 };
