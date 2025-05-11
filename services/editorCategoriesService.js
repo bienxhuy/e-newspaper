@@ -71,7 +71,7 @@ export default {
         const trx = await db.transaction();
         try {
             const ret = await db('editors_categories').where('editor_id', editorId);
-            if (ret) {
+            if (ret.length !== 0) {
                 const deleteOldCategory = await db('editors_categories').where('editor_id', editorId).transacting(trx).delete();
                 if (!deleteOldCategory) {
                     throw Error("Error in delete old categories");
