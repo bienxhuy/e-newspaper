@@ -24,6 +24,7 @@ function isValidEmail(email) {
 
 const sendMail = async (to, subject, text, html) => {
     try {
+        console.log('MAILER FLAG')
         if (!to || !to.trim() || !isValidEmail(to)) {
             throw new Error("Recipient email is required");
         }

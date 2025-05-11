@@ -9,7 +9,6 @@ const router = express.Router();
 router.get('/', async function (req, res) {
     let articlesList = await articleService.getArticlesList();
     articlesList = await articleService.getCatsAndTagsForAnArticleNoModificationDateTime(articlesList);
-    console.log(articlesList);
     articlesList = articlesList.map((article) => {
         article.publish_date = moment(article.publish_date).format('DD/MM/YYYY HH:mm');
         return article;

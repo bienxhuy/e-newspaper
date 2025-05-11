@@ -27,7 +27,6 @@ export default {
         }
         let firstPart = dateParts[0].charAt(0).toUpperCase() + dateParts[0].slice(1);
         let secondPart = dateParts[1].replace(/(\d+)(\s+)/, '$1$2');
-        console.log(secondPart);
         return `${timeParts[0]} ${timeParts[1]}, ${secondPart}`;
 
     },

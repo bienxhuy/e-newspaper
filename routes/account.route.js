@@ -101,7 +101,6 @@ router.post("/information/update-email", async function (req, res) {
 
 router.post("/information/update-birth-date", async function (req, res) {
   let dob = req.body.dob;
-  console.log(dob);
   const user = req.session.user;
   dob = moment(dob, "DD-MM-YYYY").format("YYYY-MM-DD");
   const entity = { birth_date: dob };
@@ -114,7 +113,6 @@ router.post("/information/update-password", async function (req, res) {
   const hashedPassword = bcrypt.hashSync(password, 8);
   const user = req.session.user;
   const entity = { password: hashedPassword };
-  console.log(entity);
   await accountService.updateUser(user.id, entity);
   res.redirect("/account");
 });

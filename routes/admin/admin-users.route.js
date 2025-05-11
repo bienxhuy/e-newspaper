@@ -88,7 +88,6 @@ router.post('/edit', async (req, res) => {
 router.get('/delete', async (req, res) => {
     try {
         const userId = req.query.id; 
-        console.log(userId);
 
         res.render('vwAdmin/users/users-delete', {  
             layout: 'admin',

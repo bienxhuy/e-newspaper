@@ -45,7 +45,6 @@ router.post('/renewVip', async function (req, res) {
     const id = req.body.subId;
     let newOutdatedTime = new Date(`${date}T${time}`).toISOString();
     newOutdatedTime = moment(newOutdatedTime).format('YYYY-MM-DD HH:MM:SS');
-    console.log(newOutdatedTime);
     const ret = await subscriberService.renewVipUser(id, {
         outdate_time: newOutdatedTime,
     })

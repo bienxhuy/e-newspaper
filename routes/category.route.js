@@ -24,7 +24,6 @@ router.get('/get-child-categories', async function (req, res) {
 
     let nonParentcategories = await categoryService.getAllNonParentCategories();
 
-    console.log(childCats);
     if (childCats.length !== 0) {
         categories = categories.map((category => {
             category.selected = childCats.some(childCat => childCat.id === category.id);
@@ -32,7 +31,6 @@ router.get('/get-child-categories', async function (req, res) {
         }));
     }
 
-    console.log(catId);
     categories = categories.filter((category) => {
         return category.selected === true || nonParentcategories.some(nonParentCategory => nonParentCategory.id === category.id);
     })
