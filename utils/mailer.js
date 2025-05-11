@@ -17,9 +17,14 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
 const sendMail = async (to, subject, text, html) => {
     try {
-        if (!to || !to.trim()) {
+        if (!to || !to.trim() || !isValidEmail(to)) {
             throw new Error("Recipient email is required");
         }
 
