@@ -144,7 +144,7 @@ router.get("/article", async function (req, res) {
 router.get("/cat", async function (req, res) {
   const catId = +req.query.catId || 6;
 
-  const page = +req.query.page || 1;
+  const page = isNaN(+req.query.page) || +req.query.page <= 0 ? 1 : +req.query.page;
   const offset = (page - 1) * limit;
 
   const childCats = await categoryService.getChildCategories(catId);
@@ -177,9 +177,9 @@ router.get("/cat", async function (req, res) {
 });
 
 router.get("/search", async function (req, res) {
-  const page = +req.query.page || 1;
+  const page = isNaN(+req.query.page) || +req.query.page <= 0 ? 1 : +req.query.page;
   const offset = (page - 1) * limit;
-  const keywords = req.query.keywords.trimEnd();
+  const keywords = req.query.keywords ? req.query.keywords.trimEnd() : '';
   const categoryTree = await categoryService.getCategoryTree();
   const paginationVars = await helper.paginationVars(
     keywords,
@@ -230,7 +230,7 @@ router.get("/tag", async function (req, res) {
 });
 
 router.get("/newest", async function (req, res) {
-  const page = +req.query.page || 1;
+  const page = isNaN(+req.query.page) || +req.query.page <= 0 ? 1 : +req.query.page;
   const offset = (page - 1) * limit;
   
   const categoryTree = await categoryService.getCategoryTree();

@@ -5,8 +5,8 @@ import userService from '../../services/accountService.js';
 const router = express.Router();
 
 router.get('/', async function (req, res) {
-    const writerPage = parseInt(req.query.writerPage, 10) || 1;
-    const editorPage = parseInt(req.query.editorPage, 10) || 1;
+    const writerPage = isNaN(parseInt(req.query.writerPage, 10)) || parseInt(req.query.writerPage, 10) <= 0 ? 1 : parseInt(req.query.writerPage, 10);
+    const editorPage = isNaN(parseInt(req.query.editorPage, 10)) || parseInt(req.query.editorPage, 10) <= 0 ? 1 : parseInt(req.query.editorPage, 10);
     const limit = 10; // Số item trên mỗi trang
 
     const writerApplications = (await applyService.getApplicationsByRole('writer')).reverse();

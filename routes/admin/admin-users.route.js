@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     try {
-        const page = parseInt(req.query.page) || 1;
+        const page = isNaN(+req.query.page) || +req.query.page <= 0 ? 1 : +req.query.page;
         const limit = 10; 
         const offset = (page - 1) * limit; 
 
