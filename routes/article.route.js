@@ -264,7 +264,7 @@ router.get("/download-pdf", async (req, res) => {
 
     const user = req.session.user;
     if (!user) {
-      return res.send(`
+      return res.status(401).send(`
         <script>
           alert('Bạn cần đăng nhập để tải file PDF.');
           window.location.href = window.location.href = '/article?id=${articleId}';
@@ -274,7 +274,7 @@ router.get("/download-pdf", async (req, res) => {
 
     const vipStatus = await subscriberService.getVipStatus(user.id);
     if (vipStatus.vipStatus !== "active") {
-      return res.send(`
+      return res.status(401).send(`
         <script>
           alert('Bạn cần là thành viên premium để tải file PDF.');
           window.location.href = window.location.href = '/article?id=${articleId}';
@@ -285,7 +285,7 @@ router.get("/download-pdf", async (req, res) => {
     // Lấy thông tin bài viết từ database
     const article = await articleService.getFullArticleInfoById(articleId);
     if (!article.is_premium) {
-      return res.send(`
+      return res.status(403).send(`
           <script>
             alert('Chỉ có thể tải được bài viết premium.');
             window.location.href = '/article?id=${articleId}';

@@ -81,6 +81,11 @@ router.get("/forgot-password", (req, res) => {
   });
 });
 
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
 router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
 
@@ -90,6 +95,10 @@ router.post("/forgot-password", async (req, res) => {
   req.session.otp = otp;
   req.session.otpExpires = Date.now() + 5 * 60 * 1000; // Hết hạn sau 5 phút
   req.session.email = email;
+  if (!isValidEmail(email)) {
+    res.status(400).json({ messeage: "Invalid email" });
+    return;
+  }
 
   const html = `
     <p>Xin chào,</p>

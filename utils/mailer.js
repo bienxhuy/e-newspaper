@@ -24,10 +24,12 @@ function isValidEmail(email) {
 
 const sendMail = async (to, subject, text, html) => {
     try {
-        console.log('MAILER FLAG')
+        console.log(!to || !to.trim() || !isValidEmail(to))
         if (!to || !to.trim() || !isValidEmail(to)) {
             throw new Error("Recipient email is required");
         }
+
+        console.log(to, 'processing');
 
         const mailOptions = {
             from: `"${process.env.APP_NAME}" <${process.env.MAIL_FROM_ADDRESS}>`,
