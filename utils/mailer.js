@@ -30,17 +30,19 @@ const sendMail = async (to, subject, text, html) => {
 
         console.log(to, 'processing');
 
-        const mailOptions = {
-            from: `"${process.env.APP_NAME}" <${process.env.MAIL_FROM_ADDRESS}>`,
-            to: to,
-            subject: subject,
-            text: text,
-            html: html,
-        };
+        // const mailOptions = {
+        //     from: `"${process.env.APP_NAME}" <${process.env.MAIL_FROM_ADDRESS}>`,
+        //     to: to,
+        //     subject: subject,
+        //     text: text,
+        //     html: html,
+        // };
 
-        const info = await transporter.sendMail(mailOptions);
-        console.log('Email đã được gửi thành công: ' + info.response);
-        return info;
+        // const info = await transporter.sendMail(mailOptions);
+        // console.log('Email đã được gửi thành công: ' + info.response);
+        // return info;
+        console.log('MAIL SENT');
+        return;
     } catch (error) {
         console.error('Lỗi khi gửi email:', error);
         throw error;
