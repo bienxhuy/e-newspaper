@@ -6,9 +6,9 @@ import path from 'path';
 import passport from './middlewares/passport.js';
 import dotenv from 'dotenv';
 
-import {engine} from "express-handlebars";
-import {dirname} from "path";
-import {fileURLToPath} from "url";
+import { engine } from "express-handlebars";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
 import helper from './utils/helper.js';
 import { isAdmin, isAuth, isEditor, isWriter } from './middlewares/auth.mdw.js';
@@ -21,9 +21,11 @@ import articleRoute from "./routes/article.route.js";
 import editorRouter from './routes/editor.route.js';
 import commentRoute from './routes/commentRoute.js';
 import adminRoute from "./routes/admin/admin.route.js";
-import {getVipUser} from "./middlewares/user.mdw.js";
+import { getVipUser } from "./middlewares/user.mdw.js";
 
 import csrf from 'csurf';
+import helmet from 'helmet';
+import crypto from 'crypto';
 
 
 // =================================================
@@ -65,7 +67,7 @@ app.engine('hbs', engine({
         less: helper.less,
         range: helper.range,
         add: helper.add,
-        subtract: helper.subtract,  
+        subtract: helper.subtract,
     },
 }));
 
@@ -97,6 +99,71 @@ app.use((err, req, res, next) => {
         next(err);
     }
 });
+
+
+// =================================================
+//             HTTP HEADER CONFIGURATION
+// =================================================
+// Generate a random nonce value
+app.use((req, res, next) => {
+    res.locals.nonce = crypto.randomBytes(16).toString('base64');
+    next();
+});
+
+// Define policy in middleware
+app.use((req, res, next) => {
+    const nonce = res.locals.nonce;
+
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: [
+                "'self'",
+                "https://cdn.jsdelivr.net",
+                "https://code.jquery.com",
+                "https://ajax.googleapis.com",
+                "https://cdnjs.cloudflare.com",
+                "https://cdn.tiny.cloud",
+                "https://twitter.github.io",
+                "https://www.google.com",
+                "https://www.gstatic.com",
+                `'nonce-${nonce}'`
+            ],
+            styleSrc: [
+                "'self'",
+                "https://cdn.jsdelivr.net",
+                "https://cdnjs.cloudflare.com",
+                "https://fonts.googleapis.com",
+                `'nonce-${nonce}'`,
+            ],
+            fontSrc: [
+                "'self'",
+                "https://cdn.jsdelivr.net",
+                "https://cdnjs.cloudflare.com",
+                "https://fonts.gstatic.com"
+            ],
+            imgSrc: [
+                "'self'",
+                "data:",
+                "https://sp.tinymce.com"
+            ],
+            connectSrc: ["'self'"],
+            objectSrc: ["'none'"],
+            frameSrc: [
+                "'self'",
+                "https://www.google.com/",
+                "https://cdn.tiny.cloud"
+            ],
+            frameAncestors: ["'none'"],
+            formAction: ["'self'"],
+            baseUri: ["'self'"],
+            mediaSrc: ["'none'"],
+            manifestSrc: ["'self'"],
+            workerSrc: ["'self'"]
+        }
+    })(req, res, next);
+});
+
 
 
 // =================================================
