@@ -70,30 +70,30 @@
             <img src="{{main_thumb}}" class="rounded article-thumb" />
         </a>
     </div>
-    <div class="col-9 pl-0 d-flex flex-column">
+    <div class="col-9 ps-0 d-flex flex-column">
         <p class="mb-0 article-text d-flex">
             {{#each categories}}
-            <a href="" class="category-link mr-2">{{name}}</a>
+            <a href="" class="category-link me-2">{{name}}</a>
             {{/each}}
 
-            <span class="ml-auto">
+            <span class="ms-auto">
                 {{#if is_premium}}
-                <span class="badge badge-warning mr-1">
+                <span class="badge bg-warning me-1">
                     Premium
                     <i class="bi bi-star-fill"></i>
                 </span>
                 {{/if}}
                 {{#unless is_published}}
-                <span class="badge badge-warning">Nháp</span>
+                <span class="badge bg-warning">Nháp</span>
                 {{/unless}}
             </span>
         </p>
         {{!-- Thêm link vào bài viết sau nhe --}}
-        <a class="font-weight-bold article-title" href="/writer/edit-article?id={{this.id}}">{{title}}</a>
+        <a class="fw-bold article-title" href="/writer/edit-article?id={{this.id}}">{{title}}</a>
         <div class="article-text mt-1">{{abstract}}</div>
         <p class="mb-0 article-text mt-auto d-flex">
             {{#each tags}}
-            <a href="" class="badge badge-pill badge-light mr-2 mt-auto">{{name}}</a>
+            <a href="" class="badge rounded-pill bg-light me-2 mt-auto">{{name}}</a>
             {{/each}}
         </p>
     </div>

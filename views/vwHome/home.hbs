@@ -41,7 +41,7 @@
         <div class="col-8">
 
             <div>
-                <h6 class="ml-3 mb-3 pl-2 section-heading">
+                <h6 class="ms-3 mb-3 ps-2 section-heading">
                     Tin nổi bật trong tuần
                 </h6>
                 <div id="hotWeek" class="carousel slide" data-ride="carousel">
@@ -74,8 +74,8 @@
                                     </span>
                                     {{#if is_premium}}
                                     <span
-                                        class="badge badge-warning text-danger ml-auto d-flex align-items-center premium-badge">
-                                        <img src="/static/images/others/diamond.png" alt="" class="premium-icon mr-1">
+                                        class="badge bg-warning text-danger ms-auto d-flex align-items-center premium-badge">
+                                        <img src="/static/images/others/diamond.png" alt="" class="premium-icon me-1">
                                         Premium
                                     </span>
                                     {{/if}}
@@ -97,7 +97,7 @@
             </div>
 
             <div class="mt-4">
-                <h6 class="ml-3 my-3 pl-2 section-heading">
+                <h6 class="ms-3 my-3 ps-2 section-heading">
                     Tin mới nhất
                 </h6>
                 {{#each this.newestArticles}}
@@ -107,16 +107,16 @@
                             <img src="{{main_thumb}}" class="rounded article-image" />
                         </a>
                     </div>
-                    <div class="col-8 pl-0 pb-2 d-flex flex-column">
+                    <div class="col-8 ps-0 pb-2 d-flex flex-column">
                         <p class="mb-0 article-text d-flex">
                             {{#each categories}}
                             <small>
-                                <a href="/cat?catId={{id}}" class="cat-link mr-2">{{name}}</a>
+                                <a href="/cat?catId={{id}}" class="cat-link me-2">{{name}}</a>
                             </small>
                             {{/each}}
                         </p>
                         <small class="mb-1">
-                            <a class="font-weight-bold article-title title-link" href="/article?id={{id}}">
+                            <a class="fw-bold article-title title-link" href="/article?id={{id}}">
                                 {{title}}
                             </a>
                         </small>
@@ -130,8 +130,8 @@
                             </small>
                             {{#if is_premium}}
                             <span
-                                class="badge badge-warning text-danger ml-auto d-flex align-items-center premium-badge">
-                                <img src="/static/images/others/diamond.png" alt="" class="premium-icon-small mr-1">
+                                class="badge bg-warning text-danger ms-auto d-flex align-items-center premium-badge">
+                                <img src="/static/images/others/diamond.png" alt="" class="premium-icon-small me-1">
                                 Premium
                             </span>
                             {{/if}}
@@ -147,7 +147,7 @@
             </div>
 
             <div>
-                <h6 class="ml-3 my-3 pl-2 section-heading">
+                <h6 class="ms-3 my-3 ps-2 section-heading">
                     Top chuyên mục
                 </h6>
                 <div class="masonry-layout">
@@ -179,8 +179,8 @@
                                 </small>
                                 {{#if article.is_premium}}
                                 <span
-                                    class="badge badge-warning text-danger ml-auto d-flex align-items-center premium-badge">
-                                    <img src="/static/images/others/diamond.png" alt="" class="premium-icon-small mr-1">
+                                    class="badge bg-warning text-danger ms-auto d-flex align-items-center premium-badge">
+                                    <img src="/static/images/others/diamond.png" alt="" class="premium-icon-small me-1">
                                     Premium
                                 </span>
                                 {{/if}}
@@ -196,7 +196,7 @@
 
         <div class="col-4">
 
-            <h6 class="ml-3 pl-2 section-heading">
+            <h6 class="ms-3 ps-2 section-heading">
                 Tin nổi bật nhất mọi thời đại
             </h6>
             {{#each this.topViewArticles}}
@@ -208,10 +208,10 @@
                     <p class="mb-0 d-flex pt-1">
                         {{#each categories}}
                         <a href="/cat?catId={{id}}">
-                            <small class="mr-1 cat-link">{{name}}</small>
+                            <small class="me-1 cat-link">{{name}}</small>
                         </a>
                         {{/each}}
-                        <span class="ml-auto">
+                        <span class="ms-auto">
                             <i class="bi bi-eyeglasses"></i>
                             {{view_count}}
                         </span>
@@ -228,8 +228,8 @@
                         </span>
                         {{#if is_premium}}
                         <span
-                            class="badge badge-warning text-danger ml-auto d-flex align-items-center ml-auto premium-badge">
-                            <img src="/static/images/others/diamond.png" alt="" class="premium-icon-small mr-1">
+                            class="badge bg-warning text-danger ms-auto d-flex align-items-center ms-auto premium-badge">
+                            <img src="/static/images/others/diamond.png" alt="" class="premium-icon-small me-1">
                             Premium
                         </span>
                         {{/if}}

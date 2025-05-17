@@ -75,7 +75,7 @@
                 <option value="last30days">Trong 30 ngày qua</option>
             </select>
         </div>
-        <div class="col-md-2 text-right">
+        <div class="col-md-2 text-end">
             <a href="/writer/create-new" class="btn btn-primary">Thêm bài viết</a>
         </div>
     </div>
@@ -102,31 +102,31 @@
                 {{#each this.articlesList}}
                 <tr>
                     <td>
-                        <div class="article-title font-weight-bold">
+                        <div class="article-title fw-bold">
                             {{title}}
                         </div>
                     </td>
 
                     <td>{{#each categoryList}}
-                        <span class="badge badge-pill badge-success m-1">{{name}}</span>
+                        <span class="badge rounded-pill bg-success m-1">{{name}}</span>
                         {{/each}}
                     </td>
                     <td>{{#each tagList}}
-                        <span class="badge badge-pill badge-info m-1">{{name}}</span>
+                        <span class="badge rounded-pill bg-info m-1">{{name}}</span>
                         {{/each}}
                     </td>
                     <td>{{publish_date}}</td>
                     <td>
                         {{#if is_available}}
                         <div class="d-flex justify-content-center align-items-center">
-                            <div class="btn btn-success font-weight-bold status-button">
+                            <div class="btn btn-success fw-bold status-button">
                                 Đã xuất bản
                             </div>
                         </div>
 
                         {{else}}
                         <div class="d-flex justify-content-center align-items-center">
-                            <div class="btn btn-danger font-weight-bold status-button">
+                            <div class="btn btn-danger fw-bold status-button">
                                 Chưa xuất bản
                             </div>
                         </div>
@@ -135,13 +135,13 @@
                     </td>
                     <td> {{#if is_premium}}
                         <div class="px-2 d-flex align-items-center premium-badge premium-paid">
-                            <img src="/others/service.png" class="mr-1 badge-icon" />
-                            <span class="text-white font-weight-bold">Tính phí</span>
+                            <img src="/others/service.png" class="me-1 bg-icon" />
+                            <span class="text-white fw-bold">Tính phí</span>
                         </div>
                         {{else}}
                         <div class="px-2 d-flex align-items-center premium-badge premium-free">
-                            <img src="/others/free.png" class="mr-1 badge-icon" />
-                            <span class="text-white font-weight-bold">Miễn Phí</span>
+                            <img src="/others/free.png" class="me-1 bg-icon" />
+                            <span class="text-white fw-bold">Miễn Phí</span>
                         </div>
                         {{/if}}
                     </td>

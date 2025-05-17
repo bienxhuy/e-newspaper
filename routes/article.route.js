@@ -412,7 +412,7 @@ router.get("/download-pdf", async (req, res) => {
       const tagContainer = document.querySelector("#article-tags");
       data.tags.forEach((tag) => {
         const span = document.createElement("li");
-        span.className = "badge badge-pill badge-light tag-link";
+        span.className = "badge rounded-pill bg-light tag-link";
         span.innerText = tag.name;
         tagContainer.appendChild(span);
       });

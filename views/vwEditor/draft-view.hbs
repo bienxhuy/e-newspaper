@@ -92,14 +92,14 @@
 
 
 <div class="container-fluid mt-3 py-4 d-flex main-content">
-    <div class="sticky-control bg-light p-2 mr-3 rounded">
+    <div class="sticky-control bg-light p-2 me-3 rounded">
         <a href="/editor" type="button" class="btn btn-secondary control-button">
             <i class="bi bi-reply"></i>
         </a> <br>
-        <button type="button" class="btn btn-warning control-button" data-toggle="modal" data-target="#rejectModal">
+        <button type="button" class="btn btn-warning control-button" data-bs-toggle="modal" data-target="#rejectModal">
             <i class="bi bi-ban"></i>
         </button>
-        <button type="button" class="btn btn-success control-button" data-toggle="modal" data-target="#acceptModal">
+        <button type="button" class="btn btn-success control-button" data-bs-toggle="modal" data-target="#acceptModal">
             <i class="bi bi-send-check"></i>
         </button>
     </div>
@@ -131,7 +131,7 @@
                                 {{#each this.tData}}
                                 {{#if selected}}
                                 <li>
-                                    <span class="badge badge-pill badge-light tag-badge">
+                                    <span class="badge rounded-pill bg-light tag-badge">
                                         {{name}}
                                     </span>
                                 </li>
@@ -139,7 +139,7 @@
                                 {{/each}}
                             </ul>
                         </span>
-                        <span class="badge badge-warning ml-auto mr-1 premium-badge">
+                        <span class="badge bg-warning ms-auto me-1 premium-badge">
                             Premium
                             <i class="bi bi-star-fill"></i>
                         </span>
@@ -162,7 +162,7 @@
                     </small>
                 </div>
 
-                <div class="list-group-item text-center font-weight-bold">
+                <div class="list-group-item text-center fw-bold">
                     {{this.draft.abstract}}
                 </div>
 
@@ -186,7 +186,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Không duyệt bài</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -214,14 +214,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Hiệu chỉnh</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="/editor/approve?id={{this.draft.id}}" method="post">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="ml-2" for="selectCat"><b class="text-danger">Danh mục</b></label>
+                        <label class="ms-2" for="selectCat"><b class="text-danger">Danh mục</b></label>
                         <select class="" name="newCategories[]" id="selectCat"
                             placeholder="Chọn danh sách danh mục phù hợp..." autocomplete="off" multiple required>
                             {{#each this.cData}}
@@ -235,7 +235,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="ml-2" for="selectTag"><b class="text-danger">Nhãn</b></label>
+                        <label class="ms-2" for="selectTag"><b class="text-danger">Nhãn</b></label>
                         <select class="" name="newTags[]" id="selectTag" placeholder="Chọn danh sách nhãn phù hợp..."
                             autocomplete="off" multiple required>
                             {{#each this.tData}}
@@ -244,7 +244,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="ml-2" for="pubdate"><b class="text-danger">Thời gian xuất bản</b></label>
+                        <label class="ms-2" for="pubdate"><b class="text-danger">Thời gian xuất bản</b></label>
                         <input type="datetime-local" name="publish_time" id="pubdate" class="form-control" required>
                     </div>
                 </div>

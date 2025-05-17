@@ -84,16 +84,16 @@
     <div class="p-4 d-flex align-items-center header-border">
         {{#if this.isAccepted}}
         <h5 class="mb-0 title-text">Đơn đăng ký của bạn đã được tiếp nhận, chúng tôi sẽ cố gắng phê duyệt sớm nhất</h5>
-        <img src="/others/laughing.png" class="ml-3 status-icon" />
+        <img src="/others/laughing.png" class="ms-3 status-icon" />
         {{else if this.isWriter}}
         <h5 class="mb-0 title-text">Bạn đang là một phóng viên, hãy tiếp tục phát huy sở trường của mình</h5>
-        <img src="/others/laughing.png" class="ml-3 status-icon" />
+        <img src="/others/laughing.png" class="ms-3 status-icon" />
         {{else if this.isEditor}}
         <h5 class="mb-0 title-text">Bạn đang là một Editor, hãy tiếp tục kiểm duyệt nội dung một cách tốt nhất</h5>
-        <img src="/others/laughing.png" class="ml-3 status-icon" />
+        <img src="/others/laughing.png" class="ms-3 status-icon" />
         {{else}}
         <h5 class="mb-0 title-text">Đăng ký vai trò bạn muốn để cùng chúng tôi xây dựng những bài báo chất lượng</h5>
-        <img src="/others/partners.png" class="ml-3 status-icon" />
+        <img src="/others/partners.png" class="ms-3 status-icon" />
         {{/if}}
     </div>
 
@@ -101,20 +101,20 @@
         {{#if this.isAccepted}}
         <div class="text-center">
             <img src="/others/unchecked.png" class="illustration-image" />
-            <div class="highlight-text font-weight-bold mr-3 mt-3">
+            <div class="highlight-text fw-bold me-3 mt-3">
                 Đơn đăng ký của bạn đang được xem xét
             </div>
         </div>
         <div class="text-center mt-5">
             <img src="/others/time-management.png" class="illustration-image" />
-            <div class="highlight-text font-weight-bold mr-3 mt-3">
+            <div class="highlight-text fw-bold me-3 mt-3">
                 Trong thời gian chờ đợi hãy xem những tin tức <a href="/" class="link-underline">mới nhất</a> nhé!
             </div>
         </div>
         {{else if this.isWriter}}
         <div class="text-center">
             <img src="/others/writing.png" class="illustration-image" />
-            <div class="highlight-text font-weight-bold mr-3 mt-3">
+            <div class="highlight-text fw-bold me-3 mt-3">
                 Đi đến <a href="/writer" class="link-underline">nơi làm việc</a> của bạn
             </div>
         </div>
@@ -133,7 +133,7 @@
         {{else if this.isEditor}}
         <div class="text-center">
             <img src="/others/content-creation.png" class="illustration-image" />
-            <div class="highlight-text font-weight-bold mr-3 mt-3">
+            <div class="highlight-text fw-bold me-3 mt-3">
                 Đi đến <a href="/editor" class="link-underline">nơi làm việc</a> của bạn
             </div>
         </div>
@@ -152,21 +152,21 @@
         {{else}}
         <div class="text-center">
             <img src="/others/content-creation (1).png" class="illustration-image" />
-            <div class="highlight-text font-weight-bold mr-3 mt-3">
+            <div class="highlight-text fw-bold me-3 mt-3">
                 Chọn vai trò bạn muốn đăng ký
             </div>
             {{#each this.categories}}
             <div class="mx-2 p-2 tag-container">
-                <div class="font-weight-bold text-center tag-text">{{name}}</div>
+                <div class="fw-bold text-center tag-text">{{name}}</div>
             </div>
             {{/each}}
-            <div class="highlight-text font-weight-bold mr-3 mt-3">
+            <div class="highlight-text fw-bold me-3 mt-3">
                 Đi đến <a href="/editor" class="link-underline">nơi làm việc</a> của bạn
             </div>
         </div>
         <div class="text-center mt-5">
             <img src="/others/writer.png" class="illustration-image" />
-            <div class="highlight-text font-weight-bold mr-3 mt-3">
+            <div class="highlight-text fw-bold me-3 mt-3">
                 Đi đến <a href="/writer" class="link-underline">nơi làm việc</a> của bạn
             </div>
         </div>

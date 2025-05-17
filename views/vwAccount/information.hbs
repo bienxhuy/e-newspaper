@@ -39,7 +39,7 @@
             <span class="col-2">Bút danh</span>
             <div class="col-8 user-information__value">{{this.user.pseudonym}}</div>
             <div class="col-2 ">
-                <button type="button" class="user-information__btn-update " data-toggle="modal"
+                <button type="button" class="user-information__btn-update " data-bs-toggle="modal"
                     data-target="#updatePseudonymModal">
                     <span class="">
                         Thay đổi
@@ -59,7 +59,7 @@
             </div>
 
             <div class="col-2">
-                <button type="button" class="user-information__btn-update" data-toggle="modal"
+                <button type="button" class="user-information__btn-update" data-bs-toggle="modal"
                     data-target="#updateFullNameModal">
                     <span>
                         Cập nhật
@@ -71,7 +71,7 @@
             <span class="col-2">Email:</span>
             <div class="col-8 user-information__value">{{this.user.email}}</div>
             <div class="col-2">
-                <button type="button" class="user-information__btn-update" data-toggle="modal"
+                <button type="button" class="user-information__btn-update" data-bs-toggle="modal"
                     data-target="#updateEmailModal">
                     <span>
                         Cập nhật
@@ -83,7 +83,7 @@
             <span class="col-2">Mật khẩu:</span>
             <div class="col-8 user-information__value">**********</div>
             <div class="col-2">
-                <button type="button" class="user-information__btn-update" data-toggle="modal"
+                <button type="button" class="user-information__btn-update" data-bs-toggle="modal"
                     data-target="#updatePasswordModal">
                     <span>
                         Cập nhật
@@ -95,7 +95,7 @@
             <span class="col-2">Vai Trò</span>
             <div class="col-8 user-information__value">{{this.user.role}}</div>
             <div class="col-2 ">
-                <button type="button" class="user-information__btn-update " data-toggle="modal"
+                <button type="button" class="user-information__btn-update " data-bs-toggle="modal"
                     data-target="#updateGenderModal">
                     <span>
                         Thay đổi
@@ -115,7 +115,7 @@
 
             </div>
             <div class="col-2">
-                <button type="button" class="user-information__btn-update" data-toggle="modal"
+                <button type="button" class="user-information__btn-update" data-bs-toggle="modal"
                     data-target="#updateBirthDayModal">
                     <span>
                         Cập nhật
@@ -130,8 +130,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-bolder" id="updatePseudonymModal">CẬP NHẬT BÚT DANH</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title fw-bolder" id="updatePseudonymModal">CẬP NHẬT BÚT DANH</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -143,7 +143,7 @@
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <button type="submit" id="updateFullName" class="btn btn-primary">
-                                <span class="font-weight-bold">
+                                <span class="fw-bold">
                                     LƯU THAY ĐỔI
                                 </span>
                             </button>
@@ -159,8 +159,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-bolder" id="updateFullNameModal">CẬP NHẬT HỌ VÀ TÊN</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title fw-bolder" id="updateFullNameModal">CẬP NHẬT HỌ VÀ TÊN</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -176,7 +176,7 @@
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <button type="submit" id="updateFullName" class="btn btn-primary">
-                                <span class="font-weight-bold">
+                                <span class="fw-bold">
                                     LƯU THAY ĐỔI
                                 </span>
                             </button>
@@ -191,8 +191,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-bolder" id="updateEmailModal">CẬP NHẬT EMAIL</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title fw-bolder" id="updateEmailModal">CẬP NHẬT EMAIL</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -209,7 +209,7 @@
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <button type="submit" id="updateFullName" class="btn btn-primary">
-                                <span class="font-weight-bold">
+                                <span class="fw-bold">
                                     LƯU THAY ĐỔI
                                 </span>
                             </button>
@@ -225,8 +225,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-bolder" id="updatePasswordModal">CẬP NHẬT MẬT KHẨU</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title fw-bolder" id="updatePasswordModal">CẬP NHẬT MẬT KHẨU</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -244,7 +244,7 @@
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <button type="submit" id="updateFullName" class="btn btn-primary">
-                                <span class="font-weight-bold">
+                                <span class="fw-bold">
                                     LƯU THAY ĐỔI
                                 </span>
                             </button>
@@ -260,8 +260,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-bolder" id="updateBirthDayModal">CẬP NHẬT NGÀY SINH</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title fw-bolder" id="updateBirthDayModal">CẬP NHẬT NGÀY SINH</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -273,7 +273,7 @@
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <button type="submit" id="updateFullName" class="btn btn-primary">
-                                <span class="font-weight-bold">
+                                <span class="fw-bold">
                                     LƯU THAY ĐỔI
                                 </span>
                             </button>
@@ -293,8 +293,8 @@
         <div class="d-flex py-3 justify-content-between ">
             <div class="d-flex align-items-center">
                 <img src="/others/google.png" class="social-icon" />
-                <div class="ml-3">
-                    <div class="font-weight-bold">Google</div>
+                <div class="ms-3">
+                    <div class="fw-bold">Google</div>
                     <div> Liên kết google</div>
                 </div>
             </div>
@@ -310,8 +310,8 @@
         <div class="d-flex py-3 justify-content-between ">
             <div class="d-flex align-items-center">
                 <img src="/others/facebook (1).png" class="social-icon" />
-                <div class="ml-3">
-                    <div class="font-weight-bold">Facebook</div>
+                <div class="ms-3">
+                    <div class="fw-bold">Facebook</div>
                     <div> Liên kết facebook</div>
                 </div>
             </div>

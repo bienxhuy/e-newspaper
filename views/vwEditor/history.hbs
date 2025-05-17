@@ -16,7 +16,7 @@
     {{else}}
     <div class="accordion" id="accordionExample">
         <div class="card">
-            <div class="row px-4 py-3 font-weight-bold text-danger bg-light">
+            <div class="row px-4 py-3 fw-bold text-danger bg-light">
                 <div class="col-6">
                     Tiêu đề bài viết
                 </div>
@@ -46,14 +46,14 @@
                     </div>
                     <div class="col-2 text-center">
                         {{#if isRejected}}
-                        <span class="badge badge-danger">Từ chối</span>
+                        <span class="badge bg-danger">Từ chối</span>
                         {{/if}}
                         {{#if isApproved}}
-                        <span class="badge badge-success">Duyệt</span>
+                        <span class="badge bg-success">Duyệt</span>
                         {{/if}}
                     </div>
                     <div class="col-2">
-                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        <button class="btn btn-link btn-block text-start" type="button" data-bs-toggle="collapse"
                             data-target="#coll{{id}}" aria-expanded="true" aria-controls="coll{{id}}">
                             Xem thêm
                         </button>
@@ -62,7 +62,7 @@
             </div>
 
             <div id="coll{{id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body pl-5">
+                <div class="card-body ps-5">
                     {{#if isRejected}}
                     <b>
                         Lí do không duyệt:

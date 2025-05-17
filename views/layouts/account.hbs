@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Commerce Application</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/static/css/account-information/layout-account.css">
     {{{_sections.css}}}
@@ -70,12 +69,12 @@
                     <div class="mt-1">
                         <a href="/account/information" class="{{#if this.information}}nav-link-active{{/if}}">
                             {{#if this.information}}
-                            <img src="/others/user.png" class="mr-2">
+                            <img src="/others/user.png" class="me-2">
                             Thông tin tài khoản
                         </a>
                         {{else}}
                         <a href="/account/information">
-                            <img src="/others/user (1).png" class="mr-2">
+                            <img src="/others/user (1).png" class="me-2">
                             Thông tin tài khoản
                         </a>
                         {{/if}}
@@ -83,31 +82,31 @@
                     <div>
                         {{#if this.savedArticle}}
                         <a href="/account/saved-articles" class="nav-link-active"><img src="/others/heart.png"
-                                class="mr-2">Tin đã lưu</a>
+                                class="me-2">Tin đã lưu</a>
                         {{else}}
-                        <a href="/account/saved-articles"><img src="/others/heart (1).png" class="mr-2">Tin đã lưu</a>
+                        <a href="/account/saved-articles"><img src="/others/heart (1).png" class="me-2">Tin đã lưu</a>
                         {{/if}}
                     </div>
                     <div>
                         {{#if this.premium}}
                         <a href="/account/premium" class="nav-link-active"><img src="/others/premium (1).png"
-                                class="mr-2">Premium</a>
+                                class="me-2">Premium</a>
                         {{else}}
-                        <a href="/account/premium"><img src="/others/premium.png" class="mr-2">Premium</a>
+                        <a href="/account/premium"><img src="/others/premium.png" class="me-2">Premium</a>
                         {{/if}}
                     </div>
                     <div>
                         {{#if this.roleRegister}}
                         <a href="/account/role-register" class="nav-link-active"><img src="/others/edit (1).png"
-                                class="mr-2">Đăng ký vai trò</a>
+                                class="me-2">Đăng ký vai trò</a>
                         {{else}}
-                        <a href="/account/role-register"><img src="/others/edit.png" class="mr-2">Đăng ký vai trò</a>
+                        <a href="/account/role-register"><img src="/others/edit.png" class="me-2">Đăng ký vai trò</a>
                         {{/if}}
                     </div>
                     <div>
                         <form action="/account/logout" method="POST">
                             <button type="submit" class="logout-button">
-                                <img src="/others/logout.png" class="mr-2">
+                                <img src="/others/logout.png" class="me-2">
                                 <b class="logout-label">
                                     Đăng xuất
                                 </b>
@@ -125,9 +124,9 @@
 
     <footer class="bg-white rounded mt-3 footer p-3 footer-container">
         <div class="footer__category-link d-flex pb-4">
-            <a href="/" class="font-weight-bolder">Trang chủ </a>
-            <a href="/" class="font-weight-bolder">Thế giới </a>
-            <a href="/" class="font-weight-bolder">Pháp luật </a>
+            <a href="/" class="fw-bolder">Trang chủ </a>
+            <a href="/" class="fw-bolder">Thế giới </a>
+            <a href="/" class="fw-bolder">Pháp luật </a>
         </div>
         <div class="row mt-3 pb-3 footer-border">
             <div class="col-5 flex-column justify-content-between">
@@ -181,9 +180,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"
         nonce="{{nonce}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"
-        nonce="{{nonce}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" nonce="{{nonce}}"></script>
     {{{_sections.js}}}
 </body>
 
