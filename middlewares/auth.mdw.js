@@ -18,7 +18,7 @@ export function isWriter(req, res, next) {
 
     if (req.session.user.role !== 'writer') {
         const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bạn không có quyền truy cập vào trang web này.');
             window.location.href = '/';
         </script>
@@ -31,7 +31,7 @@ export function isWriter(req, res, next) {
 export function isEditor(req, res, next) {
     if (req.session.user.role !== 'editor') {
         const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bạn không có quyền truy cập vào trang web này.');
             window.location.href = '/';
         </script>
@@ -58,7 +58,7 @@ export async function isValidWriter(req, res, next) {
     const articleOfWriter = await writerService.fetchArticleOfWriter(req.session.user.id, article_id);
     if (articleOfWriter.length === 0) {
         const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bạn không có quyền truy cập vào trang web này.');
             window.location.href = '/';
         </script>
@@ -75,7 +75,7 @@ export async function isEditorWorkAvailable(req, res, next) {
     const categoryListOfEditor = await editorCategoriesService.getEditorCategories(editorId);
     if (categoryListOfEditor.length === 0) {
         const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bạn chưa có chuyên mục nào để quản lý. Hãy quay lại sau!');
             window.location.href = '/';
         </script>
@@ -95,7 +95,7 @@ export function isEditorHasPermissonOnCategory(req, res, next) {
     // Check if in coming category id is under editor business
     if (!editorCategories.some(cat => cat.category_id === inComingCatId)) {
         const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bạn không có quyền truy cập vào phần quản lí danh mục này.');
             window.location.href = '/editor';
         </script>
@@ -124,7 +124,7 @@ export async function isEditorHasPermissionOnArticle(req, res, next) {
 
     // Deny access with an alert
     const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bạn không có quyền phê duyệt bài viết này.');
             window.location.href = '/editor';
         </script>
@@ -135,7 +135,7 @@ export async function isEditorHasPermissionOnArticle(req, res, next) {
 export function isAdmin(req, res, next) {
     if (req.session.user.role !== 'admin') {
         const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bạn không có quyền truy cập vào trang web này.');
             window.location.href = '/';
         </script>

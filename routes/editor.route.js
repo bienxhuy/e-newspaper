@@ -57,7 +57,7 @@ router.get('/drafts/view', isEditorWorkAvailable, isEditorHasPermissionOnArticle
     // Invalid case: draft is published (editor try to access a published draft)
     if (draft.is_available === 1) {
         const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bài viết đã được xuất bản.');
             window.location.href = '/editor';
         </script>

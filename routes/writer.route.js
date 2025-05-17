@@ -54,7 +54,7 @@ router.get('/edit-article', isValidWriter, async function (req, res) {
         }
 
         const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bài viết đã được xuất bản!');
             window.location.href = '${retAdd}';
         </script>

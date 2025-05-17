@@ -59,7 +59,7 @@ router.get("/article", async function (req, res) {
   const articleId = +req.query.id || 0;
   if (articleId === 0) {
     const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Vui lòng nhập ID bài viết khi truy cập bằng phương thức này.');
             window.location.href = '/';
         </script>
@@ -73,7 +73,7 @@ router.get("/article", async function (req, res) {
   );
   if (!fullInfoArticle) {
     const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bài viết không tồn tại!');
             window.location.href = '/';
         </script>
@@ -83,7 +83,7 @@ router.get("/article", async function (req, res) {
     if (fullInfoArticle.is_premium) {
         if (req.session.user === null || req.session.user === undefined) {
             const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bạn chưa đăng nhập, tài khoản đăng nhập bạn phải là premium để đọc bài này');
             window.location.href = '/';
         </script>
@@ -94,7 +94,7 @@ router.get("/article", async function (req, res) {
         let user = await subscriberService.getVipStatus(req.session.user.id);
         if (user.vipStatus !== 'active') {
             const script = `
-        <script>
+        <script nonce="{{nonce}}">
             alert('Bạn không phải là thành viên Premium để đọc bài này.');
             window.location.href = '/';
         </script>
@@ -265,7 +265,7 @@ router.get("/download-pdf", async (req, res) => {
     const user = req.session.user;
     if (!user) {
       return res.status(401).send(`
-        <script>
+        <script nonce="{{nonce}}">
           alert('Bạn cần đăng nhập để tải file PDF.');
           window.location.href = window.location.href = '/article?id=${articleId}';
         </script>
@@ -275,7 +275,7 @@ router.get("/download-pdf", async (req, res) => {
     const vipStatus = await subscriberService.getVipStatus(user.id);
     if (vipStatus.vipStatus !== "active") {
       return res.status(401).send(`
-        <script>
+        <script nonce="{{nonce}}">
           alert('Bạn cần là thành viên premium để tải file PDF.');
           window.location.href = window.location.href = '/article?id=${articleId}';
         </script>
@@ -286,7 +286,7 @@ router.get("/download-pdf", async (req, res) => {
     const article = await articleService.getFullArticleInfoById(articleId);
     if (!article.is_premium) {
       return res.status(403).send(`
-          <script>
+          <script nonce="{{nonce}}">
             alert('Chỉ có thể tải được bài viết premium.');
             window.location.href = '/article?id=${articleId}';
           </script>
@@ -393,7 +393,7 @@ router.get("/download-pdf", async (req, res) => {
 
     // Trả về thông báo và chuyển hướng về trang bài viết
     res.send(`
-        <script>
+        <script nonce="{{nonce}}">
           alert('File PDF đã được lưu vào thư mục Downloads!');
           window.location.href = '/article?id=${articleId}';
         </script>

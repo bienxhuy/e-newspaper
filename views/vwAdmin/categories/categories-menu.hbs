@@ -82,7 +82,7 @@
 </style>
 <link rel="stylesheet" href="/static/css/admin/admin-categories.css">{{/section}}
 {{#section 'js'}}
-<script>
+<script nonce="{{nonce}}">
     $(document).ready(function () {
         const deleted = $('#deleted').val().toString();
         if (deleted === 'true') {

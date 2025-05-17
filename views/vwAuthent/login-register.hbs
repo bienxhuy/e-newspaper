@@ -1,5 +1,5 @@
 {{#section 'js'}}
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script  nonce="{{nonce}}" src="https://www.google.com/recaptcha/api.js" async defer></script>
 {{/section}}
 
 {{#section 'css'}}
@@ -216,7 +216,7 @@
   </div>
 </div>
 
-<script>
+<script nonce="{{nonce}}">
   document.getElementById("termsLink").addEventListener("click", async (event) => {
     event.preventDefault();
 

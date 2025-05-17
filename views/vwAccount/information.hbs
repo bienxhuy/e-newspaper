@@ -327,9 +327,9 @@
 </div>
 
 {{#section 'js'}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
-<script>
+<script nonce="{{nonce}}" src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script nonce="{{nonce}}" src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+<script nonce="{{nonce}}">
     $('#updateName').on('submit', function (e) {
         e.preventDefault();
         const password = $('#password').val();
@@ -357,7 +357,7 @@
         });
     });
 </script>
-<script>
+<script nonce="{{nonce}}">
     $('#updateEmail').on('submit', function (e) {
         e.preventDefault();
         const password = $('#emailPassword').val();
@@ -402,7 +402,7 @@
 
     });
 </script>
-<script>
+<script nonce="{{nonce}}">
     $('#updatePassword').on('submit', function (e) {
         e.preventDefault();
         const password = $('#oldPassword').val();
