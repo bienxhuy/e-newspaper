@@ -1,183 +1,175 @@
 {{#section 'css'}}
 
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet"
-          href="/static/css/account-information/role-register.css">
+<link rel="stylesheet" href="/static/css/account-information/role-register.css">
+
+<style nonce="{{nonce}}">
+    .container-rounded {
+        border-radius: 10px;
+    }
+
+    .header-border {
+        border-bottom: 1px solid #EEEEEE;
+    }
+
+    .title-text {
+        font-weight: bold;
+    }
+
+    .content-container {
+        width: 700px;
+        margin: auto;
+    }
+
+    .status-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .illustration-image {
+        width: 250px;
+        height: 250px;
+    }
+
+    .highlight-text {
+        color: #ED1C24;
+    }
+
+    .link-underline {
+        text-decoration: underline;
+    }
+
+    .back-button {
+        border-radius: 10px;
+    }
+
+    .back-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    .submit-button {
+        border-radius: 10px;
+    }
+
+    .submit-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .tag-container {
+        border-radius: 20px;
+        border: 1px solid #464E5F;
+    }
+
+    .tag-text {
+        min-width: 100px;
+    }
+</style>
+
 {{/section}}
 
 {{#section 'js'}}
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
 {{/section}}
 
 
-<div class="bg-white " style="border-radius: 10px">
-    <div class="p-4 d-flex align-items-center" style="border-bottom: 1px solid #EEEEEE">
-
-        {{!-- Thông báo nếu thiếu thông tin --}}
-        {{#if missingInfo}}
-            <div class="alert alert-warning w-100">
-                <strong>Thông báo:</strong> Bạn cần cập nhật thông tin sau trước khi tiếp tục: {{missingInfo}}.
-                <a href="{{updateLink}}" class="btn btn-primary btn-sm" style="background: #dc3545; border: none;">Cập nhật ngay</a>
-            </div>
+<div class="bg-white container-rounded">
+    <div class="p-4 d-flex align-items-center header-border">
+        {{#if this.isAccepted}}
+        <h5 class="mb-0 title-text">Đơn đăng ký của bạn đã được tiếp nhận, chúng tôi sẽ cố gắng phê duyệt sớm nhất</h5>
+        <img src="/others/laughing.png" class="ml-3 status-icon" />
+        {{else if this.isWriter}}
+        <h5 class="mb-0 title-text">Bạn đang là một phóng viên, hãy tiếp tục phát huy sở trường của mình</h5>
+        <img src="/others/laughing.png" class="ml-3 status-icon" />
+        {{else if this.isEditor}}
+        <h5 class="mb-0 title-text">Bạn đang là một Editor, hãy tiếp tục kiểm duyệt nội dung một cách tốt nhất</h5>
+        <img src="/others/laughing.png" class="ml-3 status-icon" />
         {{else}}
-            {{#if this.waiting}}
-                <h5 style="font-weight: bold; " class="mb-0 ">Đơn đăng ký của bạn đã được tiếp nhận, chúng tôi sẽ cố gắng
-                    phản hồi sớm nhất có thể </h5>
-                <img src="/others/laughing.png " class="ml-3" style="width: 40px;height: 40px"/>
-            {{else if this.guest}}
-                <h5 style="font-weight: bold; " class="mb-0 ">Đăng ký vai trò bạn muốn để cùng chúng tôi xây dựng những bài
-                    báo
-                    chất lượng hơn </h5>
-                <img src="/others/partners.png " class="ml-3" style="width: 40px;height: 40px"/>
-            {{else if this.writer}}
-                <h5 style="font-weight: bold; " class="mb-0 ">Bạn đang là một phóng viên, hãy tiếp tục phát huy sở trường
-                    của mình nào.</h5>
-                <img src="/others/laughing.png " class="ml-3" style="width: 40px;height: 40px"/>
-            {{else if this.editor}}
-                <h5 style="font-weight: bold; " class="mb-0 ">Bạn đang là một Editor, hãy tiếp tục kiểm duyệt nội dung một
-                    cách kỹ càng nhé</h5>
-                <img src="/others/laughing.png " class="ml-3" style="width: 40px;height: 40px"/>
-            {{/if}}
+        <h5 class="mb-0 title-text">Đăng ký vai trò bạn muốn để cùng chúng tôi xây dựng những bài báo chất lượng</h5>
+        <img src="/others/partners.png" class="ml-3 status-icon" />
         {{/if}}
-
     </div>
-    <div style="width: 700px; margin: auto" class="user-information mt-3 pb-5 ">
-        {{!-- Phần nội dung cho từng vai trò --}}
-        {{#if missingInfo}}
+
+    <div class="content-container mt-3 pb-5">
+        {{#if this.isAccepted}}
+        <div class="text-center">
+            <img src="/others/unchecked.png" class="illustration-image" />
+            <div class="highlight-text font-weight-bold mr-3 mt-3">
+                Đơn đăng ký của bạn đang được xem xét
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <img src="/others/time-management.png" class="illustration-image" />
+            <div class="highlight-text font-weight-bold mr-3 mt-3">
+                Trong thời gian chờ đợi hãy xem những tin tức <a href="/" class="link-underline">mới nhất</a> nhé!
+            </div>
+        </div>
+        {{else if this.isWriter}}
+        <div class="text-center">
+            <img src="/others/writing.png" class="illustration-image" />
+            <div class="highlight-text font-weight-bold mr-3 mt-3">
+                Đi đến <a href="/writer" class="link-underline">nơi làm việc</a> của bạn
+            </div>
+        </div>
+        <form method="post" action="/account/role-register/writer" class="mt-5">
             <div class="d-flex justify-content-center">
-                <img src="/others/unchecked.png" style="width: 250px; height: 250px"/>
+                <a href="/account" class="btn-danger btn px-3 mx-3 back-button">
+                    <img src="/others/back.png" class="back-icon">
+                    Quay lại
+                </a>
+                <button type="submit" class="btn-success btn px-3 submit-button">
+                    <img src="/others/upload.png" class="submit-icon">
+                    Gửi đơn
+                </button>
             </div>
-            <div class="font-weight-bold mt-3 text-center">
-                Bạn cần cập nhật thông tin cá nhân để tiếp tục đăng ký vai trò. Nhấn vào nút "Cập nhật ngay" để hoàn thành thông tin!
+        </form>
+        {{else if this.isEditor}}
+        <div class="text-center">
+            <img src="/others/content-creation.png" class="illustration-image" />
+            <div class="highlight-text font-weight-bold mr-3 mt-3">
+                Đi đến <a href="/editor" class="link-underline">nơi làm việc</a> của bạn
             </div>
-        {{else if this.waiting}}
+        </div>
+        <form method="post" action="/account/role-register/editor" class="mt-5">
             <div class="d-flex justify-content-center">
-                <img src="/others/time-management.png" style=" width: 250px; height: 250px"/>
+                <a href="/account" class="btn-danger btn px-3 mx-3 back-button">
+                    <img src="/others/back.png" class="back-icon">
+                    Quay lại
+                </a>
+                <button type="submit" class="btn-success btn px-3 submit-button">
+                    <img src="/others/upload.png" class="submit-icon">
+                    Gửi đơn
+                </button>
             </div>
-            <div style="color: #ED1C24" class="font-weight-bold mr-3 mt-3">
-                Chúng tôi hiểu bạn rất nóng lòng để có thể hợp tác với chúng tôi, chúng tôi sẽ cố gắng trả lời bạn nhanh
-                nhất có thể. <br/>
-                Trong lúc chờ đợi cùng xem những tin tức
-                <a href="/" style="text-decoration: underline">mới
-                    nhất</a> nào!
+        </form>
+        {{else}}
+        <div class="text-center">
+            <img src="/others/content-creation (1).png" class="illustration-image" />
+            <div class="highlight-text font-weight-bold mr-3 mt-3">
+                Chọn vai trò bạn muốn đăng ký
             </div>
-        {{else if this.guest}}
-            <ul class="nav nav-pills mb-3 role-register row" id="pills-tab" role="tablist">
-                <li class="nav-item col-6  px-0" role="presentation">
-                    <button class="nav-link active w-100" id="pills-home-tab" data-toggle="pill"
-                            data-target="#pills-home"
-                            type="button" role="tab" aria-controls="pills-home" aria-selected="true">
-                        Đăng ký làm phóng viên
-                    </button>
-                </li>
-                <li class="nav-item col-6 px-0" role="presentation">
-                    <button class="nav-link  w-100" id="pills-profile-tab" data-toggle="pill"
-                            data-target="#pills-profile"
-                            type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
-                        Đăng ký làm biên
-                        tập viên
-                    </button>
-                </li>
-            </ul>
-            <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="d-flex justify-content-center">
-                        <img src="/others/writing.png" style=" width: 250px; height: 250px"/>
-                    </div>
-                    <div class="mt-5 font-weight-bold">
-
-                        Bạn muốn trở thành một phóng viên cộng tác cho chúng tôi ư? Tuyệt vời,
-                        hãy điền vào đơn đăng ký dưới đây và chúng tôi sẽ phản hồi nhanh nhất có thể!
-                    </div>
-                    <form action="" method="post" class="mt-3">
-                        <div class="form-group">
-                            <input name="role" value="writer" hidden="hidden">
-                            <textarea type="text" name="selfAccess" id="" class="form-control"
-                                      placeholder="Hãy trình bày một tí về lý do bạn chọn công việc này."
-                                      aria-describedby="helpId"></textarea>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <a href="/account" class="btn-danger btn px-3 mx-3" style="border-radius: 10px">
-                                <img src="/others/back.png" style="width: 25px; height: 25px">
-                                Hủy đơn
-                            </a>
-
-                            <button type="submit" class="btn-success btn px-3" style="border-radius: 10px">
-                                <img src="/others/upload.png" style="width: 30px; height: 30px">
-                                Nộp đơn
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-                <div class="tab-pane fade " id="pills-profile" role="tabpanel"
-                     aria-labelledby="pills-profile-tab">
-                    <div class="d-flex justify-content-center">
-                        <img src="/others/content-creation.png" style=" width: 250px; height: 250px"/>
-                    </div>
-                    <div class="mt-5 font-weight-bold">
-                        Biên tập viên là một công việc cần sự tập trung và giám sát cao, chúng tôi rất vui khi bạn
-                        có hứng thú với công việc này.
-                    </div>
-                    <form action="" method="post" id="editorSubmit" class="mt-3">
-                        <div class="form-group">
-                            <input name="role" value="editor" hidden="hidden">
-                            <textarea type="text" name="selfAccess" id="" class="form-control"
-                                      placeholder="Hãy trình bày một tí về lý do bạn chọn công việc này."
-                                      aria-describedby="helpId"></textarea>
-                        </div>
-
-                        <div class="d-flex justify-content-center">
-                            <a href="/account" class="btn-danger btn px-3 mx-3" style="border-radius: 10px">
-                                <img src="/others/back.png" style="width: 25px; height: 25px">
-                                Hủy đơn
-                            </a>
-
-                            <button type="submit" class="btn-success btn px-3" style="border-radius: 10px">
-                                <img src="/others/upload.png" style="width: 30px; height: 30px">
-                                Nộp đơn
-                            </button>
-                        </div>
-
-                    </form>
-
-                </div>
+            {{#each this.categories}}
+            <div class="mx-2 p-2 tag-container">
+                <div class="font-weight-bold text-center tag-text">{{name}}</div>
             </div>
-        {{else if this.editor}}
-            <div class="d-flex justify-content-center">
-                <img src="/others/content-creation (1).png" style=" width: 250px; height: 250px"/>
+            {{/each}}
+            <div class="highlight-text font-weight-bold mr-3 mt-3">
+                Đi đến <a href="/editor" class="link-underline">nơi làm việc</a> của bạn
             </div>
-            <div style="color: #ED1C24" class="font-weight-bold mr-3 mt-3">
-                Đây là danh sách các chuyên mục mà bạn chịu trách nhiệm quản lý:
+        </div>
+        <div class="text-center mt-5">
+            <img src="/others/writer.png" class="illustration-image" />
+            <div class="highlight-text font-weight-bold mr-3 mt-3">
+                Đi đến <a href="/writer" class="link-underline">nơi làm việc</a> của bạn
             </div>
-            <div class="d-flex mt-3">
-                {{#each this.categoryNames}}
-                    <div class="  mx-2 p-2" style="border-radius: 20px; border: 1px solid #464E5F">
-                        <div class="font-weight-bold text-center" style="min-width: 100px">{{name}}</div>
-                    </div>
-                {{/each}}
-            </div>
-            <div style="color: #ED1C24" class="font-weight-bold mr-3 mt-3">Đi đến <a href="/editor"
-                                                                                     style="text-decoration: underline">nơi
-                làm việc</a> của bạn!
-            </div>
-        {{else if this.writer}}
-            <div class="d-flex justify-content-center">
-                <img src="/others/writer.png" style=" width: 250px; height: 250px"/>
-
-            </div>
-            <div style="color: #ED1C24" class="font-weight-bold mr-3 mt-3">Đi đến <a href="/writer"
-                                                                                     style="text-decoration: underline">nơi
-                làm việc</a> của bạn!
-            </div>
+        </div>
         {{/if}}
-
-
     </div>
 </div>

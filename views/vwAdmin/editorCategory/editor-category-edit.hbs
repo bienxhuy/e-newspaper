@@ -1,89 +1,119 @@
 {{#section 'css'}}
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/css/tom-select.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <style>
-        .breadcrumb-item + .breadcrumb-item::before {
-            content: "|";
-            /* Thay đổi dấu phân cách */
-        }
+<style nonce="{{nonce}}">
+    .breadcrumb-item+.breadcrumb-item::before {
+        content: "|";
+    }
 
-        .sticky-control {
-            position: sticky;
-            top: 10px;
-            align-self: flex-start;
-        }
+    .sticky-control {
+        position: sticky;
+        top: 10px;
+        align-self: flex-start;
+    }
 
-        .optgroup-header {
-            font-weight: 500;
-            font-size: medium;
-        }
+    .optgroup-header {
+        font-weight: 500;
+        font-size: medium;
+    }
 
-        .option {
-            margin-left: 15px;
-        }
-    </style>
+    .option {
+        margin-left: 15px;
+    }
+
+    .editor-container {
+        border-radius: 10px;
+        min-height: 797px;
+        background-color: white;
+        padding: 1.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+    .toast-container {
+        position: absolute;
+        z-index: 5;
+        right: 0;
+        bottom: 0;
+        padding: 1rem;
+    }
+
+    .toast-custom {
+        min-width: 300px;
+    }
+
+    .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 10px;
+        color: white;
+    }
+
+    .status-success {
+        background-color: #1E8E23;
+    }
+
+    .status-error {
+        background-color: #FC3850;
+    }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/css/tom-select.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 {{/section}}
 
 {{#section 'js'}}
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/js/tom-select.complete.min.js"></script>
-    <script>
-        new TomSelect('#selectCat', {
-            plugins: ['remove_button'],
-        });
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js" nonce="{{nonce}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" nonce="{{nonce}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" nonce="{{nonce}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/js/tom-select.complete.min.js"
+    nonce="{{nonce}}"></script>
+<script nonce="{{nonce}}">
+    new TomSelect('#selectCat', {
+        plugins: ['remove_button'],
+    });
+</script>
 
-    </script>
-
-    <script>
-        $(document).ready(function () {
-
-            const updated = $('#updated').val().toString().trim();
-            if (updated === 'true') {
-                $('#liveToastTrue').toast('show');
-            } else if (updated === 'false') {
-                $('#liveToastFalse').toast('show');
-            }
-        });
-    </script>
-
+<script nonce="{{nonce}}">
+    $(document).ready(function () {
+        const updated = $('#updated').val().toString().trim();
+        if (updated === 'true') {
+            $('#liveToastTrue').toast('show');
+        } else if (updated === 'false') {
+            $('#liveToastFalse').toast('show');
+        }
+    });
+</script>
 {{/section}}
 
-<div class="bg-white p-4 shadow position-relative" style="border-radius: 10px; min-height: 797px">
+<div class="editor-container position-relative">
     <div class="d-flex justify-content-between">
         <h3>Sửa chuyên mục quản lý</h3>
     </div>
     <input hidden="hidden" value="{{updateEditorCategory}} " id="updated">
 
     <form action="/admin/editor-category/edit?editorId={{this.editorId}}" method="post">
-    <div class="modal-body ">
-        <div class="form-group">
-            <label class="ml-2" for="selectCat"><b class="text-danger">Danh mục</b></label>
-            <select class="" name="newCategories[]" id="selectCat"
-                    placeholder="Chọn danh sách danh mục phù hợp..." autocomplete="off" multiple required>
-                {{#each this.cData}}
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="ml-2" for="selectCat"><b class="text-danger">Danh mục</b></label>
+                <select class="" name="newCategories[]" id="selectCat" placeholder="Chọn danh sách danh mục phù hợp..."
+                    autocomplete="off" multiple required>
+                    {{#each this.cData}}
                     <optgroup class="p-5" label="{{name}}">
                         {{#each children}}
-                            <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                        <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
                         {{/each}}
                     </optgroup>
-                {{/each}}
-            </select>
+                    {{/each}}
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="modal-footer border-0 pb-3 pt-0">
-        <button type="submit" class="btn btn-danger mx-auto">Xác nhận</button>
-    </div>
+        <div class="modal-footer border-0 pb-3 pt-0">
+            <button type="submit" class="btn btn-danger mx-auto">Xác nhận</button>
+        </div>
     </form>
 
-    <div class="position-absolute bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
-        <div id="liveToastTrue" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true"
-             data-delay="4000" style="min-width: 300px">
+    <div class="toast-container">
+        <div id="liveToastTrue" class="toast hide toast-custom" role="alert" aria-live="assertive" aria-atomic="true"
+            data-delay="4000">
             <div class="toast-header">
-                <img src="/static/images/others/checked.png" class=" mr-1" width="20px" height="20px"/>
-                <strong class="mr-auto text-white px-3" style="background-color: #1E8E23; border-radius: 10px">Sửa
-                    thành công</strong>
+                <img src="/static/images/others/checked.png" class="mr-1" width="20px" height="20px" />
+                <strong class="mr-auto status-badge status-success">Sửa thành công</strong>
                 <small>mới đây</small>
                 <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -93,29 +123,30 @@
                 Đã chỉnh sửa chuyên mục
             </div>
             <div class="d-flex justify-content-center my-3">
-                <a href="/admin/editor-category" class="btn btn-outline-primary p-1">Trở về trang chủ Editor chuyên mục </a>
+                <a href="/admin/editor-category" class="btn btn-outline-primary p-1">Trở về trang chủ Editor chuyên mục
+                </a>
             </div>
-
         </div>
     </div>
-    <div class="position-absolute bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
-        <div id="liveToastFalse" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true"
-             data-delay="4000" style="min-width: 300px">
+
+    <div class="toast-container">
+        <div id="liveToastFalse" class="toast hide toast-custom" role="alert" aria-live="assertive" aria-atomic="true"
+            data-delay="4000">
             <div class="toast-header">
-                <img src="/static/images/others/unchecked.png" class=" mr-1" width="16px" height="16px"/>
-                <strong class="mr-auto text-white px-3" style="background-color: #FC3850; border-radius: 10px">Sửa thất
-                    bại</strong>
+                <img src="/static/images/others/unchecked.png" class="mr-1" width="16px" height="16px" />
+                <strong class="mr-auto status-badge status-error">Sửa thất bại</strong>
                 <small>mới đây</small>
                 <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="toast-body text-center">
-                Không thể chỉnh sửa chuyên mục <br/>
+                Không thể chỉnh sửa chuyên mục <br />
                 Chúng tôi gặp vấn đề trong quá trình xử lý :(.
             </div>
             <div class="d-flex justify-content-center my-3">
-                <a href="/admin/editor-category" class="btn btn-outline-primary p-1">Trở về trang chủ Editor chuyên mục</a>
+                <a href="/admin/editor-category" class="btn btn-outline-primary p-1">Trở về trang chủ Editor chuyên
+                    mục</a>
             </div>
         </div>
     </div>

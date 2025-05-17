@@ -1,6 +1,14 @@
+{{#section 'css'}}
+<style nonce="{{nonce}}">
+    .empty-history {
+        min-height: 300px;
+    }
+</style>
+{{/section}}
+
 <div class="wrapper">
     {{#if this.isHistoryEmpty}}
-    <div class="d-flex" style="min-height: 300px;">
+    <div class="d-flex empty-history">
         <span class="m-auto">
             Hiện bạn chưa có bài viết nào đã phê duyệt hay từ chối.
         </span>
@@ -51,7 +59,6 @@
                         </button>
                     </div>
                 </div>
-
             </div>
 
             <div id="coll{{id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -71,7 +78,6 @@
             </div>
         </div>
         {{/each}}
-
     </div>
     {{/if}}
 </div>

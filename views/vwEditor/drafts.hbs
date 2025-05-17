@@ -1,5 +1,5 @@
 {{#section 'css'}}
-<style>
+<style nonce="{{nonce}}">
     .article-title {
         color: black;
         font-size: large;
@@ -14,11 +14,26 @@
         font-size: medium;
         color: #7E8299;
     }
+
+    .category-name {
+        font-weight: 500;
+        font-size: large;
+    }
+
+    .article-row {
+        border-radius: 10px;
+    }
+
+    .article-thumb {
+        object-fit: cover;
+        width: 200px;
+        height: 170px;
+    }
 </style>
 {{/section}}
 
 <div>
-    <span style="font-weight: 500; font-size:large;">{{toUpperCase this.activeParentName}}</span>
+    <span class="category-name">{{toUpperCase this.activeParentName}}</span>
     <i class="bi bi-caret-right-fill"></i>
     <span>{{this.activeCatName}}</span>
 </div>
@@ -27,11 +42,10 @@
 Không có tin mới thuộc danh mục này.
 {{/if}}
 {{#each this.drafts}}
-<div class="row mb-3 px-3" style="border-radius: 10px; ">
-
+<div class="row mb-3 px-3 article-row">
     <div class="col-3">
         <a href="/editor/drafts/view?id={{id}}">
-            <img src="{{main_thumb}}" class="rounded" style="object-fit:cover; width: 200px; height: 170px;" />
+            <img src="{{main_thumb}}" class="rounded article-thumb" />
         </a>
     </div>
     <div class="col-9 pl-0 d-flex flex-column py-2">

@@ -1,5 +1,5 @@
 {{#section 'css'}}
-<style>
+<style nonce="{{nonce}}">
     .create-new-box {
         width: 910px;
         display: flex;
@@ -41,6 +41,17 @@
     .category-link:hover {
         text-decoration: none;
     }
+
+    /* Moved inline styles to classes */
+    .article-row {
+        border-radius: 10px;
+    }
+
+    .article-thumb {
+        object-fit: cover;
+        width: 200px;
+        height: 170px;
+    }
 </style>
 {{/section}}
 
@@ -53,10 +64,10 @@
 <h5 class="p-4">Bài nháp</h5>
 {{/unless}}
 {{#each this.draftArticles}}
-<div class="row mb-3" style="border-radius: 10px; ">
+<div class="row mb-3 article-row">
     <div class="col-3">
         <a href="/writer/edit-article?id={{this.id}}">
-            <img src="{{main_thumb}}" class="rounded" style="object-fit:cover; width: 200px; height: 170px;" />
+            <img src="{{main_thumb}}" class="rounded article-thumb" />
         </a>
     </div>
     <div class="col-9 pl-0 d-flex flex-column">

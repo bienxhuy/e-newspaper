@@ -1,8 +1,7 @@
 {{#section 'css'}}
-<style>
-    .breadcrumb-item+.breadcrumb-item::before {
+<style nonce="{{nonce}}">
+    .breadcrumb-divider::before {
         content: "|";
-        /* Thay đổi dấu phân cách */
     }
 
     .sticky-control {
@@ -11,13 +10,69 @@
         align-self: flex-start;
     }
 
-    .optgroup-header {
+    .control-button {
+        margin-bottom: 0.5rem;
+    }
+
+    .select-group-header {
         font-weight: 500;
         font-size: medium;
     }
 
-    .option {
+    .select-option {
         margin-left: 15px;
+    }
+
+    .main-content {
+        width: 730px;
+    }
+
+    .article-card {
+        border: none;
+    }
+
+    .tag-list {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    .tag-icon {
+        margin-right: 5px;
+        margin-top: 5px;
+    }
+
+    .tag-badge {
+        font-weight: 400;
+    }
+
+    .premium-badge {
+        height: 20px;
+    }
+
+    .article-title {
+        font-weight: bolder;
+        margin: 0;
+        margin-top: 15px;
+    }
+
+    .writer-info {
+        margin: 0;
+    }
+
+    .no-border {
+        border: none;
+    }
+
+    .modal-footer-custom {
+        padding-bottom: 1rem;
+        padding-top: 0;
+    }
+
+    .modal-button {
+        margin: 0 auto;
     }
 </style>
 {{/section}}
@@ -25,7 +80,7 @@
 
 {{#section 'js'}}
 {{!-- Select multiplez --}}
-<script>
+<script nonce="{{nonce}}">
     new TomSelect('#selectCat', {
         plugins: ['remove_button'],
     });
@@ -36,30 +91,30 @@
 {{/section}}
 
 
-<div class="container-fluid mt-3 py-4 d-flex" style="width: 730px;">
+<div class="container-fluid mt-3 py-4 d-flex main-content">
     <div class="sticky-control bg-light p-2 mr-3 rounded">
-        <a href="/editor" type="button" class="btn btn-secondary mb-2">
+        <a href="/editor" type="button" class="btn btn-secondary control-button">
             <i class="bi bi-reply"></i>
         </a> <br>
-        <button type="button" class="btn btn-warning mb-2" data-toggle="modal" data-target="#rejectModal">
+        <button type="button" class="btn btn-warning control-button" data-toggle="modal" data-target="#rejectModal">
             <i class="bi bi-ban"></i>
         </button>
-        <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#acceptModal">
+        <button type="button" class="btn btn-success control-button" data-toggle="modal" data-target="#acceptModal">
             <i class="bi bi-send-check"></i>
         </button>
     </div>
 
     {{!-- Article --}}
-    <div class="card" style="border: none;">
+    <div class="card article-card">
         <div class="card-body">
             <div class="list-group list-group-flush">
-                <div class="list-group-item" style='border: none;'>
+                <div class="list-group-item no-border">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             {{#each cData}}
                             {{#each children}}
                             {{#if selected}}
-                            <li class="breadcrumb-item active">
+                            <li class="breadcrumb-item active breadcrumb-divider">
                                 {{name}}
                             </li>
                             {{/if}}
@@ -71,13 +126,12 @@
 
                     <div class="d-flex">
                         <span>
-                            <ul
-                                style="list-style: none; display: flex; align-items: center; padding: 0; margin: 0;">
-                                <i class="fas fa-tags fa-sm fa-fw" style="margin-right: 5px; margin-top: 5px;"></i>
+                            <ul class="tag-list">
+                                <i class="fas fa-tags fa-sm fa-fw tag-icon"></i>
                                 {{#each this.tData}}
                                 {{#if selected}}
                                 <li>
-                                    <span class="badge badge-pill badge-light" style="font-weight: 400;">
+                                    <span class="badge badge-pill badge-light tag-badge">
                                         {{name}}
                                     </span>
                                 </li>
@@ -85,19 +139,19 @@
                                 {{/each}}
                             </ul>
                         </span>
-                        <span class="badge badge-warning ml-auto mr-1" style="height: 20px;">
+                        <span class="badge badge-warning ml-auto mr-1 premium-badge">
                             Premium
                             <i class="bi bi-star-fill"></i>
                         </span>
                     </div>
 
-                    <h3 class="card-title" style="font-weight: bolder; margin: 0; margin-top: 15px;">
+                    <h3 class="card-title article-title">
                         {{this.draft.title}}
                     </h3>
                 </div>
 
                 <div class="list-group-item d-flex align-items-center justify-content-between">
-                    <p style="margin: 0;">
+                    <p class="writer-info">
                         <i class="bi bi-vector-pen"></i>
                         {{this.draft.writer_pseudonym}}
                     </p>
@@ -146,8 +200,8 @@
                         <small id="helpId" class="text-muted p-2">Nhằm hiệu chỉnh lại bài viết cho phù hợp.</small>
                     </div>
                 </div>
-                <div class="modal-footer pb-3 pt-0">
-                    <button type="submit" class="btn btn-danger mx-auto">Xác nhận</button>
+                <div class="modal-footer modal-footer-custom">
+                    <button type="submit" class="btn btn-danger modal-button">Xác nhận</button>
                 </div>
             </form>
         </div>
@@ -171,9 +225,10 @@
                         <select class="" name="newCategories[]" id="selectCat"
                             placeholder="Chọn danh sách danh mục phù hợp..." autocomplete="off" multiple required>
                             {{#each this.cData}}
-                            <optgroup class="p-5" label="{{name}}">
+                            <optgroup class="p-5 select-group-header" label="{{name}}">
                                 {{#each children}}
-                                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                                <option value="{{id}}" {{#if selected}}selected{{/if}} class="select-option">{{name}}
+                                </option>
                                 {{/each}}
                             </optgroup>
                             {{/each}}
@@ -193,8 +248,8 @@
                         <input type="datetime-local" name="publish_time" id="pubdate" class="form-control" required>
                     </div>
                 </div>
-                <div class="modal-footer pb-3 pt-0">
-                    <button type="submit" class="btn btn-danger mx-auto">Xác nhận</button>
+                <div class="modal-footer modal-footer-custom">
+                    <button type="submit" class="btn btn-danger modal-button">Xác nhận</button>
                 </div>
             </form>
         </div>

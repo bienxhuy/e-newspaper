@@ -1,5 +1,39 @@
 {{#section 'css'}}
 <link rel="stylesheet" href="/static/css/home-articleList/home-content.css">
+<style nonce="{{nonce}}">
+    .section-heading {
+        border-left: 4px solid red;
+    }
+
+    .premium-badge {
+        font-size: 12px;
+    }
+
+    .premium-icon {
+        width: 10px;
+        height: 10px;
+    }
+
+    .premium-icon-small {
+        width: 10px;
+    }
+
+    .article-image {
+        object-fit: cover;
+        height: 180px;
+        width: 100%;
+    }
+
+    .more-icon {
+        font-size: 20px;
+    }
+
+    .article-thumb {
+        border-radius: 10px;
+        object-fit: cover;
+        width: 100%;
+    }
+</style>
 {{/section}}
 
 <div class="wrapper mx-auto mt-4 mb-5 container">
@@ -7,7 +41,7 @@
         <div class="col-8">
 
             <div>
-                <h6 class="ml-3 mb-3 pl-2" style="border-left: 4px solid red;">
+                <h6 class="ml-3 mb-3 pl-2 section-heading">
                     Tin nổi bật trong tuần
                 </h6>
                 <div id="hotWeek" class="carousel slide" data-ride="carousel">
@@ -39,10 +73,9 @@
                                         {{formatSimpleDatetime publish_date}}
                                     </span>
                                     {{#if is_premium}}
-                                    <span class="badge badge-warning text-danger ml-auto d-flex align-items-center"
-                                        style="font-size: 12px;">
-                                        <img src="/static/images/others/diamond.png" alt="" style="width: 10px; height:10px"
-                                            class="mr-1">
+                                    <span
+                                        class="badge badge-warning text-danger ml-auto d-flex align-items-center premium-badge">
+                                        <img src="/static/images/others/diamond.png" alt="" class="premium-icon mr-1">
                                         Premium
                                     </span>
                                     {{/if}}
@@ -64,15 +97,14 @@
             </div>
 
             <div class="mt-4">
-                <h6 class="ml-3 my-3 pl-2" style="border-left: 4px solid red;">
+                <h6 class="ml-3 my-3 pl-2 section-heading">
                     Tin mới nhất
                 </h6>
                 {{#each this.newestArticles}}
-                <div class="row mb-4" style="border-radius: 10px;">
+                <div class="row mb-4">
                     <div class="col-4">
                         <a href="/article?id={{id}}">
-                            <img src="{{main_thumb}}" class="rounded"
-                                style="object-fit:cover; height: 180px; width: 100%" />
+                            <img src="{{main_thumb}}" class="rounded article-image" />
                         </a>
                     </div>
                     <div class="col-8 pl-0 pb-2 d-flex flex-column">
@@ -97,9 +129,9 @@
                                 {{formatSimpleDatetime publish_date}}
                             </small>
                             {{#if is_premium}}
-                            <span class="badge badge-warning text-danger ml-auto d-flex align-items-center"
-                                style="font-size: 12px;">
-                                <img src="/static/images/others/diamond.png" alt="" style="width: 10px;" class="mr-1">
+                            <span
+                                class="badge badge-warning text-danger ml-auto d-flex align-items-center premium-badge">
+                                <img src="/static/images/others/diamond.png" alt="" class="premium-icon-small mr-1">
                                 Premium
                             </span>
                             {{/if}}
@@ -109,13 +141,13 @@
                 {{/each}}
                 <div class="text-center">
                     <a href="/newest" class="more-icon">
-                        <i class="bi bi-arrow-bar-down" style="font-size: 20px;"></i>
+                        <i class="bi bi-arrow-bar-down more-icon"></i>
                     </a>
                 </div>
             </div>
 
             <div>
-                <h6 class="ml-3 my-3 pl-2" style="border-left: 4px solid red;">
+                <h6 class="ml-3 my-3 pl-2 section-heading">
                     Top chuyên mục
                 </h6>
                 <div class="masonry-layout">
@@ -133,8 +165,7 @@
                             </h5>
                             </a>
                             <a href="/article?id={{article.id}}">
-                                <img src="{{article.main_thumb}}"
-                                    style="border-radius:10px; object-fit:cover; width:100%;">
+                                <img src="{{article.main_thumb}}" class="article-thumb">
                             </a>
                             <a href="/article?id={{article.id}}" class="title-link">
                                 <h6 class="mt-2">
@@ -147,10 +178,9 @@
                                     {{formatSimpleDatetime article.publish_date}}
                                 </small>
                                 {{#if article.is_premium}}
-                                <span class="badge badge-warning text-danger ml-auto d-flex align-items-center"
-                                    style="font-size: 12px;">
-                                    <img src="/static/images/others/diamond.png" alt="" style="width: 10px;"
-                                        class="mr-1">
+                                <span
+                                    class="badge badge-warning text-danger ml-auto d-flex align-items-center premium-badge">
+                                    <img src="/static/images/others/diamond.png" alt="" class="premium-icon-small mr-1">
                                     Premium
                                 </span>
                                 {{/if}}
@@ -166,7 +196,7 @@
 
         <div class="col-4">
 
-            <h6 class="ml-3 pl-2" style="border-left: 4px solid red;">
+            <h6 class="ml-3 pl-2 section-heading">
                 Tin nổi bật nhất mọi thời đại
             </h6>
             {{#each this.topViewArticles}}
@@ -197,9 +227,9 @@
                             {{formatSimpleDatetime publish_date}}
                         </span>
                         {{#if is_premium}}
-                        <span class="badge badge-warning text-danger ml-auto d-flex align-items-center ml-auto"
-                            style="font-size: 12px;">
-                            <img src="/static/images/others/diamond.png" alt="" style="width: 10px;" class="mr-1">
+                        <span
+                            class="badge badge-warning text-danger ml-auto d-flex align-items-center ml-auto premium-badge">
+                            <img src="/static/images/others/diamond.png" alt="" class="premium-icon-small mr-1">
                             Premium
                         </span>
                         {{/if}}

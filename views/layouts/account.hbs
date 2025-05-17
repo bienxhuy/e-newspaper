@@ -10,34 +10,79 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/static/css/account-information/layout-account.css">
     {{{_sections.css}}}
+    <style nonce="{{nonce}}">
+        .body-background {
+            background-color: #E6E9F1;
+        }
+
+        .header-logo {
+            height: 50px;
+        }
+
+        .logo-image {
+            width: 95px;
+        }
+
+        .nav-link-active {
+            color: #ED1C24;
+        }
+
+        .logout-button {
+            background: transparent;
+            border: none;
+            padding-left: 0;
+        }
+
+        .logout-label {
+            margin-left: -4px;
+        }
+
+        .footer-container {
+            width: 1320px;
+            margin: auto;
+        }
+
+        .footer-border {
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        .social-icon {
+            width: 26px;
+            height: 26px;
+        }
+
+        .social-icon-facebook {
+            margin-left: -2px;
+        }
+    </style>
 </head>
 
-<body style="background-color: #E6E9F1">
-    <div class="bg-danger d-flex justify-content-center align-items-center " style="height: 50px">
+<body class="body-background">
+    <div class="bg-danger d-flex justify-content-center align-items-center header-logo">
         <a href="/">
-            <img src="/static/images/others/logo.png" alt="" style="width: 95px">
+            <img src="/static/images/others/logo.png" class="logo-image">
         </a>
     </div>
     <div class="account-container__content justify-content-between my-4 d-flex">
-        <div class="account-container__content__sidebar  pb-3">
+        <div class="account-container__content__sidebar pb-3">
             <div class="account-container__content__sidebar__section">
-                <div class=" account-container__content__sidebar__section--link">
-                    <div class="mt-1 ">
-                        <a href="/account/information" style="color: #ED1C24">
+                <div class="account-container__content__sidebar__section--link">
+                    <div class="mt-1">
+                        <a href="/account/information" class="{{#if this.information}}nav-link-active{{/if}}">
                             {{#if this.information}}
-                            <img src="/others/user.png " class="mr-2">
+                            <img src="/others/user.png" class="mr-2">
                             Thông tin tài khoản
                         </a>
                         {{else}}
                         <a href="/account/information">
-                            <img src="/others/user (1).png " class="mr-2">
+                            <img src="/others/user (1).png" class="mr-2">
                             Thông tin tài khoản
                         </a>
                         {{/if}}
                     </div>
                     <div>
                         {{#if this.savedArticle}}
-                        <a href="/account/saved-articles" style="color: #ED1C24"><img src="/others/heart.png"
+                        <a href="/account/saved-articles" class="nav-link-active"><img src="/others/heart.png"
                                 class="mr-2">Tin đã lưu</a>
                         {{else}}
                         <a href="/account/saved-articles"><img src="/others/heart (1).png" class="mr-2">Tin đã lưu</a>
@@ -45,7 +90,7 @@
                     </div>
                     <div>
                         {{#if this.premium}}
-                        <a href="/account/premium" style="color: #ED1C24"><img src="/others/premium (1).png"
+                        <a href="/account/premium" class="nav-link-active"><img src="/others/premium (1).png"
                                 class="mr-2">Premium</a>
                         {{else}}
                         <a href="/account/premium"><img src="/others/premium.png" class="mr-2">Premium</a>
@@ -53,7 +98,7 @@
                     </div>
                     <div>
                         {{#if this.roleRegister}}
-                        <a href="/account/role-register" style="color: #ED1C24"><img src="/others/edit (1).png"
+                        <a href="/account/role-register" class="nav-link-active"><img src="/others/edit (1).png"
                                 class="mr-2">Đăng ký vai trò</a>
                         {{else}}
                         <a href="/account/role-register"><img src="/others/edit.png" class="mr-2">Đăng ký vai trò</a>
@@ -61,33 +106,30 @@
                     </div>
                     <div>
                         <form action="/account/logout" method="POST">
-                            <button type="submit" class="px-0" style="background: transparent; border: none;">
+                            <button type="submit" class="logout-button">
                                 <img src="/others/logout.png" class="mr-2">
-                                <b style="margin-left: -4px;">
+                                <b class="logout-label">
                                     Đăng xuất
                                 </b>
                             </button>
                         </form>
                     </div>
-
                 </div>
-
             </div>
         </div>
-
 
         <div class="account-container__content__content rounded bg-transparent">
             {{{body}}}
         </div>
-
     </div>
-    <footer class="bg-white rounded mt-3 footer p-3" style="width: 1320px; margin: auto">
+
+    <footer class="bg-white rounded mt-3 footer p-3 footer-container">
         <div class="footer__category-link d-flex pb-4">
             <a href="/" class="font-weight-bolder">Trang chủ </a>
             <a href="/" class="font-weight-bolder">Thế giới </a>
             <a href="/" class="font-weight-bolder">Pháp luật </a>
         </div>
-        <div class="row mt-3 pb-3" style="border-bottom: 1px solid  #EEEEEE">
+        <div class="row mt-3 pb-3 footer-border">
             <div class="col-5 flex-column justify-content-between">
                 <div>Tổng biên tập: T.T. Biện Xuân Huy</div>
                 <div>Giấy phép hoạt động báo điện tử tiếng Việt, tiếng Anh Số 561/GP-BTTTT, cấp ngày 25-11-2022
@@ -109,7 +151,6 @@
                 </div>
                 <div>
                     <a href="#" class="text-decoration-none">Chính sách bảo mật</a>
-
                 </div>
                 <div>
                     <a href="#" class="text-decoration-none">Liên hệ góp ý</a>
@@ -123,25 +164,26 @@
             </div>
             <div>
                 <a href="https://youtu.be/xvFZjo5PgG0?si=v_lXYe0q33sw9RkO" target="_blank">
-                    <img src="/static/images/others/social.png" />
+                    <img src="/static/images/others/social.png" class="social-icon" />
                 </a>
                 <a href="https://youtu.be/xvFZjo5PgG0?si=v_lXYe0q33sw9RkO" target="_blank">
-                    <img src="/static/images/others/facebook.png" style="width: 26px;height: 26px;margin-left: -2px" />
+                    <img src="/static/images/others/facebook.png" class="social-icon social-icon-facebook" />
                 </a>
                 <a href="https://youtu.be/xvFZjo5PgG0?si=v_lXYe0q33sw9RkO" target="_blank">
-                    <img src="/static/images/others/instagram.png" style="width: 26px;height: 26px" />
+                    <img src="/static/images/others/instagram.png" class="social-icon" />
                 </a>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"
+        nonce="{{nonce}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"
+        nonce="{{nonce}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
-        crossorigin="anonymous"></script>
+        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"
+        nonce="{{nonce}}"></script>
     {{{_sections.js}}}
 </body>
 

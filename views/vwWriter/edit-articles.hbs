@@ -1,6 +1,5 @@
 {{#section 'css'}}
-
-<style>
+<style nonce="{{nonce}}">
     .main-container {
         width: 1280px;
         margin: auto;
@@ -30,12 +29,28 @@
         width: 100% !important;
         height: 100% !important;
     }
+
+    .edit-heading {
+        color: #6B6869;
+        font-size: 18px;
+    }
+
+    .preview-container {
+        margin-top: 10px;
+        display: none;
+    }
+
+    .preview-image {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
 </style>
 {{/section}}
 
 {{#section 'js'}}
 {{!-- Phần này để cho select được nhiều category một lúc --}}
-<script>
+<script nonce="{{nonce}}">
     new TomSelect('#selectCat', {
         plugins: ['remove_button'],
     });
@@ -45,7 +60,7 @@
 </script>
 
 {{!-- WYSIWYG --}}
-<script>
+<script nonce="{{nonce}}">
     tinymce.init({
         selector: '#txtContent',
         height: 800,
@@ -69,7 +84,7 @@
 </script>
 
 {{!-- file input --}}
-<script>
+<script nonce="{{nonce}}">
     $(document).ready(function () {
         const existingThumbnail = '{{this.draft.main_thumb}}'; // Đường dẫn ảnh từ server
         if (existingThumbnail) {
@@ -105,8 +120,8 @@
 </script>
 
 {{!-- sweat alert --}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" nonce="{{nonce}}"></script>
+<script nonce="{{nonce}}">
     $('#delButton').on('click', function (e) {
         e.preventDefault();
         const href = $(this).attr('href'); // Lấy đường dẫn từ thẻ a
@@ -193,117 +208,79 @@
                 </button> <br>
 
                 {{#if isAdmin}}
-                <a href="/admin/articles/publish-right-now?id={{this.draft.id}}" type="button" class="btn btn-secondary mb-2">
+                <a href="/admin/articles/publish-right-now?id={{this.draft.id}}" type="button"
+                    class="btn btn-secondary mb-2">
                     <i class="bi bi-file-earmark-arrow-up-fill"></i>
                 </a> <br>
                 {{else}}
                 <a href="/writer/submit-draft?id={{this.draft.id}}" type="button" id="subButton"
-                    class="btn btn-success {{#if this.isPending}}disabled{{/if}}">
+                    class="btn btn-secondary mb-2">
                     <i class="bi bi-file-earmark-arrow-up-fill"></i>
-                </a>
+                </a> <br>
                 {{/if}}
             </div>
 
-            {{!-- Nội dung chính --}}
-            <div class="article-container mx-auto p-3 bg-light rounded">
-                <h4 class="ml-4 mb-2" style="color: #6B6869; font-size: 18px"><b>Chỉnh sửa bài viết</b></h4>
-                <hr class="mt-0">
+            <div class="article-container">
+                <h4 class="ml-4 mb-2 edit-heading"><b>Chỉnh sửa bài viết</b></h4>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="txtTitle">Tiêu đề</label>
+                            <input type="text" class="form-control" id="txtTitle" name="title"
+                                value="{{this.draft.title}}" required>
+                        </div>
 
-                {{#if this.isPending}}
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    Bài viết của bạn vẫn đang chờ được duyệt, bạn có thể chỉnh sửa nó bây giờ!
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {{/if}}
+                        <div class="form-group">
+                            <label for="txtAbstract">Tóm tắt</label>
+                            <textarea class="form-control" id="txtAbstract" name="abstract" rows="3"
+                                required>{{this.draft.abstract}}</textarea>
+                        </div>
 
-                {{#if this.isRejected}}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    Bài viết của bạn không được duyệt, lí do là: <br>
-                    <b>{{this.draft.reject_reason}}</b> <br>
-                    <hr class="m-2">
-                    Hãy chỉnh sửa trước khi đăng kiểm duyệt lại!
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {{/if}}
+                        <div class="form-group">
+                            <label for="selectCat">Chuyên mục</label>
+                            <select id="selectCat" name="categories[]" multiple required>
+                                {{#each this.categories}}
+                                <optgroup label="{{name}}" class="optgroup-header">
+                                    {{#each subcategories}}
+                                    <option value="{{id}}" class="option" {{#if selected}}selected{{/if}}>
+                                        {{name}}
+                                    </option>
+                                    {{/each}}
+                                </optgroup>
+                                {{/each}}
+                            </select>
+                        </div>
 
-                {{#if this.isCreating}}
-                <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    Nội dung được kiểm duyệt kĩ, hãy nghiêm túc khi viết nhé!
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {{/if}}
+                        <div class="form-group">
+                            <label for="selectTag">Tag</label>
+                            <select id="selectTag" name="tags[]" multiple required>
+                                {{#each this.tags}}
+                                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
 
-                <div class="form-group">
-                    <div class="d-flex justify-content-between">
-                        <label class="ml-2" for="txtTitle"><b class="text-danger">Tiêu đề</b></label>
-                        <span class="form-group custom-control custom-checkbox">
-                            <input type="checkbox" name="isPremium" class="custom-control-input ml-5 text-right"
-                                id="customCheck1" {{#if this.draft.is_premium}}checked{{/if}}>
-                            <label class="custom-control-label" for="customCheck1">
-                                <span class="badge badge-warning">
-                                    <b class="">Bài viết Premium</b>
-                                    <i class="bi bi-star-fill"></i>
-                                </span>
-                            </label>
-                        </span>
+                        <div class="form-group">
+                            <label for="fileThumbnail">Ảnh đại diện</label>
+                            <input type="file" class="form-control-file" id="fileThumbnail" name="thumbnail">
+                            <input type="hidden" name="main_thumb" id="hiddenMainThumb"
+                                value="{{this.draft.main_thumb}}">
+                            <div id="preview-container" class="preview-container">
+                                <img id="preview-image" class="preview-image">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtContent">Nội dung</label>
+                            <textarea id="txtContent" name="content"></textarea>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="isPremium" name="is_premium" {{#if
+                                this.draft.is_premium}}checked{{/if}}>
+                            <label class="form-check-label" for="isPremium">Bài viết premium</label>
+                        </div>
                     </div>
-                    <input type="text" name="title" id="txtTitle" class="form-control" placeholder="Nhập tiêu đề ở đây"
-                        aria-describedby="helpId" value="{{this.draft.title}}" required>
-                </div>
-                <div class="form-group">
-                    <label class="ml-2" for="txtAbstract"><b class="text-danger">Tóm tắt bài viết</b></label>
-                    <textarea name="abstract" class="form-control" id="txtAbstract"
-                        placeholder="Nhập tóm tắt bài viết ở đây" rows="3"
-                        aria-describedby="helpId">{{this.draft.abstract}}</textarea>
-                    <small id="helpId" class="text-muted ml-1">Nội dung tóm tắt hấp dẫn sẽ thu hút người đọc
-                        hơn.</small>
-                </div>
-                <div class="form-group">
-                    <label class="ml-2" for="fileThumbnail"><b class="text-danger">Ảnh đại diện bài viết</b></label>
-                    <input type="hidden" name="oldthumbnail" id="hiddenMainThumb" value="{{this.draft.main_thumb}}">
-                    <input type="file" name="thumbnail" id="fileThumbnail" class="file" aria-describedby="helpId">
-                    <small id="helpId" class="text-muted ml-1">Chọn hình ảnh đại diện phù hợp cho bài viết.</small>
-
-                    <div id="preview-container" style="margin-top: 10px; display:none;">
-                        <img id="preview-image" src="" alt="Preview"
-                            style="max-width: 100%; height: auto; object-fit: cover;">
-                    </div>
-                </div>
-                <hr class="mt-0 mb-2">
-
-                <div class="form-group">
-                    <label class="ml-2" for="selectCat"><b class="text-danger">Danh mục</b></label>
-                    <select class="" name="categories[]" id="selectCat" placeholder="Chọn danh sách danh mục phù hợp..."
-                        autocomplete="off" multiple>
-                        {{#each this.cData}}
-                        <optgroup class="p-5" label="{{name}}">
-                            {{#each children}}
-                            <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
-                            {{/each}}
-                        </optgroup>
-                        {{/each}}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="ml-2" for="selectTag"><b class="text-danger">Nhãn</b></label>
-                    <select class="" name="tags[]" id="selectTag" placeholder="Chọn danh sách nhãn phù hợp..."
-                        autocomplete="off" multiple>
-                        {{#each this.tData}}
-                        <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
-                        {{/each}}
-                    </select>
-                </div>
-                <hr class="mb-2">
-
-                <div class="form-group">
-                    <label class="ml-2" for="txtContent"><b class="text-danger">Nội dung bài viết</b></label>
-                    <textarea class="form-group" name="content" id="txtContent"></textarea>
                 </div>
             </div>
         </div>

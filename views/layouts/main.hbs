@@ -18,25 +18,57 @@
         rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/css/tom-select.css" rel="stylesheet">
 
+    <style nonce="{{nonce}}">
+        .body-background {
+            background-color: #E6E9F1;
+        }
+
+        .header-logo {
+            height: 50px;
+        }
+
+        .logo-image {
+            width: 95px;
+        }
+
+        .footer-container {
+            width: 1320px;
+            margin: auto;
+        }
+
+        .footer-border {
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        .social-icon {
+            width: 26px;
+            height: 26px;
+        }
+
+        .social-icon-facebook {
+            margin-left: -2px;
+        }
+    </style>
+
     {{{_sections.css}}}
 </head>
 
-<body style="background-color: #E6E9F1">
-    <div class="bg-danger d-flex justify-content-center align-items-center " style="height: 50px">
+<body class="body-background">
+    <div class="bg-danger d-flex justify-content-center align-items-center header-logo">
         <a href="/">
-            <img src="/static/images/others/logo.png" alt="" style="width: 95px">
+            <img src="/static/images/others/logo.png" alt="" class="logo-image">
         </a>
     </div>
 
     {{{body}}}
 
-    <footer class="bg-white rounded mt-3 footer p-3" style="width: 1320px; margin: auto">
+    <footer class="bg-white rounded mt-3 footer p-3 footer-container">
         <div class="footer__category-link d-flex pb-4">
             <a href="/" class="font-weight-bolder">Trang chủ </a>
             <a href="/" class="font-weight-bolder">Thế giới </a>
             <a href="/" class="font-weight-bolder">Pháp luật </a>
         </div>
-        <div class="row mt-3 pb-3" style="border-bottom: 1px solid  #EEEEEE">
+        <div class="row mt-3 pb-3 footer-border">
             <div class="col-5 flex-column justify-content-between">
                 <div>Tổng biên tập: T.T. Biện Xuân Huy</div>
                 <div>Giấy phép hoạt động báo điện tử tiếng Việt, tiếng Anh Số 561/GP-BTTTT, cấp ngày 25-11-2022
@@ -72,45 +104,50 @@
             </div>
             <div>
                 <a href="https://youtu.be/xvFZjo5PgG0?si=v_lXYe0q33sw9RkO" target="_blank">
-                    <img src="/static/images/others/social.png" />
+                    <img src="/static/images/others/social.png" class="social-icon" />
                 </a>
                 <a href="https://youtu.be/xvFZjo5PgG0?si=v_lXYe0q33sw9RkO" target="_blank">
-                    <img src="/static/images/others/facebook.png" style="width: 26px;height: 26px;margin-left: -2px" />
+                    <img src="/static/images/others/facebook.png" class="social-icon social-icon-facebook" />
                 </a>
                 <a href="https://youtu.be/xvFZjo5PgG0?si=v_lXYe0q33sw9RkO" target="_blank">
-                    <img src="/static/images/others/instagram.png" style="width: 26px;height: 26px" />
+                    <img src="/static/images/others/instagram.png" class="social-icon" />
                 </a>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"
+        nonce="{{nonce}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"
+        nonce="{{nonce}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
-        crossorigin="anonymous"></script>
+        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"
+        nonce="{{nonce}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"
+        nonce="{{nonce}}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" nonce="{{nonce}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" nonce="{{nonce}}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" nonce="{{nonce}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" nonce="{{nonce}}"></script>
 
     {{!-- Select nhieu muc --}}
-    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/js/tom-select.complete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/js/tom-select.complete.min.js"
+        nonce="{{nonce}}"></script>
 
     {{!-- tinyMCE --}}
     <script src="https://cdn.tiny.cloud/1/cdmf4otr4i6qmtynngm9mxc5j1hb906knqi3o9dxf43zn57c/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.6.0/plugins/help/js/i18n/keynav/vi.min.js"></script>
+        referrerpolicy="origin" nonce="{{nonce}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.6.0/plugins/help/js/i18n/keynav/vi.min.js"
+        nonce="{{nonce}}"></script>
 
     {{!-- file Input --}}
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/fileinput.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.4/js/locales/vi.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/fileinput.min.js"
+        nonce="{{nonce}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.4/js/locales/vi.min.js"
+        nonce="{{nonce}}"></script>
 
     {{{_sections.js}}}
 

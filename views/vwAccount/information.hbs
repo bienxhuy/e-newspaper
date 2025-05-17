@@ -1,26 +1,52 @@
 {{#section 'css'}}
-    <link rel="stylesheet"
-          href="/static/css/account-information/account-information.css">
+<link rel="stylesheet" href="/static/css/account-information/account-information.css">
+<style nonce="{{nonce}}">
+    .container-rounded {
+        border-radius: 10px;
+    }
+
+    .header-border {
+        border-bottom: 1px solid #EEEEEE;
+    }
+
+    .title-text {
+        font-weight: bold;
+    }
+
+    .content-container {
+        width: 800px;
+        margin: auto;
+    }
+
+    .input-field {
+        background-color: #EAEEF2;
+    }
+
+    .social-icon {
+        width: 30px;
+        height: 30px;
+    }
+</style>
 {{/section}}
 
-<div class="bg-white pb-3" style="border-radius: 10px">
-    <div class="p-4 " style="border-bottom: 1px solid #EEEEEE">
-        <h4 style="font-weight: bold; " class=" ">Báo Tuổi Già cam kết bảo mật thông tin</h4>
+<div class="bg-white pb-3 container-rounded">
+    <div class="p-4 header-border">
+        <h4 class="title-text">Báo Tuổi Già cam kết bảo mật thông tin</h4>
     </div>
-    <div style="width: 800px; margin: auto" class="user-information mt-3">
+    <div class="content-container mt-3">
         {{#if this.user.pseudonym}}
-            <div class="row py-3">
-                <span class="col-2">Bút danh</span>
-                <div class="col-8 user-information__value">{{this.user.pseudonym}}</div>
-                <div class="col-2 ">
-                    <button type="button" class="user-information__btn-update " data-toggle="modal"
-                            data-target="#updatePseudonymModal">
+        <div class="row py-3">
+            <span class="col-2">Bút danh</span>
+            <div class="col-8 user-information__value">{{this.user.pseudonym}}</div>
+            <div class="col-2 ">
+                <button type="button" class="user-information__btn-update " data-toggle="modal"
+                    data-target="#updatePseudonymModal">
                     <span class="">
-                    Thay đổi
+                        Thay đổi
                     </span>
-                    </button>
-                </div>
+                </button>
             </div>
+        </div>
 
         {{/if}}
         <div class="row py-3 ">
@@ -34,9 +60,9 @@
 
             <div class="col-2">
                 <button type="button" class="user-information__btn-update" data-toggle="modal"
-                        data-target="#updateFullNameModal">
+                    data-target="#updateFullNameModal">
                     <span>
-                    Cập nhật
+                        Cập nhật
                     </span>
                 </button>
             </div>
@@ -46,9 +72,9 @@
             <div class="col-8 user-information__value">{{this.user.email}}</div>
             <div class="col-2">
                 <button type="button" class="user-information__btn-update" data-toggle="modal"
-                        data-target="#updateEmailModal">
+                    data-target="#updateEmailModal">
                     <span>
-                    Cập nhật
+                        Cập nhật
                     </span>
                 </button>
             </div>
@@ -58,9 +84,9 @@
             <div class="col-8 user-information__value">**********</div>
             <div class="col-2">
                 <button type="button" class="user-information__btn-update" data-toggle="modal"
-                        data-target="#updatePasswordModal">
+                    data-target="#updatePasswordModal">
                     <span>
-                    Cập nhật
+                        Cập nhật
                     </span>
                 </button>
             </div>
@@ -70,9 +96,9 @@
             <div class="col-8 user-information__value">{{this.user.role}}</div>
             <div class="col-2 ">
                 <button type="button" class="user-information__btn-update " data-toggle="modal"
-                        data-target="#updateGenderModal">
+                    data-target="#updateGenderModal">
                     <span>
-                    Thay đổi
+                        Thay đổi
                     </span>
                 </button>
             </div>
@@ -81,18 +107,18 @@
             <span class="col-2">Ngày sinh:</span>
             <div class="col-8 user-information__value">
                 {{#if this.user.birth_date}}
-                    {{this.user.birth_date}}
+                {{this.user.birth_date}}
                 {{else}}
-                    Cập nhật chính xác ngày sinh để có cơ hội nhận được những bất ngờ
-                    từ báo Tuổi Già
+                Cập nhật chính xác ngày sinh để có cơ hội nhận được những bất ngờ
+                từ báo Tuổi Già
                 {{/if}}
 
             </div>
             <div class="col-2">
                 <button type="button" class="user-information__btn-update" data-toggle="modal"
-                        data-target="#updateBirthDayModal">
+                    data-target="#updateBirthDayModal">
                     <span>
-                    Cập nhật
+                        Cập nhật
                     </span>
                 </button>
             </div>
@@ -100,7 +126,7 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="updatePseudonymModal" tabindex="-1" aria-labelledby="updatePseudonymModal"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -112,9 +138,8 @@
                 <div class="modal-body">
                     <form id="updatePseudonym" method="post" action="/account/information/update-pseudonym">
                         <div class="form-group">
-                            <input type="text" name="pseudonym" id="pseudonym" class="form-control p-2 border-0 mt-2"
-                                   style="background-color:#EAEEF2 " placeholder="Nhập bút danh"
-                                   aria-describedby="helpId">
+                            <input type="text" name="pseudonym" id="pseudonym" class="form-control input-field p-2"
+                                placeholder="Nhập bút danh" aria-describedby="helpId">
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <button type="submit" id="updateFullName" class="btn btn-primary">
@@ -130,7 +155,7 @@
         </div>
     </div>
     <div class="modal fade" id="updateFullNameModal" tabindex="-1" aria-labelledby="updateFullNameModal"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -142,14 +167,12 @@
                 <div class="modal-body">
                     <form method="post" action="/account/information/update-name" id="updateName">
                         <div class="form-group">
-                            <input type="password" name="password" id="password" class="form-control p-2 border-0"
-                                   style="background-color:#EAEEF2 " placeholder="Nhập mật khẩu"
-                                   aria-describedby="helpId">
+                            <input type="password" name="password" id="password" class="form-control input-field p-2"
+                                placeholder="Nhập mật khẩu" aria-describedby="helpId">
                         </div>
                         <div class="form-group">
-                            <input type="text" name="name" id="name" class="form-control p-2 border-0 mt-2"
-                                   style="background-color:#EAEEF2 " placeholder="Nhập họ tên"
-                                   aria-describedby="helpId">
+                            <input type="text" name="name" id="name" class="form-control input-field p-2 mt-2"
+                                placeholder="Nhập họ tên" aria-describedby="helpId">
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <button type="submit" id="updateFullName" class="btn btn-primary">
@@ -176,14 +199,13 @@
                 <div class="modal-body">
                     <form method="post" action="/account/information/update-email" id="updateEmail">
                         <div class="form-group">
-                            <input type="password" name="password" id="emailPassword" class="form-control p-2 border-0"
-                                   style="background-color:#EAEEF2 " placeholder="Nhập mật khẩu"
-                                   aria-describedby="helpId">
+                            <input type="password" name="password" id="emailPassword"
+                                class="form-control input-field p-2" placeholder="Nhập mật khẩu"
+                                aria-describedby="helpId">
                         </div>
                         <div class="form-group">
-                            <input type="text" name="email" id="email" class="form-control p-2 border-0 mt-2"
-                                   style="background-color:#EAEEF2 " placeholder="Nhập email"
-                                   aria-describedby="helpId">
+                            <input type="text" name="email" id="email" class="form-control input-field p-2 mt-2"
+                                placeholder="Nhập email" aria-describedby="helpId">
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <button type="submit" id="updateFullName" class="btn btn-primary">
@@ -199,7 +221,7 @@
         </div>
     </div>
     <div class="modal fade" id="updatePasswordModal" tabindex="-1" aria-labelledby="updatePasswordModal"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -211,15 +233,14 @@
                 <div class="modal-body">
                     <form method="post" action="/account/information/update-password" id="updatePassword">
                         <div class="form-group">
-                            <input type="password" name="oldPassword" id="oldPassword" class="form-control p-2 border-0"
-                                   style="background-color:#EAEEF2 " placeholder="Nhập mật khẩu cũ"
-                                   aria-describedby="helpId">
+                            <input type="password" name="oldPassword" id="oldPassword"
+                                class="form-control input-field p-2" placeholder="Nhập mật khẩu cũ"
+                                aria-describedby="helpId">
                         </div>
                         <div class="form-group">
                             <input type="password" name="newPassword" id="newPassword"
-                                   class="form-control p-2 border-0 mt-2"
-                                   style="background-color:#EAEEF2 " placeholder="Nhập mật khẩu mới"
-                                   aria-describedby="helpId">
+                                class="form-control input-field p-2 mt-2" placeholder="Nhập mật khẩu mới"
+                                aria-describedby="helpId">
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <button type="submit" id="updateFullName" class="btn btn-primary">
@@ -235,7 +256,7 @@
         </div>
     </div>
     <div class="modal fade" id="updateBirthDayModal" tabindex="-1" aria-labelledby="updateBirthDayModal"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -247,9 +268,8 @@
                 <div class="modal-body">
                     <form method="post" action="/account/information/update-birth-date">
                         <div class="form-group">
-                            <input type="text" name="dob" id="dob" class="form-control p-2 border-0"
-                                   style="background-color:#EAEEF2 " placeholder="DD-MM-YYYY"
-                                   aria-describedby="helpId">
+                            <input type="text" name="dob" id="dob" class="form-control input-field p-2"
+                                placeholder="DD-MM-YYYY" aria-describedby="helpId">
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <button type="submit" id="updateFullName" class="btn btn-primary">
@@ -265,14 +285,14 @@
         </div>
     </div>
 </div>
-<div class="bg-white mt-4 pb-4" style="border-radius: 10px">
-    <div class="p-4 " style="border-bottom: 1px solid #EEEEEE">
-        <h4 style="font-weight: bold; " class=" ">Liên kết mạng xã hội</h4>
+<div class="bg-white mt-4 pb-4 container-rounded">
+    <div class="p-4 header-border">
+        <h4 class="title-text">Liên kết mạng xã hội</h4>
     </div>
-    <div style="width: 800px; margin: auto" class="user-information mt-3">
+    <div class="content-container mt-3">
         <div class="d-flex py-3 justify-content-between ">
             <div class="d-flex align-items-center">
-                <img src="/others/google.png" style="width: 30px; height: 30px"/>
+                <img src="/others/google.png" class="social-icon" />
                 <div class="ml-3">
                     <div class="font-weight-bold">Google</div>
                     <div> Liên kết google</div>
@@ -289,7 +309,7 @@
 
         <div class="d-flex py-3 justify-content-between ">
             <div class="d-flex align-items-center">
-                <img src="/others/facebook (1).png" style="width: 30px; height: 30px"/>
+                <img src="/others/facebook (1).png" class="social-icon" />
                 <div class="ml-3">
                     <div class="font-weight-bold">Facebook</div>
                     <div> Liên kết facebook</div>
@@ -307,108 +327,108 @@
 </div>
 
 {{#section 'js'}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
-    <script>
-        $('#updateName').on('submit', function (e) {
-            e.preventDefault();
-            const password = $('#password').val();
-            const name = $('#name').val();
-            if (password.length === 0) {
-                Swal.fire({title: 'Error!', text: 'Password is required', icon: 'error',});
-                return;
-            }
-            if (name.length === 0) {
-                Swal.fire({title: 'Error!', text: 'Name is required', icon: 'error',});
-                return;
-            }
-            $.ajax({
-                method: 'POST', url: '/account/is-valid-password',
-                data: {password: password},
-                success: function (response) {
-                    if (response === true) {
-                        $('#updateName').off('submit').submit();
-                    } else {
-                        Swal.fire({title: 'Error!', text: 'Password is incorrect', icon: 'error',});
-                    }
-                }, error: function () {
-                    Swal.fire({title: 'Error!', text: 'There was an error processing your request', icon: 'error',});
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+<script>
+    $('#updateName').on('submit', function (e) {
+        e.preventDefault();
+        const password = $('#password').val();
+        const name = $('#name').val();
+        if (password.length === 0) {
+            Swal.fire({ title: 'Error!', text: 'Password is required', icon: 'error', });
+            return;
+        }
+        if (name.length === 0) {
+            Swal.fire({ title: 'Error!', text: 'Name is required', icon: 'error', });
+            return;
+        }
+        $.ajax({
+            method: 'POST', url: '/account/is-valid-password',
+            data: { password: password },
+            success: function (response) {
+                if (response === true) {
+                    $('#updateName').off('submit').submit();
+                } else {
+                    Swal.fire({ title: 'Error!', text: 'Password is incorrect', icon: 'error', });
                 }
-            });
+            }, error: function () {
+                Swal.fire({ title: 'Error!', text: 'There was an error processing your request', icon: 'error', });
+            }
         });
-    </script>
-    <script>
-        $('#updateEmail').on('submit', function (e) {
-            e.preventDefault();
-            const password = $('#emailPassword').val();
-            const email = $('#email').val();
-            $.getJSON(`/account/is-available-email?email=${email}`, function (data) {
-                if (data === false) {
-                    Swal.fire
+    });
+</script>
+<script>
+    $('#updateEmail').on('submit', function (e) {
+        e.preventDefault();
+        const password = $('#emailPassword').val();
+        const email = $('#email').val();
+        $.getJSON(`/account/is-available-email?email=${email}`, function (data) {
+            if (data === false) {
+                Swal.fire
                     ({
                         title: 'Error!',
                         text: 'Email already existed',
                         icon: 'error',
                     })
-                    return;
-                }
-                if (password.length === 0) {
-                    Swal.fire({title: 'Error!', text: 'Password is required', icon: 'error',});
-                    return;
-                }
-                if (email.length === 0) {
-                    Swal.fire({title: 'Error!', text: 'Email is required', icon: 'error',});
-                    return;
-                }
-                $.ajax({
-                    method: 'POST', url: '/account/is-valid-password',
-                    data: {password: password},
-                    success: function (response) {
-                        if (response === true) {
-                            $('#updateEmail').off('submit').submit();
-                        } else {
-                            Swal.fire({title: 'Error!', text: 'Password is incorrect', icon: 'error',});
-                        }
-                    }, error: function () {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'There was an error processing your request',
-                            icon: 'error',
-                        });
-                    }
-                });
-            });
-
-
-        });
-    </script>
-    <script>
-        $('#updatePassword').on('submit', function (e) {
-            e.preventDefault();
-            const password = $('#oldPassword').val();
-            const newPassword = $('#newPassword').val();
-            if (password.length === 0) {
-                Swal.fire({title: 'Error!', text: 'Password is required', icon: 'error',});
                 return;
             }
-            if (newPassword.length === 0) {
-                Swal.fire({title: 'Error!', text: 'New password is required', icon: 'error',});
+            if (password.length === 0) {
+                Swal.fire({ title: 'Error!', text: 'Password is required', icon: 'error', });
+                return;
+            }
+            if (email.length === 0) {
+                Swal.fire({ title: 'Error!', text: 'Email is required', icon: 'error', });
                 return;
             }
             $.ajax({
                 method: 'POST', url: '/account/is-valid-password',
-                data: {password: password},
+                data: { password: password },
                 success: function (response) {
                     if (response === true) {
-                        $('#updatePassword').off('submit').submit();
+                        $('#updateEmail').off('submit').submit();
                     } else {
-                        Swal.fire({title: 'Error!', text: 'Password is incorrect', icon: 'error',});
+                        Swal.fire({ title: 'Error!', text: 'Password is incorrect', icon: 'error', });
                     }
                 }, error: function () {
-                    Swal.fire({title: 'Error!', text: 'There was an error processing your request', icon: 'error',});
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'There was an error processing your request',
+                        icon: 'error',
+                    });
                 }
             });
         });
-    </script>
+
+
+    });
+</script>
+<script>
+    $('#updatePassword').on('submit', function (e) {
+        e.preventDefault();
+        const password = $('#oldPassword').val();
+        const newPassword = $('#newPassword').val();
+        if (password.length === 0) {
+            Swal.fire({ title: 'Error!', text: 'Password is required', icon: 'error', });
+            return;
+        }
+        if (newPassword.length === 0) {
+            Swal.fire({ title: 'Error!', text: 'New password is required', icon: 'error', });
+            return;
+        }
+        $.ajax({
+            method: 'POST', url: '/account/is-valid-password',
+            data: { password: password },
+            success: function (response) {
+                if (response === true) {
+                    $('#updatePassword').off('submit').submit();
+                } else {
+                    Swal.fire({ title: 'Error!', text: 'Password is incorrect', icon: 'error', });
+                }
+            }, error: function () {
+                Swal.fire({ title: 'Error!', text: 'There was an error processing your request', icon: 'error', });
+            }
+        });
+    });
+</script>
 
 {{/section}}

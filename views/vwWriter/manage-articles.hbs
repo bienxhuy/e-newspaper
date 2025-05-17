@@ -1,5 +1,5 @@
 {{#section 'css'}}
-<style>
+<style nonce="{{nonce}}">
     #pills-tab button.nav-link.active {
         background-color: #ED1C24;
         color: white;
@@ -26,6 +26,17 @@
     .category-link:hover {
         text-decoration: none;
     }
+
+    /* Moved inline styles to classes */
+    .article-row {
+        border-radius: 10px;
+    }
+
+    .article-thumb {
+        object-fit: cover;
+        width: 200px;
+        height: 170px;
+    }
 </style>
 {{/section}}
 
@@ -51,10 +62,10 @@
         Bạn chưa có tin nào xuất bản hay chờ xuất bản, viết một tin mới tại <a href="/writer/create-articles">đây</a>.
         {{/if}}
         {{#each this.availableArticles}}
-        <div class="row mb-3" style="border-radius: 10px; ">
+        <div class="row mb-3 article-row">
             <div class="col-3">
                 <a href="/article?id={{id}}">
-                    <img src="{{main_thumb}}" class="rounded" style="object-fit:cover; width: 200px; height: 170px;" />
+                    <img src="{{main_thumb}}" class="rounded article-thumb" />
                 </a>
             </div>
             <div class="col-9 pl-0 d-flex flex-column">
@@ -95,14 +106,14 @@
         Bạn chưa có tin nào đang chờ được duyệt, viết một tin mới tại <a href="/writer/create-articles">đây</a>.
         {{/if}}
         {{#each this.draftArticles}}
-        <div class="row mb-3" style="border-radius: 10px; ">
+        <div class="row mb-3 article-row">
             <div class="col-3">
                 <a href="/writer/edit-article?id={{id}}">
-                    <img src="{{main_thumb}}" class="rounded" style="object-fit:cover; width: 200px; height: 170px;" />
+                    <img src="{{main_thumb}}" class="rounded article-thumb" />
                 </a>
             </div>
             <div class="col-9 pl-0 d-flex flex-column">
-                <p style="color: #7E8299" class="mb-0 article-text d-flex">
+                <p class="mb-0 article-text d-flex">
                     {{#each categories}}
                     <a href="/cat?catId={{id}}" class="category-link mr-2">{{name}}</a>
                     {{/each}}

@@ -1,13 +1,40 @@
 {{#section 'css'}}
-<style>
-    .table th {
-        text-align: center;
-        background-color: #f5f5f5;
+<style nonce="{{nonce}}">
+    .register-container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        padding: 1.5rem;
+        margin-top: 1.5rem;
     }
 
-    .table td {
+    .table-custom {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .table-custom th {
+        text-align: center;
+        background-color: #f8f9fa;
+        padding: 1rem;
+        font-weight: 500;
+    }
+
+    .table-custom td {
         vertical-align: middle;
         text-align: center;
+        padding: 0.75rem;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa;
+        transition: background-color 0.2s ease;
+    }
+
+    .badge {
+        padding: 0.5rem 0.75rem;
+        border-radius: 10px;
+        font-weight: 500;
     }
 
     .badge-pending {
@@ -25,22 +52,80 @@
         color: #ffffff;
     }
 
-    .btn {
-        border-radius: 20px;
+    .btn-rounded {
+        border-radius: 10px;
+        padding: 0.375rem 1rem;
     }
 
-    .table-hover tbody tr:hover {
-        background-color: #f9f9f9;
+    .nav-pills .nav-link {
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        margin-right: 0.5rem;
+        color: #6c757d;
+        transition: all 0.2s ease;
+    }
+
+    .nav-pills .nav-link:hover {
+        background-color: #f8f9fa;
     }
 
     .nav-pills .nav-link.active {
         background-color: #dc3545;
+        color: #ffffff;
+    }
+
+    .truncate-text {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .filter-select {
+        width: 25%;
+        border-radius: 10px;
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #ced4da;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+
+    .pagination-link {
+        background-color: #dc3545;
+        color: #ffffff;
+        border-color: #dc3545;
+        border-radius: 10px;
+        padding: 0.375rem 0.75rem;
+        margin: 0 0.25rem;
+        transition: all 0.2s ease;
+    }
+
+    .pagination-link:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+        color: #ffffff;
+    }
+
+    .pagination-link.active {
+        background-color: #ffffff;
+        color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .empty-message {
+        text-align: center;
+        color: #6c757d;
+        padding: 2rem;
+        font-style: italic;
     }
 </style>
 {{/section}}
 
-<div class="container p-4 mt-4"
-    style="background-color: #ffffff; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+<div class="register-container">
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="pills-reporter-tab" data-toggle="pill"
@@ -56,13 +141,12 @@
             </button>
         </li>
     </ul>
-
     <div class="tab-content p-3" id="pills-tabContent">
         <!-- Tab ứng tuyển writer -->
         <div class="tab-pane fade show active" id="pills-reporter-tab-content" role="tabpanel"
             aria-labelledby="pills-reporter-tab">
             <div class="d-flex justify-content-end mb-3">
-                <select id="writer-filter" class="form-control w-25">
+                <select id="writer-filter" class="filter-select">
                     <option value="">Tất cả trạng thái</option>
                     <option value="pending">Pending</option>
                     <option value="approved">Approved</option>
@@ -70,7 +154,7 @@
                 </select>
             </div>
             {{#if writerApplications.length}}
-            <table class="table table-hover table-bordered">
+            <table class="table table-custom table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>Tên</th>
@@ -84,18 +168,21 @@
                     <tr data-status="{{this.status}}">
                         <td>{{this.user_name}}</td>
                         <td>
-                            <span class="d-inline-block text-truncate" style="max-width: 200px;"
-                                title="{{this.self_access}}">
+                            <span class="d-inline-block truncate-text" title="{{this.self_access}}">
                                 {{this.self_access}}
                             </span>
                         </td>
                         <td><span class="badge badge-{{this.status}}">{{this.status}}</span></td>
                         <td>
                             {{#if (eq this.status 'pending')}}
-                            <button class="btn btn-success btn-sm"
-                                onclick="updateStatus('{{this.id}}', 'approved', '{{../writerRoleName}}')"><b>Duyệt</b></button>
-                            <button class="btn btn-danger btn-sm"
-                                onclick="updateStatus('{{this.id}}', 'rejected')"><b>Từ chối</b></button>
+                            <button class="btn btn-success btn-rounded btn-sm"
+                                onclick="updateStatus('{{this.id}}', 'approved', '{{../writerRoleName}}')">
+                                <b>Duyệt</b>
+                            </button>
+                            <button class="btn btn-danger btn-rounded btn-sm"
+                                onclick="updateStatus('{{this.id}}', 'rejected')">
+                                <b>Từ chối</b>
+                            </button>
                             {{else}}
                             <span><b>Đã xử lý</b></span>
                             {{/if}}
@@ -104,46 +191,38 @@
                     {{/each}}
                 </tbody>
             </table>
+
             <!-- Pagination for Writer -->
-            <div class="mt-3 d-flex justify-content-center">
-                <nav aria-label="Pagination">
-                    <ul class="pagination">
-                        <!-- Nút Previous -->
-                        {{#if (greater currentPage 1)}}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{subtract currentPage 1}}" aria-label="Previous"
-                                style="background-color: #dc3545; color: #fff; border-color: #dc3545;">&laquo;</a>
-                        </li>
-                        {{/if}}
-
-                        <!-- Số Trang -->
-                        {{#each (range 1 totalPages)}}
-                        <li class="page-item {{#if (eq this ../currentPage)}}active{{/if}}">
-                            <a class="page-link" href="?page={{this}}" style="background-color: {{#if (eq this ../currentPage)}}#fff{{else}}#dc3545{{/if}}; 
-                           color: {{#if (eq this ../currentPage)}}#dc3545{{else}}#fff{{/if}}; 
-                           border-color: #dc3545;">{{this}}</a>
-                        </li>
-                        {{/each}}
-
-                        <!-- Nút Next -->
-                        {{#if (less currentPage totalPages)}}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{add currentPage 1}}" aria-label="Next"
-                                style="background-color: #dc3545; color: #fff; border-color: #dc3545;">&raquo;</a>
-                        </li>
-                        {{/if}}
-                    </ul>
-                </nav>
-            </div>
+            <nav aria-label="Pagination" class="pagination">
+                <ul class="pagination">
+                    {{#if (greater currentPage 1)}}
+                    <li class="page-item">
+                        <a class="pagination-link" href="?page={{subtract currentPage 1}}"
+                            aria-label="Previous">&laquo;</a>
+                    </li>
+                    {{/if}}
+                    {{#each (range 1 totalPages)}}
+                    <li class="page-item">
+                        <a class="pagination-link {{#if (eq this ../currentPage)}}active{{/if}}"
+                            href="?page={{this}}">{{this}}</a>
+                    </li>
+                    {{/each}}
+                    {{#if (less currentPage totalPages)}}
+                    <li class="page-item">
+                        <a class="pagination-link" href="?page={{add currentPage 1}}" aria-label="Next">&raquo;</a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </nav>
             {{else}}
-            <p class="text-center text-muted">Chưa có đơn đăng ký nào.</p>
+            <p class="empty-message">Chưa có đơn đăng ký nào.</p>
             {{/if}}
         </div>
 
         <!-- Tab ứng tuyển editor -->
         <div class="tab-pane fade" id="pills-editor-tab-content" role="tabpanel" aria-labelledby="pills-editor-tab">
             <div class="d-flex justify-content-end mb-3">
-                <select id="editor-filter" class="form-control w-25">
+                <select id="editor-filter" class="filter-select">
                     <option value="">Tất cả trạng thái</option>
                     <option value="pending">Pending</option>
                     <option value="approved">Approved</option>
@@ -151,7 +230,7 @@
                 </select>
             </div>
             {{#if editorApplications.length}}
-            <table class="table table-hover table-bordered">
+            <table class="table table-custom table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>Tên</th>
@@ -165,18 +244,21 @@
                     <tr data-status="{{this.status}}">
                         <td>{{this.user_name}}</td>
                         <td>
-                            <span class="d-inline-block text-truncate" style="max-width: 200px;"
-                                title="{{this.self_access}}">
+                            <span class="d-inline-block truncate-text" title="{{this.self_access}}">
                                 {{this.self_access}}
                             </span>
                         </td>
                         <td><span class="badge badge-{{this.status}}">{{this.status}}</span></td>
                         <td>
                             {{#if (eq this.status 'pending')}}
-                            <button class="btn btn-success btn-sm"
-                                onclick="updateStatus('{{this.id}}', 'approved', '{{../editorRoleName}}')"><b>Duyệt</b></button>
-                            <button class="btn btn-danger btn-sm"
-                                onclick="updateStatus('{{this.id}}', 'rejected')"><b>Từ chối</b></button>
+                            <button class="btn btn-success btn-rounded btn-sm"
+                                onclick="updateStatus('{{this.id}}', 'approved', '{{../editorRoleName}}')">
+                                <b>Duyệt</b>
+                            </button>
+                            <button class="btn btn-danger btn-rounded btn-sm"
+                                onclick="updateStatus('{{this.id}}', 'rejected')">
+                                <b>Từ chối</b>
+                            </button>
                             {{else}}
                             <span><b>Đã xử lý</b></span>
                             {{/if}}
@@ -185,46 +267,37 @@
                     {{/each}}
                 </tbody>
             </table>
+
             <!-- Pagination for Editor -->
-            <div class="mt-3 d-flex justify-content-center">
-                <nav aria-label="Pagination">
-                    <ul class="pagination">
-                        <!-- Nút Previous -->
-                        {{#if (greater currentPage 1)}}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{subtract currentPage 1}}" aria-label="Previous"
-                                style="background-color: #dc3545; color: #fff; border-color: #dc3545;">&laquo;</a>
-                        </li>
-                        {{/if}}
-
-                        <!-- Số Trang -->
-                        {{#each (range 1 totalPages)}}
-                        <li class="page-item {{#if (eq this ../currentPage)}}active{{/if}}">
-                            <a class="page-link" href="?page={{this}}" style="background-color: {{#if (eq this ../currentPage)}}#fff{{else}}#dc3545{{/if}}; 
-                           color: {{#if (eq this ../currentPage)}}#dc3545{{else}}#fff{{/if}}; 
-                           border-color: #dc3545;">{{this}}</a>
-                        </li>
-                        {{/each}}
-
-                        <!-- Nút Next -->
-                        {{#if (less currentPage totalPages)}}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{add currentPage 1}}" aria-label="Next"
-                                style="background-color: #dc3545; color: #fff; border-color: #dc3545;">&raquo;</a>
-                        </li>
-                        {{/if}}
-                    </ul>
-                </nav>
-            </div>
+            <nav aria-label="Pagination" class="pagination">
+                <ul class="pagination">
+                    {{#if (greater currentPage 1)}}
+                    <li class="page-item">
+                        <a class="pagination-link" href="?page={{subtract currentPage 1}}"
+                            aria-label="Previous">&laquo;</a>
+                    </li>
+                    {{/if}}
+                    {{#each (range 1 totalPages)}}
+                    <li class="page-item">
+                        <a class="pagination-link {{#if (eq this ../currentPage)}}active{{/if}}"
+                            href="?page={{this}}">{{this}}</a>
+                    </li>
+                    {{/each}}
+                    {{#if (less currentPage totalPages)}}
+                    <li class="page-item">
+                        <a class="pagination-link" href="?page={{add currentPage 1}}" aria-label="Next">&raquo;</a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </nav>
             {{else}}
-            <p class="text-center text-muted"><b>Chưa có đơn đăng ký nào.</b></p>
+            <p class="empty-message">Chưa có đơn đăng ký nào.</p>
             {{/if}}
         </div>
-
     </div>
 </div>
 
-<script>
+<script nonce="{{nonce}}">
     // Function to filter rows by status
     function filterTable(tableBodyId, filterValue) {
         const rows = document.querySelectorAll(`#${tableBodyId} tr`);
