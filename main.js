@@ -181,6 +181,22 @@ app.use('/writer', isAuth, isWriter, writerRouter);
 app.use('/editor', isAuth, isEditor, editorRouter);
 app.use('/admin', isAuth, isAdmin, adminRoute);
 
+app.use((req, res, next) => {
+    res.status(404).send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>404 - Not Found</title>
+        </head>
+        <body>
+            <h1>404 - Not Found</h1>
+            <p>The requested URL ${req.originalUrl} was not found on this server.</p>
+        </body>
+        </html>
+    `);
+});
 
 app.listen(3000, function () {
     console.log("Server started on http://localhost:3000");
