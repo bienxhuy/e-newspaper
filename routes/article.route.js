@@ -55,6 +55,17 @@ router.get("/", async function (req, res) {
 
 // ../article?id=
 router.get("/article", async function (req, res) {
+  // Authorization
+  const isAuth = req.session.user !== undefined;
+  let isWriter,
+    isEditor,
+    isAdmin = false;
+  if (isAuth) {
+    isWriter = req.session.user.role === "writer";
+    isEditor = req.session.user.role === "editor";
+    isAdmin = req.session.user.role === "admin";
+  }
+
   // Get article id
   const articleId = +req.query.id || 0;
   if (articleId === 0) {
@@ -78,22 +89,22 @@ router.get("/article", async function (req, res) {
             window.location.href = '/';
         </script>
         `;
-        return res.send(script);
-    }
-    if (fullInfoArticle.is_premium) {
-        if (req.session.user === null || req.session.user === undefined) {
-            const script = `
+    return res.send(script);
+  }
+  if (fullInfoArticle.is_premium) {
+    if (req.session.user === null || req.session.user === undefined) {
+      const script = `
         <script>
             alert('Bạn chưa đăng nhập, tài khoản đăng nhập bạn phải là premium để đọc bài này');
             window.location.href = '/';
         </script>
     `;
-            return res.send(script);
-        }
+      return res.send(script);
+    }
 
-        let user = await subscriberService.getVipStatus(req.session.user.id);
-        if (user.vipStatus !== 'active') {
-            const script = `
+    let user = await subscriberService.getVipStatus(req.session.user.id);
+    if (user.vipStatus !== 'active') {
+      const script = `
         <script>
             alert('Bạn không phải là thành viên Premium để đọc bài này.');
             window.location.href = '/';
@@ -102,7 +113,7 @@ router.get("/article", async function (req, res) {
       return res.send(script);
     }
   }
-  
+
   // Nav data
   const categoryTree = await categoryService.getCategoryTree();
 
@@ -132,6 +143,11 @@ router.get("/article", async function (req, res) {
 
   res.render("vwHome/article", {
     layout: "home",
+    isAuth: isAuth,
+    isWriter: isWriter,
+    isEditor: isEditor,
+    isWriter: isWriter,
+    isAdmin: isAdmin,
     article: fullInfoArticle,
     comments: articleComments,
     commentCount: articleComments.length,
@@ -142,6 +158,17 @@ router.get("/article", async function (req, res) {
 });
 
 router.get("/cat", async function (req, res) {
+  // Authorization
+  const isAuth = req.session.user !== undefined;
+  let isWriter,
+    isEditor,
+    isAdmin = false;
+  if (isAuth) {
+    isWriter = req.session.user.role === "writer";
+    isEditor = req.session.user.role === "editor";
+    isAdmin = req.session.user.role === "admin";
+  }
+
   const catId = +req.query.catId || 6;
 
   const page = isNaN(+req.query.page) || +req.query.page <= 0 ? 1 : +req.query.page;
@@ -164,6 +191,11 @@ router.get("/cat", async function (req, res) {
 
   res.render("vwHome/articleListByCat", {
     layout: "home",
+    isAuth: isAuth,
+    isWriter: isWriter,
+    isEditor: isEditor,
+    isWriter: isWriter,
+    isAdmin: isAdmin,
     mainCat: category,
     childCats: childCats,
     articles: paginationVars.articles,
@@ -177,6 +209,17 @@ router.get("/cat", async function (req, res) {
 });
 
 router.get("/search", async function (req, res) {
+  // Authorization
+  const isAuth = req.session.user !== undefined;
+  let isWriter,
+    isEditor,
+    isAdmin = false;
+  if (isAuth) {
+    isWriter = req.session.user.role === "writer";
+    isEditor = req.session.user.role === "editor";
+    isAdmin = req.session.user.role === "admin";
+  }
+
   const page = isNaN(+req.query.page) || +req.query.page <= 0 ? 1 : +req.query.page;
   const offset = (page - 1) * limit;
   const keywords = req.query.keywords ? req.query.keywords.trimEnd() : '';
@@ -191,6 +234,11 @@ router.get("/search", async function (req, res) {
   );
   res.render("vwHome/articleListByKeywords", {
     layout: "home",
+    isAuth: isAuth,
+    isWriter: isWriter,
+    isEditor: isEditor,
+    isWriter: isWriter,
+    isAdmin: isAdmin,
     empty: paginationVars.articles.length === 0,
     page_items: paginationVars.page_items,
     prevPage: paginationVars.prevPage,
@@ -202,6 +250,17 @@ router.get("/search", async function (req, res) {
 });
 
 router.get("/tag", async function (req, res) {
+  // Authorization
+  const isAuth = req.session.user !== undefined;
+  let isWriter,
+    isEditor,
+    isAdmin = false;
+  if (isAuth) {
+    isWriter = req.session.user.role === "writer";
+    isEditor = req.session.user.role === "editor";
+    isAdmin = req.session.user.role === "admin";
+  }
+
   const tagId = +req.query.tagId || 1;
   const page = +req.query.page || 1;
   const offset = (page - 1) * limit;
@@ -218,6 +277,11 @@ router.get("/tag", async function (req, res) {
 
   res.render("vwHome/articleListByTag", {
     layout: "home",
+    isAuth: isAuth,
+    isWriter: isWriter,
+    isEditor: isEditor,
+    isWriter: isWriter,
+    isAdmin: isAdmin,
     tagName: tag.tagName,
     articles: paginationVars.articles,
     empty: paginationVars.articles.length === 0,
@@ -230,9 +294,20 @@ router.get("/tag", async function (req, res) {
 });
 
 router.get("/newest", async function (req, res) {
+  // Authorization
+  const isAuth = req.session.user !== undefined;
+  let isWriter,
+    isEditor,
+    isAdmin = false;
+  if (isAuth) {
+    isWriter = req.session.user.role === "writer";
+    isEditor = req.session.user.role === "editor";
+    isAdmin = req.session.user.role === "admin";
+  }
+
   const page = isNaN(+req.query.page) || +req.query.page <= 0 ? 1 : +req.query.page;
   const offset = (page - 1) * limit;
-  
+
   const categoryTree = await categoryService.getCategoryTree();
 
   const paginationVars = await helper.paginationVars(
@@ -246,6 +321,11 @@ router.get("/newest", async function (req, res) {
   );
   res.render("vwHome/articleNewest", {
     layout: "home",
+    isAuth: isAuth,
+    isWriter: isWriter,
+    isEditor: isEditor,
+    isWriter: isWriter,
+    isAdmin: isAdmin,
     articles: paginationVars.articles,
     categoryTree: categoryTree,
     empty: paginationVars.articles.length === 0,
