@@ -135,6 +135,8 @@ app.use((req, res, next) => {
                 "https://cdnjs.cloudflare.com",
                 "https://fonts.googleapis.com",
                 `'nonce-${nonce}'`,
+                "'sha256-2hfpHa9d2z5yTDzk/TaGjE7b0lSfdRgpgDc1XofiLTg='",
+                "'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='"
             ],
             fontSrc: [
                 "'self'",
