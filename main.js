@@ -1,6 +1,4 @@
-import connectLiveReload from 'connect-livereload'
 import hbs_section from 'express-handlebars-sections';
-import livereload from 'livereload';
 import session from "express-session";
 import express from "express";
 import path from 'path';
@@ -30,13 +28,6 @@ import {getVipUser} from "./middlewares/user.mdw.js";
 //                  SERVER CONFIG
 // =================================================
 
-const liveReloadServer = livereload.createServer();
-liveReloadServer.server.once("connection", () => {
-    setTimeout(() => {
-        liveReloadServer.refresh("/");
-    }, 1);
-});
-
 dotenv.config();
 const app = express();
 
@@ -50,7 +41,6 @@ app.use(session({
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(connectLiveReload());
 // Middleware Passport
 app.use(passport.initialize());
 app.use(passport.session());
