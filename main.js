@@ -23,6 +23,8 @@ import commentRoute from './routes/commentRoute.js';
 import adminRoute from "./routes/admin/admin.route.js";
 import {getVipUser} from "./middlewares/user.mdw.js";
 
+import csrf from 'csurf';
+
 
 // =================================================
 //                  SERVER CONFIG
@@ -69,6 +71,32 @@ app.engine('hbs', engine({
 
 app.set("view engine", "hbs");
 app.set("views", "./views");
+
+
+// =================================================
+//                  CSRF CONFIGURATION
+// =================================================
+// Enable CSRF protection
+const csrfProtection = csrf();
+
+app.use(csrfProtection);
+
+// Make csrfToken available to all views
+app.use((req, res, next) => {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
+
+// Additionally configure response when csrf token is invalid
+app.use((err, req, res, next) => {
+    if (err.code === 'EBADCSRFTOKEN') {
+        // Session has expired or tampered with
+        res.status(403);
+        res.send('Invalid CSRF token.');
+    } else {
+        next(err);
+    }
+});
 
 
 // =================================================
