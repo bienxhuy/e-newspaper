@@ -40,7 +40,9 @@ app.use(session({
     secret: 'SECRET_KEY',
     resave: false,
     saveUninitialized: true,
-    cookie: {}
+    cookie: {
+        sameSite: 'lax'
+    }
 }))
 
 app.use(express.urlencoded({ extended: true }));
