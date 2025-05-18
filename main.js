@@ -26,6 +26,8 @@ import { getVipUser } from "./middlewares/user.mdw.js";
 import csrf from 'csurf';
 import helmet from 'helmet';
 import crypto from 'crypto';
+import https from 'https';
+import fs from 'fs';
 
 
 // =================================================
@@ -41,7 +43,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        sameSite: 'lax'
+        sameSite: 'lax',
+        secure: true
     }
 }))
 
@@ -225,6 +228,15 @@ app.use((req, res, next) => {
     `);
 });
 
-app.listen(3000, function () {
-    console.log("Server started on http://localhost:3000");
+// app.listen(3000, function () {
+//     console.log("Server started on http://localhost:3000");
+// });
+
+const httpsOptions = {
+  key: fs.readFileSync('./server.key'),
+  cert: fs.readFileSync('./server.crt')
+};
+
+https.createServer(httpsOptions, app).listen(3443, () => {
+  console.log('HTTPS Server running at https://localhost:3443');
 });
