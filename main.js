@@ -51,11 +51,6 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/static', express.static('static'));
-const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use('/others', express.static(path.join(__dirname, '/static/images/others')));
-
-
 app.engine('hbs', engine({
     extname: 'hbs',
     defaultLayout: 'main',
@@ -183,6 +178,21 @@ app.use(helmet.hsts({
     includeSubDomains: true,
     preload: true
 }));
+
+
+// =================================================
+//      X-Content-Type-Options Header Missing
+// =================================================
+app.use(helmet.noSniff());
+
+
+// =================================================
+//              STATIC FILE ROUTING
+// =================================================
+
+app.use('/static', express.static('static'));
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use('/others', express.static(path.join(__dirname, '/static/images/others')));
 
 
 // =================================================
