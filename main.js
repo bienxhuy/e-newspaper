@@ -78,6 +78,12 @@ app.set("views", "./views");
 
 
 // =================================================
+// Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s)
+// =================================================
+app.disable('x-powered-by');
+
+
+// =================================================
 //                  CSRF CONFIGURATION
 // =================================================
 // Enable CSRF protection
