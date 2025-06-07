@@ -1,5 +1,4 @@
 node_modules/
-static/images/articles/**
 .env
 root.*
 server.*
