@@ -16,20 +16,27 @@ const router = express.Router();
 // Limit for each page
 const limit = 10;
 
-router.get("/", async function (req, res) {
+async function getNavData(req) {
   // Authorization
   const isAuth = req.session.user !== undefined;
-  let isWriter,
-    isEditor,
-    isAdmin = false;
+  let isWriter, isEditor, isAdmin = false;
   if (isAuth) {
     isWriter = req.session.user.role === "writer";
     isEditor = req.session.user.role === "editor";
     isAdmin = req.session.user.role === "admin";
   }
 
-  // Data for homepage
+  // Category tree
   const categoryTree = await categoryService.getCategoryTree();
+
+  return { isAuth, isWriter, isEditor, isAdmin, categoryTree };
+}
+
+router.get("/", async function (req, res) {
+  // Get nav data
+  const { isAuth, isWriter, isEditor, isAdmin, categoryTree } = await getNavData(req);
+
+  // Data for homepage
   const topViewArticles = await articleService.getTopViewArticlesWithCat(10);
   const newestArticles = await articleService.getNewestArticlesWithCat(10);
   const newestArticlesOfTopCat = await articleService.getNewestArticleOfTopCats(
@@ -55,6 +62,9 @@ router.get("/", async function (req, res) {
 
 // ../article?id=
 router.get("/article", async function (req, res) {
+  // Get nav data
+  const { isAuth, isWriter, isEditor, isAdmin, categoryTree } = await getNavData(req);
+
   // Get article id
   const articleId = +req.query.id || 0;
   if (articleId === 0) {
@@ -103,9 +113,6 @@ router.get("/article", async function (req, res) {
     }
   }
   
-  // Nav data
-  const categoryTree = await categoryService.getCategoryTree();
-
   // Get comments of article
   const articleComments =
     await commentService.fetchCommentsOfArticleByArticleId(articleId);
@@ -132,6 +139,10 @@ router.get("/article", async function (req, res) {
 
   res.render("vwHome/article", {
     layout: "home",
+    isAuth: isAuth,
+    isWriter: isWriter,
+    isEditor: isEditor,
+    isAdmin: isAdmin,
     article: fullInfoArticle,
     comments: articleComments,
     commentCount: articleComments.length,
@@ -150,8 +161,9 @@ router.get("/cat", async function (req, res) {
   const childCats = await categoryService.getChildCategories(catId);
 
   const category = await categoryService.getCategory(catId);
-  const categoryTree = await categoryService.getCategoryTree();
 
+  // Get navigation data
+  const { isAuth, isWriter, isEditor, isAdmin, categoryTree } = await getNavData(req);
 
   const paginationVars = await helper.paginationVars(
     catId,
@@ -164,6 +176,10 @@ router.get("/cat", async function (req, res) {
 
   res.render("vwHome/articleListByCat", {
     layout: "home",
+    isAuth: isAuth,
+    isWriter: isWriter,
+    isEditor: isEditor,
+    isAdmin: isAdmin,
     mainCat: category,
     childCats: childCats,
     articles: paginationVars.articles,
@@ -177,10 +193,12 @@ router.get("/cat", async function (req, res) {
 });
 
 router.get("/search", async function (req, res) {
+  // Get navigation data
+  const { isAuth, isWriter, isEditor, isAdmin, categoryTree } = await getNavData(req);
+
   const page = +req.query.page || 1;
   const offset = (page - 1) * limit;
   const keywords = req.query.keywords.trimEnd();
-  const categoryTree = await categoryService.getCategoryTree();
   const paginationVars = await helper.paginationVars(
     keywords,
     limit,
@@ -191,6 +209,10 @@ router.get("/search", async function (req, res) {
   );
   res.render("vwHome/articleListByKeywords", {
     layout: "home",
+    isAuth: isAuth,
+    isWriter: isWriter,
+    isEditor: isEditor,
+    isAdmin: isAdmin,
     empty: paginationVars.articles.length === 0,
     page_items: paginationVars.page_items,
     prevPage: paginationVars.prevPage,
@@ -202,10 +224,12 @@ router.get("/search", async function (req, res) {
 });
 
 router.get("/tag", async function (req, res) {
+  // Get navigation data
+  const { isAuth, isWriter, isEditor, isAdmin, categoryTree } = await getNavData(req);
+
   const tagId = +req.query.tagId || 1;
   const page = +req.query.page || 1;
   const offset = (page - 1) * limit;
-  const categoryTree = await categoryService.getCategoryTree();
   const tag = await tagService.getTagNameById(tagId);
   const paginationVars = await helper.paginationVars(
     tagId,
@@ -218,6 +242,10 @@ router.get("/tag", async function (req, res) {
 
   res.render("vwHome/articleListByTag", {
     layout: "home",
+    isAuth: isAuth,
+    isWriter: isWriter,
+    isEditor: isEditor,
+    isAdmin: isAdmin,
     tagName: tag.tagName,
     articles: paginationVars.articles,
     empty: paginationVars.articles.length === 0,
@@ -233,7 +261,8 @@ router.get("/newest", async function (req, res) {
   const page = +req.query.page || 1;
   const offset = (page - 1) * limit;
   
-  const categoryTree = await categoryService.getCategoryTree();
+  // Get navigation data
+  const { isAuth, isWriter, isEditor, isAdmin, categoryTree } = await getNavData(req);
 
   const paginationVars = await helper.paginationVars(
     null,
@@ -246,6 +275,10 @@ router.get("/newest", async function (req, res) {
   );
   res.render("vwHome/articleNewest", {
     layout: "home",
+    isAuth: isAuth,
+    isWriter: isWriter,
+    isEditor: isEditor,
+    isAdmin: isAdmin,
     articles: paginationVars.articles,
     categoryTree: categoryTree,
     empty: paginationVars.articles.length === 0,
