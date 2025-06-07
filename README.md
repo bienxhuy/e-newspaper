@@ -89,8 +89,8 @@ A feature-rich online newspaper platform allowing users to read, search, and int
    \`\`\`
 
 4. **Set up the database**
-   - Import SQL schema or run migrations (if defined)
-   - Configure via `knexfile.js` or Sequelize config
+   - Run SQL query in /sql folder
+   - Configure via `db.js`
 
 5. **Run the application**
    \`\`\`bash
