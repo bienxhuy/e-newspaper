@@ -1,32 +1,36 @@
 /*
  Navicat Premium Dump SQL
 
- Source Server         : local 
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 100427 (10.4.27-MariaDB)
+ Source Server Version : 100432 (10.4.32-MariaDB)
  Source Host           : localhost:3306
- Source Schema         : web_programming_final_project
+ Source Schema         : epaperdb
 
  Target Server Type    : MySQL
- Target Server Version : 100427 (10.4.27-MariaDB)
+ Target Server Version : 100432 (10.4.32-MariaDB)
  File Encoding         : 65001
 
- Date: 16/12/2024 10:15:16
+ Date: 25/12/2024 23:11:25
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for advanced
+-- Table structure for users
 -- ----------------------------
-DROP TABLE IF EXISTS `advanced`;
-CREATE TABLE `advanced`  (
-  `t2_password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `user_id` int NOT NULL,
-  INDEX `user_id`(`user_id` ASC) USING BTREE,
-  CONSTRAINT `advanced_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `birth_date` date NULL DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `role` enum('guest','writer','editor','admin') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `email`(`email` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for apply
@@ -53,15 +57,40 @@ CREATE TABLE `articles`  (
   `abstract` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `main_thumb` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `is_available` tinyint NULL DEFAULT 1,
+  `is_available` tinyint NULL DEFAULT 0,
   `publish_date` datetime NOT NULL,
   `is_premium` tinyint NULL DEFAULT 0,
   `writer_id` int NOT NULL,
   `view_count` int NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `writer_id`(`writer_id` ASC) USING BTREE,
+  FULLTEXT INDEX `title`(`title`, `abstract`, `content`),
   CONSTRAINT `articles_ibfk_1` FOREIGN KEY (`writer_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 85 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for categories
+-- ----------------------------
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE `categories`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `parent_id` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `parent_id`(`parent_id` ASC) USING BTREE,
+  CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for tags
+-- ----------------------------
+DROP TABLE IF EXISTS `tags`;
+CREATE TABLE `tags`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `name`(`name` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 71 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for articles_categories
@@ -90,19 +119,6 @@ CREATE TABLE `articles_tags`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for categories
--- ----------------------------
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE `categories`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `parent_id` int NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `parent_id`(`parent_id` ASC) USING BTREE,
-  CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Table structure for comments
 -- ----------------------------
 DROP TABLE IF EXISTS `comments`;
@@ -117,20 +133,37 @@ CREATE TABLE `comments`  (
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for drafts
 -- ----------------------------
 DROP TABLE IF EXISTS `drafts`;
 CREATE TABLE `drafts`  (
-  `status` enum('pending','approved','rejected') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `status` enum('pending','approved','rejected','creating') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `date` datetime NOT NULL,
   `reject_reason` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `article_id` int NOT NULL,
+  PRIMARY KEY (`article_id`) USING BTREE,
   INDEX `article_id`(`article_id` ASC) USING BTREE,
   CONSTRAINT `drafts_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for editor_history
+-- ----------------------------
+DROP TABLE IF EXISTS `editor_history`;
+CREATE TABLE `editor_history`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `editor_id` int NOT NULL,
+  `action` enum('approved','rejected') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `extra` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `date` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `article_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `FK_EDITORS`(`editor_id` ASC) USING BTREE,
+  CONSTRAINT `FK_EDITORS` FOREIGN KEY (`editor_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for editors_categories
@@ -146,57 +179,33 @@ CREATE TABLE `editors_categories`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for subscribe_request
+-- Table structure for saved_articles
 -- ----------------------------
-DROP TABLE IF EXISTS `subscribe_request`;
-CREATE TABLE `subscribe_request`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `subscribe_id` int NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_subscribe_request_subscribers`(`subscribe_id` ASC) USING BTREE,
-  CONSTRAINT `fk_subscribe_request_subscribers` FOREIGN KEY (`subscribe_id`) REFERENCES `subscribers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+DROP TABLE IF EXISTS `saved_articles`;
+CREATE TABLE `saved_articles`  (
+  `user_id` int NOT NULL,
+  `article_id` int NOT NULL,
+  `saved_at` datetime NULL DEFAULT current_timestamp,
+  PRIMARY KEY (`user_id`, `article_id`) USING BTREE,
+  INDEX `article_id`(`article_id` ASC) USING BTREE,
+  CONSTRAINT `saved_articles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `saved_articles_ibfk_2` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for subscribers
 -- ----------------------------
 DROP TABLE IF EXISTS `subscribers`;
 CREATE TABLE `subscribers`  (
-  `outdate_time` datetime NOT NULL,
-  `user_id` int NOT NULL,
-  `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `subscribe_time` datetime NOT NULL,
   `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `subscribe_time` datetime NOT NULL,
+  `outdate_time` datetime NOT NULL,
+  `status` enum('active','waiting') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `subscribers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for tags
--- ----------------------------
-DROP TABLE IF EXISTS `tags`;
-CREATE TABLE `tags`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `name`(`name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for users
--- ----------------------------
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `birth_date` date NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `role` enum('guest','writer','editor','admin') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `email`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for views
@@ -217,6 +226,7 @@ DROP TABLE IF EXISTS `writers`;
 CREATE TABLE `writers`  (
   `pseudonym` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `user_id` int NOT NULL,
+  PRIMARY KEY (`user_id`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `writers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
