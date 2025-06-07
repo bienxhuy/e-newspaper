@@ -3,12 +3,15 @@ import session from "express-session";
 import express from "express";
 import path from 'path';
 
+import { RedisStore } from 'connect-redis';
+import redisClient from './utils/redis.js';
+
 import passport from './middlewares/passport.js';
 import dotenv from 'dotenv';
 
-import {engine} from "express-handlebars";
-import {dirname} from "path";
-import {fileURLToPath} from "url";
+import { engine } from "express-handlebars";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
 import helper from './utils/helper.js';
 import { isAdmin, isAuth, isEditor, isWriter } from './middlewares/auth.mdw.js';
@@ -21,7 +24,7 @@ import articleRoute from "./routes/article.route.js";
 import editorRouter from './routes/editor.route.js';
 import commentRoute from './routes/commentRoute.js';
 import adminRoute from "./routes/admin/admin.route.js";
-import {getVipUser} from "./middlewares/user.mdw.js";
+import { getVipUser } from "./middlewares/user.mdw.js";
 
 
 // =================================================
@@ -32,10 +35,14 @@ const app = express();
 
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
-    secret: 'SECRET_KEY',
+    store: new RedisStore({ client: redisClient }),
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: {}
+    cookie: {
+      secure: process.env.APP_ENV === 'production',
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
 }))
 
 app.use(express.urlencoded({ extended: true }));
@@ -62,7 +69,7 @@ app.engine('hbs', engine({
         less: helper.less,
         range: helper.range,
         add: helper.add,
-        subtract: helper.subtract,  
+        subtract: helper.subtract,
     },
 }));
 
