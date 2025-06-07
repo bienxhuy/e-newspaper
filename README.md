@@ -86,13 +86,20 @@ A feature-rich online newspaper platform allowing users to read, search, and int
    APP_ENV=http://localhost:3000/login-register
 
    RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
+
+   DB_HOST=your-host-name
+   DB_PORT=3306
+   DB_USER=your-username
+   DB_PASSWORD=your-password
+   DB_NAME=epaperdb
    \`\`\`
 
-4. **Set up the database**
+5. **Set up the database**
+   - Create database (our application's database name is epaperdb)
    - Run SQL query in /sql folder
    - Configure via `db.js`
 
-5. **Run the application**
+7. **Run the application**
    \`\`\`bash
    npm run dev
    \`\`\`
