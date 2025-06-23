@@ -52,19 +52,19 @@ A feature-rich online newspaper platform allowing users to read, search, and int
 ## 🧪 Setup & Installation
 
 1. **Clone the repo**
-   \`\`\`bash
+   ```bash
    git clone https://github.com/bienxhuy/e-newspaper.git
    cd e-newspaper
-   \`\`\`
+   ```
 
 2. **Install dependencies**
-   \`\`\`bash
+   ```bash
    npm install
-   \`\`\`
+   ```
 
 3. **Configure environment variables**
    Create a `.env` file in root:
-   \`\`\`env
+   ```
    GOOGLE_CLIENT_ID=your_google_client_id
    GOOGLE_CLIENT_SECRET=your_google_client_secret
    GOOGLE_CALLBACK_URL='http://localhost:3000/auth/google/callback'
@@ -92,7 +92,7 @@ A feature-rich online newspaper platform allowing users to read, search, and int
    DB_USER=your-username
    DB_PASSWORD=your-password
    DB_NAME=epaperdb
-   \`\`\`
+   ```
 
 5. **Set up the database**
    - Create database (our application's database name is epaperdb)
