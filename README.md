@@ -63,6 +63,7 @@ A feature-rich online newspaper platform allowing users to read, search, and int
    ```
 
 3. **Configure environment variables**
+
    Create a `.env` file in root:
    ```
    GOOGLE_CLIENT_ID=your_google_client_id
@@ -94,12 +95,12 @@ A feature-rich online newspaper platform allowing users to read, search, and int
    DB_NAME=epaperdb
    ```
 
-5. **Set up the database**
+4. **Set up the database**
    - Create database (our application's database name is epaperdb)
    - Run SQL query in /sql folder
    - Configure via `db.js`
 
-7. **Run the application**
+5. **Run the application**
    \`\`\`bash
    npm run dev
    \`\`\`
